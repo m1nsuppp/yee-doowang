@@ -18,3 +18,22 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Local environment files and secrets
+.env
+.env.*
+!.env.example
+
+# Next.js
+node_modules/
+.next/
+out/
+coverage/
+*.tsbuildinfo
