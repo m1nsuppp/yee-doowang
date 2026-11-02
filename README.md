@@ -9,15 +9,17 @@
 - `frontend/`: Next.js App Router, React, TypeScript, Tailwind CSS, Biome
 - `backend/`: Python 3.12, FastAPI, Pydantic
 - `compose.yaml`: 로컬 PostgreSQL 개발용 컨테이너
-- LLM (선정): OpenRouter API + Instructor (실제 코칭 요청 경로는 아직 연결하지 않았습니다)
+- LLM: OpenRouter를 FastAPI 외부 provider 어댑터 경계로 연결합니다. 모델과 API 키는 `backend/.env`에서 설정합니다.
 - 규칙 추론: PyreWire (wirelog Datalog 엔진; 프로젝트 규칙은 아직 정의하지 않았습니다)
 - Python 의존성·환경: `uv`
 
-서비스는 로컬 개발 단계이며 배포 설정은 포함하지 않습니다. PostgreSQL은 로컬 개발용으로만 준비되어 있고, API 데이터 모델·연결은 아직 추가하지 않았습니다.
+서비스는 로컬 개발 단계이며 배포 설정은 포함하지 않습니다. API는 PostgreSQL에 연결하지 않으며, LLM 요청은 설정된 OpenRouter 모델로 전달합니다.
 
 ## 로컬 실행
 
 필요한 도구: Node.js 20.9 이상, `uv`. Python 3.12는 `uv`가 프로젝트 설정에 맞춰 관리합니다. Docker Compose는 로컬 PostgreSQL을 사용할 때만 필요합니다.
+
+OpenRouter를 사용하려면 `backend/.env.example`을 `backend/.env`로 복사하고 `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`을 설정합니다. 실제 키는 커밋하지 않습니다. OMP 확장은 시작 시 로드되므로 `.omp/extensions/guard-env-files.ts`를 적용하려면 새 OMP 세션을 시작해야 합니다. 이 확장은 `.env*` 직접 경로를 읽거나 수정하는 도구 호출을 차단합니다 (`*.example` 제외). OMP 확장은 샌드박스가 아니므로 임의 코드 실행까지 막는 운영체제 수준의 보안 경계는 아닙니다.
 
 API와 웹 앱을 각각 터미널에서 실행합니다.
 
@@ -51,11 +53,21 @@ npm run build
 
 ```bash
 cd backend
-uv run ruff check src
+uv run ruff check src tests
+uv run python -m unittest discover -s tests
 ```
 
 - 웹 앱: <http://localhost:3000>
 - API 상태 확인: <http://localhost:8000/health>
 - API 문서: <http://localhost:8000/docs>
+- Chat API: `POST http://localhost:8000/api/chat`
 
-OpenRouter 키와 모델 ID는 LLM 기능을 연결할 때 `backend/.env.example`을 `backend/.env`로 복사해 설정합니다. 실제 키는 커밋하지 않습니다.
+키와 모델을 설정한 뒤 실제 응답을 확인합니다.
+
+```bash
+curl -sS http://localhost:8000/api/chat \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt":"운동 전 준비운동을 짧게 추천해줘."}'
+```
+
+요청 본문은 `{"prompt":"..."}`, 성공 응답은 `{"reply":"..."}`입니다. 설정이 없으면 `503`, 공급자 요청 실패는 `502`로 반환합니다.
