@@ -1,4 +1,4 @@
-# 이두왕(Yee Doo-Wang)
+# 이두왕(Yee DooWang)
 
 헬스트레이너 AI 에이전트(Personal Trainer AI Agent)의 이름이자, 프로젝트의 이름이다.
 
