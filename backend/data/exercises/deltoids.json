@@ -551,7 +551,7 @@
   {
     "source_id": "0287",
     "name": "dumbbell arnold press v. 2",
-    "name_ko": null,
+    "name_ko": "덤벨 아놀드 프레스 2형",
     "primary_muscle_id": "deltoids",
     "secondary_muscle_ids": [
       "triceps",
@@ -599,7 +599,7 @@
   {
     "source_id": "0310",
     "name": "dumbbell front raise",
-    "name_ko": null,
+    "name_ko": "덤벨 프런트 레이즈",
     "primary_muscle_id": "deltoids",
     "secondary_muscle_ids": [
       "biceps",
@@ -814,7 +814,7 @@
   {
     "source_id": "0361",
     "name": "dumbbell one arm shoulder press",
-    "name_ko": null,
+    "name_ko": "덤벨 한 팔 숄더 프레스",
     "primary_muscle_id": "deltoids",
     "secondary_muscle_ids": [
       "triceps",
@@ -898,7 +898,7 @@
   {
     "source_id": "0378",
     "name": "dumbbell rear fly",
-    "name_ko": null,
+    "name_ko": "덤벨 리어 플라이",
     "primary_muscle_id": "deltoids",
     "secondary_muscle_ids": [
       "trapezius",
@@ -1054,7 +1054,7 @@
   {
     "source_id": "0405",
     "name": "dumbbell seated shoulder press",
-    "name_ko": null,
+    "name_ko": "시티드 덤벨 숄더 프레스",
     "primary_muscle_id": "deltoids",
     "secondary_muscle_ids": [
       "triceps",

@@ -135,10 +135,12 @@ class ChatService:
         self._catalog = catalog
         self._known_equipment_ids = {item.id for item in catalog.equipment}
         self._muscle_names = {
-            item.id: item.name_ko or item.source_terms[0] for item in catalog.muscles
+            item.id: item.name_ko or f"원문 근육명: {item.source_terms[0]}"
+            for item in catalog.muscles
         }
         self._equipment_names = {
-            item.id: item.name_ko or item.source_term for item in catalog.equipment
+            item.id: item.name_ko or f"원문 장비명: {item.source_term}"
+            for item in catalog.equipment
         }
         self._pattern_names = {
             item.id: item.name_ko for item in catalog.movement_patterns

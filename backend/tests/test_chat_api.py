@@ -132,10 +132,12 @@ class ChatApiTests(unittest.TestCase):
         recommendations = {item["source_id"]: item for item in body["exercises"]}
         self.assertEqual(set(recommendations), set(expected))
         equipment_names = {
-            item.id: item.name_ko or item.source_term for item in catalog.equipment
+            item.id: item.name_ko or f"원문 장비명: {item.source_term}"
+            for item in catalog.equipment
         }
         muscle_names = {
-            item.id: item.name_ko or item.source_terms[0] for item in catalog.muscles
+            item.id: item.name_ko or f"원문 근육명: {item.source_terms[0]}"
+            for item in catalog.muscles
         }
         pattern_names = {item.id: item.name_ko for item in catalog.movement_patterns}
         for source_id, source in expected.items():
@@ -189,6 +191,33 @@ class ChatApiTests(unittest.TestCase):
             {exercise["source_id"] for exercise in response.json()["exercises"]},
             expected_ids,
         )
+
+    def test_untranslated_catalog_labels_are_explicit(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "복근 운동 알아서 골라줘."}
+                    ]
+                },
+            )
+
+        self.assertEqual(response.status_code, 200)
+        exercise = next(
+            exercise
+            for exercise in response.json()["exercises"]
+            if exercise["source_id"] == "0011"
+        )
+        self.assertIsNone(exercise["name_ko"])
+        self.assertEqual(exercise["name"], "assisted hanging knee raise")
+        self.assertEqual(exercise["primary_muscle_ko"], "복근")
+        self.assertEqual(exercise["equipment_ko"], "원문 장비명: assisted")
 
     def test_obliques_day_chat_includes_secondary_muscle_candidates(self) -> None:
         app = create_app(
@@ -301,10 +330,12 @@ class ChatApiTests(unittest.TestCase):
             exercise.source_id: exercise for exercise in catalog.exercises
         }
         equipment_names = {
-            item.id: item.name_ko or item.source_term for item in catalog.equipment
+            item.id: item.name_ko or f"원문 장비명: {item.source_term}"
+            for item in catalog.equipment
         }
         muscle_names = {
-            item.id: item.name_ko or item.source_terms[0] for item in catalog.muscles
+            item.id: item.name_ko or f"원문 근육명: {item.source_terms[0]}"
+            for item in catalog.muscles
         }
         pattern_names = {item.id: item.name_ko for item in catalog.movement_patterns}
         for recommendation in body["exercises"]:

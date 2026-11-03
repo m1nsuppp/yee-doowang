@@ -709,7 +709,7 @@
   {
     "source_id": "0308",
     "name": "dumbbell fly",
-    "name_ko": null,
+    "name_ko": "덤벨 플라이",
     "primary_muscle_id": "chest",
     "secondary_muscle_ids": [
       "deltoids"
