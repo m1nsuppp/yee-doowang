@@ -11,7 +11,12 @@ from yee_doowang_api.application.chat import (
     EquipmentIntent,
     IntentDecision,
 )
-from yee_doowang_api.application.exercise_catalog import Equipment, Exercise
+from yee_doowang_api.application.exercise_catalog import (
+    Equipment,
+    Exercise,
+    Muscle,
+    WorkoutDay,
+)
 from yee_doowang_api.infrastructure.exercise_catalog_file import load_exercise_catalog
 from yee_doowang_api.main import create_app
 from yee_doowang_api.settings import Settings
@@ -22,6 +27,8 @@ class FixtureCoachModel:
         self,
         messages: Sequence[ConversationMessage],
         _equipment_options: Sequence[Equipment],
+        _workout_days: Sequence[WorkoutDay],
+        muscle_options: Sequence[Muscle],
     ) -> IntentDecision:
         transcript = " ".join(
             message.content.lower() for message in messages if message.role == "user"
@@ -37,7 +44,12 @@ class FixtureCoachModel:
             workout_intent = "obliques_day"
         elif "복근" in transcript or "하복근" in transcript:
             workout_intent = "abs_day"
-        elif any(term in transcript for term in ("push", "가슴", "삼두", "어깨")):
+        elif any(term in transcript for term in ("push", "가슴", "삼두", "어깨")) or any(
+            alias.lower() in transcript
+            for muscle in muscle_options
+            if muscle.id in {"chest", "deltoids", "triceps"}
+            for alias in muscle.aliases_ko
+        ):
             workout_intent = "push_day"
         else:
             return IntentDecision(
@@ -87,6 +99,8 @@ class FailingCoachModel:
         self,
         _messages: Sequence[ConversationMessage],
         _equipment_options: Sequence[Equipment],
+        _workout_days: Sequence[WorkoutDay],
+        _muscles: Sequence[Muscle],
     ) -> IntentDecision:
         raise ChatCompletionError("provider detail must not reach the caller")
 
@@ -162,6 +176,52 @@ class ChatApiTests(unittest.TestCase):
                 if source.movement_pattern_id is not None
                 else None,
             )
+
+
+    def test_korean_muscle_alias_maps_to_same_push_candidates(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": "위팔세갈래근 운동을 덤벨로 추천해줘.",
+                        }
+                    ]
+                },
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        catalog = load_exercise_catalog()
+        push_muscle_ids = next(
+            set(day.focus_muscle_ids)
+            for day in catalog.workout_days
+            if day.id == "push_day"
+        )
+        expected_ids = {
+            exercise.source_id
+            for exercise in catalog.exercises
+            if exercise.primary_muscle_id in push_muscle_ids
+            and exercise.equipment_id == "dumbbell"
+        }
+        self.assertEqual(
+            {exercise["source_id"] for exercise in body["exercises"]},
+            expected_ids,
+        )
+        kickback = next(
+            exercise
+            for exercise in body["exercises"]
+            if exercise["source_id"] == "0333"
+        )
+        self.assertEqual(kickback["primary_muscle_ko"], "삼두근")
+
 
     def test_abs_day_chat_returns_only_abdominal_primary_targets(self) -> None:
         app = create_app(

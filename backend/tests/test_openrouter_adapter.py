@@ -95,7 +95,12 @@ class OpenRouterAdapterTests(unittest.IsolatedAsyncioTestCase):
         ]
 
         try:
-            intent = await model.interpret(messages, catalog.equipment)
+            intent = await model.interpret(
+                messages,
+                catalog.equipment,
+                catalog.workout_days,
+                catalog.muscles,
+            )
             answer = await model.answer(
                 messages,
                 prompt_candidates,

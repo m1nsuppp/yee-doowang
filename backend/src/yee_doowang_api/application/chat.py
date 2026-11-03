@@ -9,6 +9,8 @@ from yee_doowang_api.application.exercise_catalog import (
     Equipment,
     Exercise,
     ExerciseCatalog,
+    Muscle,
+    WorkoutDay,
 )
 
 
@@ -104,6 +106,8 @@ class CoachModel(Protocol):
         self,
         messages: Sequence[ConversationMessage],
         equipment_options: Sequence[Equipment],
+        workout_days: Sequence[WorkoutDay],
+        muscles: Sequence[Muscle],
     ) -> IntentDecision: ...
 
     async def answer(
@@ -147,7 +151,12 @@ class ChatService:
         }
 
     async def reply(self, messages: Sequence[ConversationMessage]) -> ChatReply:
-        intent = await self._model.interpret(messages, self._catalog.equipment)
+        intent = await self._model.interpret(
+            messages,
+            self._catalog.equipment,
+            self._catalog.workout_days,
+            self._catalog.muscles,
+        )
         if intent.workout_intent in {"clarify", "unsupported"}:
             reply = intent.message or (
                 "현재는 푸시 데이, 복근, 복사근 운동을 추천해요. 어떤 부위를 원하시나요?"

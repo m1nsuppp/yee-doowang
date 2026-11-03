@@ -17,6 +17,7 @@
     {
       "id": "deltoids",
       "name_ko": "삼각근",
+      "aliases_ko": ["어깨세모근"],
       "source_terms": [
         "deltoids",
         "delts",
@@ -27,6 +28,7 @@
     {
       "id": "triceps",
       "name_ko": "삼두근",
+      "aliases_ko": ["위팔세갈래근"],
       "source_terms": [
         "triceps"
       ]
@@ -120,13 +122,15 @@
     {
       "id": "biceps",
       "name_ko": "이두근",
+      "aliases_ko": ["위팔두갈래근"],
       "source_terms": [
         "biceps"
       ]
     },
     {
       "id": "brachialis",
-      "name_ko": "위팔근",
+      "name_ko": "상완근",
+      "aliases_ko": ["위팔근"],
       "source_terms": [
         "brachialis"
       ]
@@ -190,6 +194,7 @@
     {
       "id": "hip_flexors",
       "name_ko": "고관절 굴곡근",
+      "aliases_ko": ["고관절 굽힘근"],
       "source_terms": [
         "hip flexors"
       ]
@@ -211,7 +216,8 @@
     },
     {
       "id": "levator_scapulae",
-      "name_ko": "어깨올림근",
+      "name_ko": "견갑거근",
+      "aliases_ko": ["어깨올림근"],
       "source_terms": [
         "levator scapulae"
       ]
