@@ -497,6 +497,121 @@
       "include_secondary_muscles": true
     }
   ],
+  "recommendations": {
+    "sources": [
+      {
+        "id": "exercise_api",
+        "name": "ExerciseAPI curated exercise dataset",
+        "url": "https://github.com/aschenoni/exercise-api/tree/main/data",
+        "version": "1.1.0",
+        "license": "CC BY 4.0",
+        "attribution": "Exercise data by ExerciseAPI (https://exercise-api.com), licensed under CC BY 4.0. Adapted metadata only."
+      },
+      {
+        "id": "novice_consensus",
+        "name": "Selecting Resistance Training Exercises for Novices: A Delphi Study with Expert Consensus",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11873903/",
+        "version": null,
+        "license": null,
+        "attribution": "Kompf JM, Rhodes RE, Lee S. Am J Lifestyle Med. 2025;19(3):437–449. doi:10.1177/15598276221115662."
+      }
+    ],
+    "profiles": [
+      {
+        "source_id": "0025",
+        "exercise_api": {
+          "id": "barbell_bench_press",
+          "name": "Barbell Bench Press",
+          "primary_muscle": "chest",
+          "modality": "hypertrophy",
+          "sfr_class": "moderate",
+          "is_gold_standard": true,
+          "preferred_rank": 1,
+          "e1rm_substitution_group": "chest_horizontal_press",
+          "loadable": true
+        }
+      },
+      {
+        "source_id": "0289",
+        "exercise_api": {
+          "id": "dumbbell_bench_press",
+          "name": "Dumbbell Bench Press",
+          "primary_muscle": "chest",
+          "modality": "hypertrophy",
+          "sfr_class": "moderate",
+          "is_gold_standard": false,
+          "preferred_rank": 2,
+          "e1rm_substitution_group": "chest_horizontal_press",
+          "loadable": true
+        }
+      },
+      {
+        "source_id": "0178",
+        "exercise_api": {
+          "id": "cable_lateral_raise",
+          "name": "Cable Lateral Raise",
+          "primary_muscle": "side_delts",
+          "modality": "hypertrophy",
+          "sfr_class": "high",
+          "is_gold_standard": true,
+          "preferred_rank": 1,
+          "e1rm_substitution_group": "side_delt_raise",
+          "loadable": true
+        }
+      },
+      {
+        "source_id": "0334",
+        "exercise_api": {
+          "id": "dumbbell_lateral_raise",
+          "name": "Dumbbell Lateral Raise",
+          "primary_muscle": "side_delts",
+          "modality": "hypertrophy",
+          "sfr_class": "high",
+          "is_gold_standard": true,
+          "preferred_rank": 2,
+          "e1rm_substitution_group": "side_delt_raise",
+          "loadable": true
+        },
+        "novice_consensus_exercise_name": "Dumbbell lateral raise"
+      },
+      {
+        "source_id": "0175",
+        "exercise_api": {
+          "id": "cable_crunch",
+          "name": "Cable Crunch",
+          "primary_muscle": "abs",
+          "modality": "hypertrophy",
+          "sfr_class": "high",
+          "is_gold_standard": true,
+          "preferred_rank": 2,
+          "e1rm_substitution_group": "abs_flexion",
+          "loadable": true
+        }
+      },
+      {
+        "source_id": "0283",
+        "exercise_api": {
+          "id": "diamond_pushup",
+          "name": "Diamond Push-up",
+          "primary_muscle": "triceps",
+          "modality": "hypertrophy",
+          "sfr_class": "moderate",
+          "is_gold_standard": false,
+          "preferred_rank": 5,
+          "e1rm_substitution_group": "triceps_extension",
+          "loadable": false
+        }
+      },
+      {
+        "source_id": "0310",
+        "novice_consensus_exercise_name": "Dumbbell front raise"
+      },
+      {
+        "source_id": "0333",
+        "novice_consensus_exercise_name": "Dumbbell kick back"
+      }
+    ]
+  },
   "exercise_shards": [
     "exercises/abductors.json",
     "exercises/abs.json",

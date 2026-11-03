@@ -39,7 +39,9 @@ class ExerciseCatalogTests(unittest.TestCase):
         data = self.catalog.model_dump()
         data["exercises"][1]["source_id"] = data["exercises"][0]["source_id"]
 
-        with self.assertRaisesRegex(ValidationError, "source exercise IDs must be unique"):
+        with self.assertRaisesRegex(
+            ValidationError, "source exercise IDs must be unique"
+        ):
             ExerciseCatalog.model_validate(data)
 
     def test_catalog_rejects_korean_alias_colliding_with_another_muscle(self) -> None:
@@ -50,5 +52,15 @@ class ExerciseCatalogTests(unittest.TestCase):
         with self.assertRaisesRegex(
             ValidationError,
             "Korean muscle names and aliases must be unique",
+        ):
+            ExerciseCatalog.model_validate(data)
+
+    def test_catalog_rejects_recommendation_profile_for_unknown_exercise(self) -> None:
+        data = self.catalog.model_dump()
+        data["recommendations"]["profiles"][0]["source_id"] = "9999"
+
+        with self.assertRaisesRegex(
+            ValidationError,
+            "Unknown recommendation-profile exercise ID",
         ):
             ExerciseCatalog.model_validate(data)

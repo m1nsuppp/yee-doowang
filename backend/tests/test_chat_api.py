@@ -10,10 +10,12 @@ from yee_doowang_api.application.chat import (
     EquipmentConstraint,
     EquipmentIntent,
     IntentDecision,
+    RecommendationPreferences,
 )
 from yee_doowang_api.application.exercise_catalog import (
     Equipment,
     Exercise,
+    ExerciseRecommendationProfile,
     Muscle,
     WorkoutDay,
 )
@@ -23,6 +25,33 @@ from yee_doowang_api.settings import Settings
 
 
 class FixtureCoachModel:
+    @staticmethod
+    def _preferences(transcript: str) -> RecommendationPreferences:
+        has_hypertrophy = any(term in transcript for term in ("근비대", "근육 증가"))
+        has_strength = "근력" in transcript
+        if has_hypertrophy and has_strength:
+            goal = "unknown"
+        elif has_hypertrophy:
+            goal = "hypertrophy"
+        elif has_strength:
+            goal = "strength"
+        elif any(term in transcript for term in ("목표 건너", "목표는 상관없")):
+            goal = "skip"
+        elif any(term in transcript for term in ("감량", "지구력", "일반 체력")):
+            goal = "unsupported"
+        else:
+            goal = "unknown"
+
+        if any(term in transcript for term in ("초보", "처음 시작", "복귀")):
+            experience = "novice"
+        elif any(term in transcript for term in ("경력 건너", "경력은 상관없")):
+            experience = "skip"
+        elif any(term in transcript for term in ("숙련자", "경험자")):
+            experience = "experienced"
+        else:
+            experience = "unknown"
+        return RecommendationPreferences(goal=goal, experience=experience)
+
     async def interpret(
         self,
         messages: Sequence[ConversationMessage],
@@ -33,10 +62,12 @@ class FixtureCoachModel:
         transcript = " ".join(
             message.content.lower() for message in messages if message.role == "user"
         )
+        personalization = self._preferences(transcript)
         if "하체" in transcript or "등 운동" in transcript or "이두" in transcript:
             return IntentDecision(
                 workout_intent="unsupported",
                 equipment=EquipmentIntent(mode="unknown", equipment_ids=[]),
+                personalization=personalization,
                 message="현재는 푸시 데이, 복근, 복사근 운동 추천을 지원합니다.",
             )
 
@@ -44,7 +75,9 @@ class FixtureCoachModel:
             workout_intent = "obliques_day"
         elif "복근" in transcript or "하복근" in transcript:
             workout_intent = "abs_day"
-        elif any(term in transcript for term in ("push", "가슴", "삼두", "어깨")) or any(
+        elif any(
+            term in transcript for term in ("push", "가슴", "삼두", "어깨")
+        ) or any(
             alias.lower() in transcript
             for muscle in muscle_options
             if muscle.id in {"chest", "deltoids", "triceps"}
@@ -55,32 +88,39 @@ class FixtureCoachModel:
             return IntentDecision(
                 workout_intent="clarify",
                 equipment=EquipmentIntent(mode="unknown", equipment_ids=[]),
+                personalization=personalization,
                 message="푸시 데이, 복근, 복사근 중 원하는 운동 부위를 알려주세요.",
             )
 
         if "알아서" in transcript or "아무거나" in transcript:
             equipment = EquipmentIntent(mode="delegate_any", equipment_ids=[])
+            message = ""
         elif "맨몸" in transcript or "no equipment" in transcript:
-            equipment = EquipmentIntent(
-                mode="specified",
-                equipment_ids=["body_weight"],
-            )
+            equipment = EquipmentIntent(mode="specified", equipment_ids=["body_weight"])
+            message = ""
         elif "덤벨" in transcript:
-            equipment = EquipmentIntent(
-                mode="specified",
-                equipment_ids=["dumbbell"],
-            )
+            equipment = EquipmentIntent(mode="specified", equipment_ids=["dumbbell"])
+            message = ""
         else:
-            return IntentDecision(
-                workout_intent=workout_intent,
-                equipment=EquipmentIntent(mode="unknown", equipment_ids=[]),
-                message="사용할 수 있는 장비를 모르셔도 괜찮아요. ‘알아서 골라줘’라고 해주세요.",
+            equipment = EquipmentIntent(mode="unknown", equipment_ids=[])
+            message = (
+                "사용할 수 있는 장비를 모르셔도 괜찮아요. ‘알아서 골라줘’라고 해주세요."
             )
+
+        if personalization.goal == "unknown":
+            message = "근비대와 근력 중 우선할 목표를 알려주세요."
+        elif personalization.goal == "unsupported":
+            message = "현재 근거가 있는 목표는 근비대와 근력 진행입니다."
+        elif personalization.experience == "unknown":
+            message = "운동을 처음 시작했거나 몇 년 쉬었다가 복귀했는지 알려주세요."
+        elif personalization.experience == "experienced":
+            message = "초보·복귀 운동자 외의 경력 적합도 근거는 없어요. 경력 분류를 건너뛸까요?"
 
         return IntentDecision(
             workout_intent=workout_intent,
             equipment=equipment,
-            message="",
+            personalization=personalization,
+            message=message,
         )
 
     async def answer(
@@ -88,6 +128,8 @@ class FixtureCoachModel:
         _messages: Sequence[ConversationMessage],
         _candidates: Sequence[Exercise],
         equipment_constraint: EquipmentConstraint,
+        _personalization: RecommendationPreferences,
+        _recommendation_profiles: Sequence[ExerciseRecommendationProfile],
     ) -> CoachAnswer:
         if equipment_constraint.mode == "unrestricted":
             return CoachAnswer(reply="장비 조건은 제한하지 않고 후보를 모았어요.")
@@ -109,6 +151,8 @@ class FailingCoachModel:
         _messages: Sequence[ConversationMessage],
         _candidates: Sequence[Exercise],
         _equipment_constraint: EquipmentConstraint,
+        _personalization: RecommendationPreferences,
+        _recommendation_profiles: Sequence[ExerciseRecommendationProfile],
     ) -> CoachAnswer:
         raise AssertionError("answer must not run after interpretation fails")
 
@@ -120,7 +164,10 @@ class ChatApiTests(unittest.TestCase):
             coach_model=FixtureCoachModel(),
         )
         messages = [
-            {"role": "user", "content": "PushDay 운동 추천해줘."},
+            {
+                "role": "user",
+                "content": "PushDay 근비대 목표, 경력 건너뛰고 운동 추천해줘.",
+            },
             {"role": "assistant", "content": "사용할 수 있는 장비가 있나요?"},
             {"role": "user", "content": "맨몸만 사용할 수 있어."},
         ]
@@ -177,7 +224,6 @@ class ChatApiTests(unittest.TestCase):
                 else None,
             )
 
-
     def test_korean_muscle_alias_maps_to_same_push_candidates(self) -> None:
         app = create_app(
             settings=Settings(_env_file=None),
@@ -191,7 +237,7 @@ class ChatApiTests(unittest.TestCase):
                     "messages": [
                         {
                             "role": "user",
-                            "content": "위팔세갈래근 운동을 덤벨로 추천해줘.",
+                            "content": "위팔세갈래근 운동을 덤벨로 추천해줘. 근비대 목표, 초보자.",
                         }
                     ]
                 },
@@ -222,6 +268,87 @@ class ChatApiTests(unittest.TestCase):
         )
         self.assertEqual(kickback["primary_muscle_ko"], "삼두근")
 
+    def test_goal_changes_candidate_order_using_pinned_source_metadata(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+        requests = (
+            "PushDay 근비대 목표, 경력 건너뛰고 알아서 추천해줘.",
+            "PushDay 근력 목표, 경력 건너뛰고 알아서 추천해줘.",
+        )
+
+        with TestClient(app) as client:
+            responses = [
+                client.post(
+                    "/api/chat",
+                    json={"messages": [{"role": "user", "content": content}]},
+                )
+                for content in requests
+            ]
+
+        for response in responses:
+            self.assertEqual(response.status_code, 200)
+        self.assertEqual(responses[0].json()["exercises"][0]["source_id"], "0178")
+        self.assertEqual(responses[1].json()["exercises"][0]["source_id"], "0025")
+
+    def test_novice_self_report_promotes_only_research_supported_exercises(
+        self,
+    ) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": "PushDay 근비대 목표, 초보자, 덤벨 추천해줘.",
+                        }
+                    ]
+                },
+            )
+
+        self.assertEqual(response.status_code, 200)
+        source_ids = [item["source_id"] for item in response.json()["exercises"]]
+        self.assertEqual(source_ids[0], "0334")
+        self.assertLess(source_ids.index("0333"), source_ids.index("0355"))
+
+    def test_missing_conflicting_and_unsupported_contexts_ask_instead_of_guessing(
+        self,
+    ) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+        requests = (
+            "PushDay 덤벨 추천해줘.",
+            "PushDay 근비대와 근력 목표 둘 다, 초보자, 덤벨 추천해줘.",
+            "PushDay 감량 목표, 초보자, 덤벨 추천해줘.",
+            "PushDay 근비대 목표, 덤벨 추천해줘.",
+        )
+
+        with TestClient(app) as client:
+            responses = [
+                client.post(
+                    "/api/chat",
+                    json={"messages": [{"role": "user", "content": content}]},
+                )
+                for content in requests
+            ]
+
+        self.assertTrue(all(response.status_code == 200 for response in responses))
+        self.assertTrue(
+            all(response.json()["exercises"] == [] for response in responses)
+        )
+        self.assertIn("근비대와 근력", responses[0].json()["reply"])
+        self.assertIn("근비대와 근력", responses[1].json()["reply"])
+        self.assertIn("근력 진행", responses[2].json()["reply"])
+        self.assertIn("복귀", responses[3].json()["reply"])
 
     def test_abs_day_chat_returns_only_abdominal_primary_targets(self) -> None:
         app = create_app(
@@ -234,7 +361,10 @@ class ChatApiTests(unittest.TestCase):
                 "/api/chat",
                 json={
                     "messages": [
-                        {"role": "user", "content": "맨몸 복근 운동 추천해줘."}
+                        {
+                            "role": "user",
+                            "content": "맨몸 복근 운동 추천해줘. 목표 건너뛰고 경력 건너뛰고.",
+                        }
                     ]
                 },
             )
@@ -263,7 +393,10 @@ class ChatApiTests(unittest.TestCase):
                 "/api/chat",
                 json={
                     "messages": [
-                        {"role": "user", "content": "복근 운동 알아서 골라줘."}
+                        {
+                            "role": "user",
+                            "content": "복근 운동 알아서 골라줘. 근비대 목표, 경력 건너뛰고.",
+                        }
                     ]
                 },
             )
@@ -292,7 +425,7 @@ class ChatApiTests(unittest.TestCase):
                     "messages": [
                         {
                             "role": "user",
-                            "content": "복사근 운동 추천해줘. 알아서 골라줘.",
+                            "content": "복사근 운동 추천해줘. 알아서 골라줘. 목표 건너뛰고 경력 건너뛰고.",
                         }
                     ]
                 },
@@ -316,6 +449,31 @@ class ChatApiTests(unittest.TestCase):
                 for exercise in response.json()["exercises"]
             )
         )
+
+    def test_missing_candidate_evidence_requires_explicit_personalization_opt_out(
+        self,
+    ) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": "복사근 운동, 근비대 목표, 초보자로 알아서 추천해줘.",
+                        }
+                    ]
+                },
+            )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["exercises"], [])
+        self.assertIn("경력 기준 정렬을 건너뛰고", response.json()["reply"])
 
     def test_generic_chat_request_asks_for_workout_area(self) -> None:
         app = create_app(
@@ -343,7 +501,14 @@ class ChatApiTests(unittest.TestCase):
         with TestClient(app) as client:
             response = client.post(
                 "/api/chat",
-                json={"messages": [{"role": "user", "content": "PushDay 추천해줘."}]},
+                json={
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": "PushDay 근비대 목표, 초보자 추천해줘.",
+                        }
+                    ]
+                },
             )
 
         self.assertEqual(response.status_code, 200)
@@ -359,7 +524,7 @@ class ChatApiTests(unittest.TestCase):
             coach_model=FixtureCoachModel(),
         )
         messages = [
-            {"role": "user", "content": "PushDay 운동 추천해줘."},
+            {"role": "user", "content": "PushDay 운동 추천해줘. 근비대 목표, 초보자."},
             {"role": "assistant", "content": "어떤 장비를 쓸 수 있나요?"},
             {"role": "user", "content": "모르겠어. 알아서 추천해줘."},
         ]
