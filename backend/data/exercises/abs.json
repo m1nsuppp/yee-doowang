@@ -2,7 +2,7 @@
   {
     "source_id": "0001",
     "name": "3/4 sit-up",
-    "name_ko": "3/4 윗몸일으키기",
+    "name_ko": "3/4 싯업",
     "primary_muscle_id": "abs",
     "secondary_muscle_ids": [
       "hip_flexors",

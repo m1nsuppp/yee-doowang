@@ -126,7 +126,7 @@
     },
     {
       "id": "brachialis",
-      "name_ko": "상완근",
+      "name_ko": "위팔근",
       "source_terms": [
         "brachialis"
       ]
@@ -161,7 +161,7 @@
     },
     {
       "id": "grip_muscles",
-      "name_ko": "악력근",
+      "name_ko": null,
       "source_terms": [
         "grip muscles"
       ]
@@ -189,7 +189,7 @@
     },
     {
       "id": "hip_flexors",
-      "name_ko": "고관절 굽힘근",
+      "name_ko": "고관절 굴곡근",
       "source_terms": [
         "hip flexors"
       ]
@@ -211,7 +211,7 @@
     },
     {
       "id": "levator_scapulae",
-      "name_ko": "견갑거근",
+      "name_ko": "어깨올림근",
       "source_terms": [
         "levator scapulae"
       ]
@@ -325,7 +325,7 @@
     },
     {
       "id": "bosu_ball",
-      "name_ko": "보수 볼",
+      "name_ko": "보수볼",
       "source_term": "bosu ball"
     },
     {
@@ -350,7 +350,7 @@
     },
     {
       "id": "hammer",
-      "name_ko": "해머",
+      "name_ko": "슬레지 해머",
       "source_term": "hammer"
     },
     {
@@ -390,7 +390,7 @@
     },
     {
       "id": "skierg_machine",
-      "name_ko": "스키에르그 머신",
+      "name_ko": "SkiErg 머신",
       "source_term": "skierg machine"
     },
     {
@@ -440,7 +440,7 @@
     },
     {
       "id": "wheel_roller",
-      "name_ko": "휠 롤러",
+      "name_ko": "AB 휠",
       "source_term": "wheel roller"
     }
   ],
