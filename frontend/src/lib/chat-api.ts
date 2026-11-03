@@ -8,6 +8,7 @@ export type RecommendedExercise = {
   name: string;
   name_ko: string | null;
   primary_muscle_ko: string;
+  secondary_muscles_ko: string[];
   equipment_ko: string;
   movement_pattern_ko: string | null;
 };

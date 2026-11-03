@@ -26,40 +26,49 @@ class FixtureCoachModel:
         transcript = " ".join(
             message.content.lower() for message in messages if message.role == "user"
         )
-        if "하체" in transcript:
+        if "하체" in transcript or "등 운동" in transcript or "이두" in transcript:
             return IntentDecision(
                 workout_intent="unsupported",
                 equipment=EquipmentIntent(mode="unknown", equipment_ids=[]),
-                message="현재는 PushDay 운동 후보 추천만 지원합니다.",
+                message="현재는 푸시 데이, 복근, 복사근 운동 추천을 지원합니다.",
             )
+
+        if "복사근" in transcript or "옆구리" in transcript:
+            workout_intent = "obliques_day"
+        elif "복근" in transcript or "하복근" in transcript:
+            workout_intent = "abs_day"
+        elif any(term in transcript for term in ("push", "가슴", "삼두", "어깨")):
+            workout_intent = "push_day"
+        else:
+            return IntentDecision(
+                workout_intent="clarify",
+                equipment=EquipmentIntent(mode="unknown", equipment_ids=[]),
+                message="푸시 데이, 복근, 복사근 중 원하는 운동 부위를 알려주세요.",
+            )
+
         if "알아서" in transcript or "아무거나" in transcript:
-            return IntentDecision(
-                workout_intent="push_day",
-                equipment=EquipmentIntent(mode="delegate_any", equipment_ids=[]),
-                message="",
+            equipment = EquipmentIntent(mode="delegate_any", equipment_ids=[])
+        elif "맨몸" in transcript or "no equipment" in transcript:
+            equipment = EquipmentIntent(
+                mode="specified",
+                equipment_ids=["body_weight"],
             )
-        if "맨몸" in transcript or "no equipment" in transcript:
-            return IntentDecision(
-                workout_intent="push_day",
-                equipment=EquipmentIntent(
-                    mode="specified",
-                    equipment_ids=["body_weight"],
-                ),
-                message="",
+        elif "덤벨" in transcript:
+            equipment = EquipmentIntent(
+                mode="specified",
+                equipment_ids=["dumbbell"],
             )
-        if "덤벨" in transcript:
+        else:
             return IntentDecision(
-                workout_intent="push_day",
-                equipment=EquipmentIntent(
-                    mode="specified",
-                    equipment_ids=["dumbbell"],
-                ),
-                message="",
+                workout_intent=workout_intent,
+                equipment=EquipmentIntent(mode="unknown", equipment_ids=[]),
+                message="사용할 수 있는 장비를 모르셔도 괜찮아요. ‘알아서 골라줘’라고 해주세요.",
             )
+
         return IntentDecision(
-            workout_intent="push_day",
-            equipment=EquipmentIntent(mode="unknown", equipment_ids=[]),
-            message="사용할 수 있는 장비를 모르셔도 괜찮아요. ‘알아서 골라줘’라고 해주세요.",
+            workout_intent=workout_intent,
+            equipment=equipment,
+            message="",
         )
 
     async def answer(
@@ -138,6 +147,10 @@ class ChatApiTests(unittest.TestCase):
                 muscle_names[source.primary_muscle_id],
             )
             self.assertEqual(
+                recommendation["secondary_muscles_ko"],
+                [muscle_names[muscle_id] for muscle_id in source.secondary_muscle_ids],
+            )
+            self.assertEqual(
                 recommendation["equipment_ko"],
                 equipment_names[source.equipment_id],
             )
@@ -147,6 +160,90 @@ class ChatApiTests(unittest.TestCase):
                 if source.movement_pattern_id is not None
                 else None,
             )
+
+    def test_abs_day_chat_returns_only_abdominal_primary_targets(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "맨몸 복근 운동 추천해줘."}
+                    ]
+                },
+            )
+
+        self.assertEqual(response.status_code, 200)
+        catalog = load_exercise_catalog()
+        expected_ids = {
+            exercise.source_id
+            for exercise in catalog.exercises
+            if exercise.primary_muscle_id in {"abs", "lower_abs"}
+            and exercise.equipment_id == "body_weight"
+        }
+        self.assertEqual(
+            {exercise["source_id"] for exercise in response.json()["exercises"]},
+            expected_ids,
+        )
+
+    def test_obliques_day_chat_includes_secondary_muscle_candidates(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": "복사근 운동 추천해줘. 알아서 골라줘.",
+                        }
+                    ]
+                },
+            )
+
+        self.assertEqual(response.status_code, 200)
+        catalog = load_exercise_catalog()
+        expected_ids = {
+            exercise.source_id
+            for exercise in catalog.exercises
+            if exercise.primary_muscle_id == "obliques"
+            or "obliques" in exercise.secondary_muscle_ids
+        }
+        self.assertEqual(
+            {exercise["source_id"] for exercise in response.json()["exercises"]},
+            expected_ids,
+        )
+        self.assertTrue(
+            any(
+                "복사근" in exercise["secondary_muscles_ko"]
+                for exercise in response.json()["exercises"]
+            )
+        )
+
+    def test_generic_chat_request_asks_for_workout_area(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = client.post(
+                "/api/chat",
+                json={"messages": [{"role": "user", "content": "운동 추천해줘."}]},
+            )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["exercises"], [])
+        self.assertIn("복근", response.json()["reply"])
+        self.assertIn("복사근", response.json()["reply"])
 
     def test_missing_equipment_produces_a_clarifying_turn(self) -> None:
         app = create_app(
@@ -251,7 +348,8 @@ class ChatApiTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["exercises"], [])
-        self.assertIn("PushDay", response.json()["reply"])
+        self.assertIn("복근", response.json()["reply"])
+        self.assertIn("복사근", response.json()["reply"])
 
     def test_chat_rejects_blank_messages_and_non_user_final_message(self) -> None:
         app = create_app(
