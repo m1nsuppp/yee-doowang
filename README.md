@@ -25,7 +25,13 @@
 
 운동 추천 채팅은 대화 내역에서 운동 부위와 장비 선택을 해석합니다. 부위가 명확하지 않은 일반 요청에는 지원 부위를 확인합니다. 장비를 모르면 확인하지만, 사용자가 “알아서 골라줘”라고 위임하면 맨몸으로 단정하지 않고 모든 카탈로그 장비를 대상으로 후보를 추립니다. 지원 범위 밖의 요청에는 현재 지원 범위를 안내합니다.
 
-애플리케이션은 장비를 `specified`, `unknown`, `delegate_any`로 구분하고, PyreWire에는 검증된 장비 제한 또는 명시적인 `unrestricted` 조건만 전달합니다. 고정 규칙은 선택한 운동 부위, 카탈로그의 근육 분류, 장비 조건을 조합해 후보를 고릅니다. 근육 `name_ko`는 대표 표기이고 `aliases_ko`는 같은 근육 ID를 가리키는 별칭이며, 의도 해석에 사용하고 카드에는 대표 표기만 표시합니다. LLM은 추론된 후보를 설명하고, 화면은 카탈로그 정보를 카드로 표시합니다. 한국어 운동명이 없으면 `원문 운동명`, 근육·장비 번역이 없으면 각각 `원문 근육명`, `원문 장비명`을 붙여 원문을 표시하며 번역이나 설명을 추정하지 않습니다. 현재 데이터에는 난이도나 세트·횟수·중량 처방이 없으므로 초보자 적합성을 단정하거나 처방을 생성하지 않습니다.
+애플리케이션은 장비를 `specified`, `unknown`, `delegate_any`로 구분하고, PyreWire에는 검증된 장비 제한 또는 명시적인 `unrestricted` 조건만 전달합니다. 근육 `name_ko`는 대표 표기이고 `aliases_ko`는 같은 근육 ID를 가리키는 별칭이며, 의도 해석에 사용하고 카드에는 대표 표기만 표시합니다. 화면에는 카탈로그에서 추론한 후보만 표시하며, 번역·설명·세트·횟수·중량 처방을 만들어내지 않습니다.
+
+추천 전 대화에서 사용자가 밝힌 목표와 운동 경력을 확인합니다. 현재 근거가 연결된 목표는 근비대와 근력 진행이며, 그 밖의 목표·상충하는 목표는 확인을 요청합니다. 사용자가 원하면 목표나 경력 분류를 건너뛸 수 있습니다. 성별·나이·운동 기간만으로 능력이나 초보 여부를 추정하지 않습니다.
+
+순위는 `backend/data/exercise-catalog.json`의 출처 연결 프로필만 사용합니다. ExerciseAPI v1.1.0의 CC BY 4.0 메타데이터는 근비대의 `is_gold_standard`, `sfr_class`, 같은 대체 그룹 내 `preferred_rank`와 근력 진행 호환성의 `loadable`·`e1rm_substitution_group`에 사용합니다. 근력 호환성은 외부 중량 진행 기록이 가능하다는 뜻이지, 해당 운동이 모두에게 최선이라는 판정이 아닙니다. ExerciseAPI는 `is_gold_standard`를 연구·기전·훈련 관행을 종합한 편집상 지표로, SFR 등 일부 분류도 큐레이터 평가로 설명하므로 확정적 효과를 보장하지 않습니다. 초보자 표기는 Kompf, Rhodes, Lee의 전문가 합의 연구에서 특정 운동이 초보자에게 적절하다고 판단된 경우에만 연결합니다. 원문 프로필이 없는 운동은 해당 항목에서 미평가된 것이며 부적합하다는 뜻이 아닙니다. 세트·횟수·중량 처방값은 생성하지 않습니다.
+
+출처: [ExerciseAPI 데이터 v1.1.0](https://github.com/aschenoni/exercise-api/tree/main/data), CC BY 4.0 (변환된 메타데이터 사용; 표시 문구: “Exercise data by ExerciseAPI (https://exercise-api.com), licensed under CC BY 4.0.”); [Kompf et al., *Selecting Resistance Training Exercises for Novices: A Delphi Study with Expert Consensus*](https://pmc.ncbi.nlm.nih.gov/articles/PMC11873903/), doi:10.1177/15598276221115662. 연구의 초보 정의는 저항 운동 경험이 없거나 여러 해 운동하지 않은 경우이며, 태그가 있는 운동에만 적용합니다.
 
 ## 로컬 실행
 
@@ -82,7 +88,7 @@ uv run python -m unittest discover -s tests
 ```bash
 curl -sS http://localhost:8000/api/chat \
   -H 'Content-Type: application/json' \
-  -d '{"messages":[{"role":"user","content":"맨몸으로 복근 운동을 추천해줘."}]}'
+  -d '{"messages":[{"role":"user","content":"맨몸 복근 운동을 추천해줘. 목표는 근비대이고 운동을 처음 시작했어요."}]}'
 ```
 
-요청은 시간순 `messages` 배열이며 각 항목은 `user` 또는 `assistant` 역할과 메시지 내용을 가집니다. 마지막 메시지는 `user`여야 하며 최대 30개 메시지를 받습니다. 응답은 자연어 `reply`와 PyreWire가 추론한 카탈로그 운동 `exercises` 목록입니다. 운동 카드 데이터에는 주 표적·보조 근육, 장비, 분류된 동작 패턴이 포함됩니다. 조건 확인·지원 범위 안내 응답은 빈 `exercises`를 반환할 수 있습니다. 설정이 없으면 `503`, 공급자 또는 구조화 응답 처리 실패는 `502`로 반환합니다.
+요청은 시간순 `messages` 배열이며 각 항목은 `user` 또는 `assistant` 역할과 메시지 내용을 가집니다. 마지막 메시지는 `user`여야 하며 최대 30개 메시지를 받습니다. 응답은 자연어 `reply`와 조건에 맞는 카탈로그 운동 `exercises` 목록입니다. 후보는 출처가 연결된 목표·경력 근거에 따라 순위화됩니다. 목표·경력 확인이나 지원되지 않는 기준 확인 응답은 빈 `exercises`를 반환할 수 있습니다. 운동 카드 데이터에는 주 표적·보조 근육, 장비, 분류된 동작 패턴이 포함됩니다. 설정이 없으면 `503`, 공급자 또는 구조화 응답 처리 실패는 `502`로 반환합니다.
