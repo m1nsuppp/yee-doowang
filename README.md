@@ -15,6 +15,29 @@
 
 서비스는 로컬 개발 단계이며 배포 설정은 포함하지 않습니다. API는 PostgreSQL에 연결하지 않으며, LLM 요청은 설정된 OpenRouter 모델로 전달합니다.
 
+## PushDay 운동 데이터
+
+- `backend/data/pushday-exercises.json`에 PushDay용 운동 17개를 로컬 파일로 큐레이션했습니다. DB와 채팅에는 아직 연결하지 않습니다.
+- 원본: [hasaneyldrm/exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset), revision `7455efae41b330c265e7cd4b78dfa848e7ce5ebd`. 원본 운동 데이터는 MIT 라이선스이며, 고지문은 `backend/data/EXERCISES-DATA-LICENSE`에 보관합니다. 이미지/GIF는 가져오지 않았습니다.
+- 관계 모델: 운동은 주 표적 근육·보조 근육, 장비, 동작 패턴을 ID로 참조하고, 운동일은 집중 근육을 참조합니다. PushDay 후보는 주 표적 근육이 가슴·삼각근·삼두근 중 하나인 운동입니다. 보조 근육은 문맥 정보이며 PushDay 포함 여부를 단독으로 결정하지 않습니다.
+- 원본에는 동작 패턴 관계가 없어 `horizontal_press`, `vertical_press`, `shoulder_abduction`, `elbow_extension`은 로컬에서 직접 분류했습니다. 따라서 이 파일은 원본을 그대로 옮긴 데이터가 아니라 추적 가능한 큐레이션입니다.
+
+로컬에서 PushDay 후보를 확인할 수 있습니다.
+
+```bash
+cd backend
+uv run python - <<'PY'
+from yee_doowang_api.application.exercise_catalog import load_exercise_catalog
+
+catalog = load_exercise_catalog()
+for exercise in catalog.find_exercises(
+    workout_day_id="push_day",
+    equipment_id="body_weight",
+):
+    print(exercise.name_ko)
+PY
+```
+
 ## 로컬 실행
 
 필요한 도구: Node.js 20.9 이상, `uv`. Python 3.12는 `uv`가 프로젝트 설정에 맞춰 관리합니다. Docker Compose는 로컬 PostgreSQL을 사용할 때만 필요합니다.
