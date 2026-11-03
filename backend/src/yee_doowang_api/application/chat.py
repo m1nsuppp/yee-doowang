@@ -43,7 +43,9 @@ class EquipmentIntent(_ChatModel):
 
 
 class IntentDecision(_ChatModel):
-    workout_intent: Literal["push_day", "unsupported"]
+    workout_intent: Literal[
+        "push_day", "abs_day", "obliques_day", "clarify", "unsupported"
+    ]
     equipment: EquipmentIntent
     message: str = Field(max_length=1200)
 
@@ -83,6 +85,7 @@ class RecommendedExercise(_ChatModel):
     name: str
     name_ko: str | None
     primary_muscle_ko: str
+    secondary_muscles_ko: list[str]
     equipment_ko: str
     movement_pattern_ko: str | None
 
@@ -143,8 +146,10 @@ class ChatService:
 
     async def reply(self, messages: Sequence[ConversationMessage]) -> ChatReply:
         intent = await self._model.interpret(messages, self._catalog.equipment)
-        if intent.workout_intent != "push_day":
-            reply = intent.message or "현재는 PushDay 운동 후보 추천만 지원합니다."
+        if intent.workout_intent in {"clarify", "unsupported"}:
+            reply = intent.message or (
+                "현재는 푸시 데이, 복근, 복사근 운동을 추천해요. 어떤 부위를 원하시나요?"
+            )
             return ChatReply(reply=reply, exercises=[])
 
         equipment_intent = intent.equipment
@@ -171,7 +176,7 @@ class ChatService:
             constraint = EquipmentConstraint(mode="unrestricted", equipment_ids=[])
 
         candidates = await self._reasoner.recommend(
-            workout_day_id="push_day",
+            workout_day_id=intent.workout_intent,
             equipment_constraint=constraint,
         )
         answer = await self._model.answer(messages, candidates, constraint)
@@ -186,6 +191,10 @@ class ChatService:
             name=exercise.name,
             name_ko=exercise.name_ko,
             primary_muscle_ko=self._muscle_names[exercise.primary_muscle_id],
+            secondary_muscles_ko=[
+                self._muscle_names[muscle_id]
+                for muscle_id in exercise.secondary_muscle_ids
+            ],
             equipment_ko=self._equipment_names[exercise.equipment_id],
             movement_pattern_ko=(
                 self._pattern_names.get(exercise.movement_pattern_id)

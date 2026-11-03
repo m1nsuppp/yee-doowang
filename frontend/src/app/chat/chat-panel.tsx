@@ -132,7 +132,7 @@ export default function ChatPanel() {
           </span>
           <div className="flex items-baseline gap-2">
             <span className="font-extrabold tracking-tight">이두왕</span>
-            <span className="text-xs text-[#718077]">PushDay</span>
+            <span className="text-xs text-[#718077]">푸시 · 복근 · 복사근</span>
           </div>
         </div>
         <button
@@ -189,6 +189,13 @@ export default function ChatPanel() {
                         </p>
                         <p className="mt-2 text-xs leading-5 text-[#68756d]">
                           {exercise.primary_muscle_ko} · {exercise.equipment_ko}
+                          {exercise.secondary_muscles_ko.length > 0 && (
+                            <>
+                              <br />
+                              보조 근육:{" "}
+                              {exercise.secondary_muscles_ko.join(" · ")}
+                            </>
+                          )}
                           {exercise.movement_pattern_ko && (
                             <>
                               <br />
