@@ -61,10 +61,10 @@ export default function Home() {
             분명한 운동 선택과 오래 이어갈 수 있는 코칭을 지향합니다.
           </p>
           <a
-            href="#approach"
+            href="/chat"
             className="mt-8 inline-flex min-h-12 items-center gap-3 rounded-full bg-[#183d31] px-6 text-sm font-bold text-white transition hover:bg-[#285c48]"
           >
-            이두왕의 코칭 방식 보기 <span aria-hidden="true">↓</span>
+            푸시 운동 추천 시작하기 <span aria-hidden="true">↗</span>
           </a>
         </div>
 
