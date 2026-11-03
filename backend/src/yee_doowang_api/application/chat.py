@@ -80,10 +80,11 @@ class CoachAnswer(_ChatModel):
 
 class RecommendedExercise(_ChatModel):
     source_id: str
-    name_ko: str
+    name: str
+    name_ko: str | None
     primary_muscle_ko: str
     equipment_ko: str
-    movement_pattern_ko: str
+    movement_pattern_ko: str | None
 
 
 class ChatReply(_ChatModel):
@@ -130,8 +131,12 @@ class ChatService:
         self._reasoner = reasoner
         self._catalog = catalog
         self._known_equipment_ids = {item.id for item in catalog.equipment}
-        self._muscle_names = {item.id: item.name_ko for item in catalog.muscles}
-        self._equipment_names = {item.id: item.name_ko for item in catalog.equipment}
+        self._muscle_names = {
+            item.id: item.name_ko or item.source_terms[0] for item in catalog.muscles
+        }
+        self._equipment_names = {
+            item.id: item.name_ko or item.source_term for item in catalog.equipment
+        }
         self._pattern_names = {
             item.id: item.name_ko for item in catalog.movement_patterns
         }
@@ -178,8 +183,13 @@ class ChatService:
     def _present_exercise(self, exercise: Exercise) -> RecommendedExercise:
         return RecommendedExercise(
             source_id=exercise.source_id,
+            name=exercise.name,
             name_ko=exercise.name_ko,
             primary_muscle_ko=self._muscle_names[exercise.primary_muscle_id],
             equipment_ko=self._equipment_names[exercise.equipment_id],
-            movement_pattern_ko=self._pattern_names[exercise.movement_pattern_id],
+            movement_pattern_ko=(
+                self._pattern_names.get(exercise.movement_pattern_id)
+                if exercise.movement_pattern_id is not None
+                else None
+            ),
         )

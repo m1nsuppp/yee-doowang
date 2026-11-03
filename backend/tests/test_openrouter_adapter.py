@@ -77,6 +77,16 @@ class OpenRouterAdapterTests(unittest.IsolatedAsyncioTestCase):
             base_url=f"http://127.0.0.1:{server.server_port}/v1",
         )
         catalog = load_exercise_catalog()
+        candidate_without_name_ko = next(
+            exercise for exercise in catalog.exercises if exercise.name_ko is None
+        )
+        candidate_without_pattern = next(
+            exercise
+            for exercise in catalog.exercises
+            if exercise.movement_pattern_id is None
+            and exercise.source_id != candidate_without_name_ko.source_id
+        )
+        prompt_candidates = [candidate_without_name_ko, candidate_without_pattern]
         messages = [
             ConversationMessage(
                 role="user",
@@ -88,7 +98,7 @@ class OpenRouterAdapterTests(unittest.IsolatedAsyncioTestCase):
             intent = await model.interpret(messages, catalog.equipment)
             answer = await model.answer(
                 messages,
-                catalog.exercises,
+                prompt_candidates,
                 EquipmentConstraint(mode="unrestricted", equipment_ids=[]),
             )
         finally:
@@ -102,3 +112,15 @@ class OpenRouterAdapterTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(intent.equipment.equipment_ids, [])
         self.assertEqual(answer.reply, "장비 제한 없이 후보를 골랐어요.")
         self.assertEqual(len(requests), 2)
+        prompt = requests[1]["messages"][0]["content"]
+        prompt_facts = json.loads(prompt.split("검증된 후보(JSON): ", 1)[1])
+        self.assertEqual(
+            [
+                (fact["name"], fact["name_ko"], fact["movement_pattern_id"])
+                for fact in prompt_facts
+            ],
+            [
+                (item.name, item.name_ko, item.movement_pattern_id)
+                for item in prompt_candidates
+            ],
+        )

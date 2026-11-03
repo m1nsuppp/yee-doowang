@@ -1,0 +1,62 @@
+[
+  {
+    "source_id": "0597",
+    "name": "lever seated hip abduction",
+    "name_ko": null,
+    "primary_muscle_id": "abductors",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "3006",
+    "name": "resistance band seated hip abduction",
+    "name_ko": null,
+    "primary_muscle_id": "abductors",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "resistance_band"
+  },
+  {
+    "source_id": "1774",
+    "name": "side bridge hip abduction",
+    "name_ko": null,
+    "primary_muscle_id": "abductors",
+    "secondary_muscle_ids": [
+      "glutes",
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0710",
+    "name": "side hip abduction",
+    "name_ko": null,
+    "primary_muscle_id": "abductors",
+    "secondary_muscle_ids": [
+      "glutes",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1427",
+    "name": "straight leg outer hip abductor",
+    "name_ko": null,
+    "primary_muscle_id": "abductors",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  }
+]

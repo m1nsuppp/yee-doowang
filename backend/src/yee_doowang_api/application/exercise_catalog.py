@@ -15,13 +15,13 @@ class DataSource(_CatalogModel):
 
 class Muscle(_CatalogModel):
     id: str
-    name_ko: str
+    name_ko: str | None
     source_terms: list[str]
 
 
 class Equipment(_CatalogModel):
     id: str
-    name_ko: str
+    name_ko: str | None
     source_term: str
 
 
@@ -34,15 +34,15 @@ class WorkoutDay(_CatalogModel):
     id: str
     name_ko: str
     focus_muscle_ids: list[str]
-
+    include_secondary_muscles: bool = False
 
 class Exercise(_CatalogModel):
     source_id: str = Field(pattern=r"^[0-9]{4}$")
     name: str
-    name_ko: str
+    name_ko: str | None
     primary_muscle_id: str
     secondary_muscle_ids: list[str]
-    movement_pattern_id: str
+    movement_pattern_id: str | None
     equipment_id: str
 
 
@@ -78,9 +78,10 @@ class ExerciseCatalog(_CatalogModel):
                 "exercise muscle",
             )
             _require_known_ids([exercise.equipment_id], equipment_ids, "exercise equipment")
-            _require_known_ids(
-                [exercise.movement_pattern_id], pattern_ids, "exercise movement pattern"
-            )
+            if exercise.movement_pattern_id is not None:
+                _require_known_ids(
+                    [exercise.movement_pattern_id], pattern_ids, "exercise movement pattern"
+                )
 
         return self
 

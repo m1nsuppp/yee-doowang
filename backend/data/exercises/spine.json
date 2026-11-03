@@ -1,0 +1,229 @@
+[
+  {
+    "source_id": "1314",
+    "name": "back extension on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1010",
+    "name": "band straight leg deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1333",
+    "name": "exercise ball back extension with arms extended",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1334",
+    "name": "exercise ball back extension with hands behind head",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1335",
+    "name": "exercise ball back extension with knees off ground",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1336",
+    "name": "exercise ball back extension with rotation",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1338",
+    "name": "exercise ball hug",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1343",
+    "name": "exercise ball prone leg raise",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "abs",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "0489",
+    "name": "hyperextension",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0488",
+    "name": "hyperextension (on bench)",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0573",
+    "name": "lever back extension",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1352",
+    "name": "lower back curl",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2208",
+    "name": "roller back stretch",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "roller"
+  },
+  {
+    "source_id": "1362",
+    "name": "sphinx",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1363",
+    "name": "spine stretch",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1364",
+    "name": "standing pelvic tilt",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "abs"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3231",
+    "name": "two toe touch (male)",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1366",
+    "name": "upward facing dog",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0835",
+    "name": "weighted hyperextension (on stability ball)",
+    "name_ko": null,
+    "primary_muscle_id": "spine",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  }
+]

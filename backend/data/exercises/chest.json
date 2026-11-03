@@ -1,0 +1,1912 @@
+[
+  {
+    "source_id": "3294",
+    "name": "archer push up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0009",
+    "name": "assisted chest dip (kneeling)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1716",
+    "name": "assisted seated pectoralis major stretch with stability ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "2364",
+    "name": "assisted wide-grip chest dip (kneeling)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1254",
+    "name": "band bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0989",
+    "name": "band one arm twisting chest press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0025",
+    "name": "barbell bench press",
+    "name_ko": "바벨 벤치 프레스",
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": "horizontal_press",
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0033",
+    "name": "barbell decline bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1255",
+    "name": "barbell decline pullover",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0036",
+    "name": "barbell decline wide-grip press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0040",
+    "name": "barbell front raise and pullover",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0045",
+    "name": "barbell guillotine bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0047",
+    "name": "barbell incline bench press",
+    "name_ko": "바벨 인클라인 벤치 프레스",
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": "horizontal_press",
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1256",
+    "name": "barbell reverse grip decline bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1257",
+    "name": "barbell reverse grip incline bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0122",
+    "name": "barbell wide bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1258",
+    "name": "barbell wide reverse grip bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1259",
+    "name": "behind head chest stretch",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "0151",
+    "name": "cable bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0155",
+    "name": "cable cross-over variation",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0158",
+    "name": "cable decline fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1260",
+    "name": "cable decline one arm press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1261",
+    "name": "cable decline press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0169",
+    "name": "cable incline bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0171",
+    "name": "cable incline fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0170",
+    "name": "cable incline fly (on stability ball)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0179",
+    "name": "cable low fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0185",
+    "name": "cable lying fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0188",
+    "name": "cable middle fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1262",
+    "name": "cable one arm decline chest fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1263",
+    "name": "cable one arm fly on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1264",
+    "name": "cable one arm incline fly on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1265",
+    "name": "cable one arm incline press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1266",
+    "name": "cable one arm incline press on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0191",
+    "name": "cable one arm lateral bent-over",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "trapezius"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1267",
+    "name": "cable one arm press on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1268",
+    "name": "cable press on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "2144",
+    "name": "cable seated chest press",
+    "name_ko": "케이블 시티드 체스트 프레스",
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": "horizontal_press",
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0227",
+    "name": "cable standing fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1269",
+    "name": "cable standing up straight crossovers",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1270",
+    "name": "cable upper chest crossovers",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1271",
+    "name": "chest and front of shoulder stretch",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0251",
+    "name": "chest dip",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1430",
+    "name": "chest dip (on dip-pull-up cage)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2462",
+    "name": "chest dip on straight bar",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1272",
+    "name": "chest stretch with exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "3216",
+    "name": "chest tap push-up (male)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1273",
+    "name": "clap push up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0258",
+    "name": "clock push-up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0279",
+    "name": "decline push-up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1274",
+    "name": "deep push up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1275",
+    "name": "drop push up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0288",
+    "name": "dumbbell around pullover",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "lats"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0289",
+    "name": "dumbbell bench press",
+    "name_ko": "덤벨 벤치 프레스",
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": "horizontal_press",
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0301",
+    "name": "dumbbell decline bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0302",
+    "name": "dumbbell decline fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0303",
+    "name": "dumbbell decline hammer press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1276",
+    "name": "dumbbell decline one arm fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0307",
+    "name": "dumbbell decline twist fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0308",
+    "name": "dumbbell fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1277",
+    "name": "dumbbell fly on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3545",
+    "name": "dumbbell incline alternate press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0314",
+    "name": "dumbbell incline bench press",
+    "name_ko": "덤벨 인클라인 벤치 프레스",
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": "horizontal_press",
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0316",
+    "name": "dumbbell incline breeding",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0319",
+    "name": "dumbbell incline fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1278",
+    "name": "dumbbell incline fly on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0321",
+    "name": "dumbbell incline hammer press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1279",
+    "name": "dumbbell incline one arm fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1280",
+    "name": "dumbbell incline one arm fly on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1281",
+    "name": "dumbbell incline one arm press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1282",
+    "name": "dumbbell incline one arm press on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0324",
+    "name": "dumbbell incline palm-in press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1283",
+    "name": "dumbbell incline press on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0331",
+    "name": "dumbbell incline twisted flyes",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0340",
+    "name": "dumbbell lying hammer press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0343",
+    "name": "dumbbell lying one arm press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0342",
+    "name": "dumbbell lying one arm press v. 2",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1284",
+    "name": "dumbbell lying pullover on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1285",
+    "name": "dumbbell one arm bench fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1286",
+    "name": "dumbbell one arm chest fly on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1287",
+    "name": "dumbbell one arm decline chest press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1288",
+    "name": "dumbbell one arm fly on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1289",
+    "name": "dumbbell one arm incline chest press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1290",
+    "name": "dumbbell one arm press on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1291",
+    "name": "dumbbell one arm pullover on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "lats",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1622",
+    "name": "dumbbell one arm reverse grip press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1292",
+    "name": "dumbbell one leg fly on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1293",
+    "name": "dumbbell press on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0375",
+    "name": "dumbbell pullover",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "lats",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1294",
+    "name": "dumbbell pullover hip extension on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1295",
+    "name": "dumbbell pullover on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "lats"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1624",
+    "name": "dumbbell reverse bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0433",
+    "name": "dumbbell straight arm pullover",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "lats",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1167",
+    "name": "dynamic chest stretch (male)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1296",
+    "name": "exercise ball pike push up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "0458",
+    "name": "floor fly (with barbell)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "3327",
+    "name": "full planche push-up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2139",
+    "name": "hands bike",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "upper_body_ergometer"
+  },
+  {
+    "source_id": "3234",
+    "name": "hyght dumbbell fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0492",
+    "name": "incline push up depth jump",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0493",
+    "name": "incline push-up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3785",
+    "name": "incline push-up (on box)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0494",
+    "name": "incline reverse grip push-up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1297",
+    "name": "isometric chest squeeze",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0500",
+    "name": "isometric wipers",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0519",
+    "name": "kettlebell alternating press on floor",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0531",
+    "name": "kettlebell extended range one arm press on floor",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "1298",
+    "name": "kettlebell one arm floor press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0545",
+    "name": "kettlebell plyo push-up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "3211",
+    "name": "kneeling push-up (male)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3288",
+    "name": "korean dips",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0577",
+    "name": "lever chest press",
+    "name_ko": "레버 체스트 프레스",
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": "horizontal_press",
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0576",
+    "name": "lever chest press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1300",
+    "name": "lever decline chest press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1299",
+    "name": "lever incline chest press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1479",
+    "name": "lever incline chest press v. 2",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0596",
+    "name": "lever seated fly",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "trapezius"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "3758",
+    "name": "lever standing chest press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1301",
+    "name": "machine inner chest press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1302",
+    "name": "medicine ball chest pass",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "medicine_ball"
+  },
+  {
+    "source_id": "1303",
+    "name": "medicine ball chest push from 3 point stance",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "medicine_ball"
+  },
+  {
+    "source_id": "1304",
+    "name": "medicine ball chest push multiple response",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "medicine_ball"
+  },
+  {
+    "source_id": "1305",
+    "name": "medicine ball chest push single response",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "medicine_ball"
+  },
+  {
+    "source_id": "1312",
+    "name": "medicine ball chest push with run release",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "medicine_ball"
+  },
+  {
+    "source_id": "3217",
+    "name": "modified hindu push-up (male)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1306",
+    "name": "plyo push up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1689",
+    "name": "push and pull bodyweight",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1307",
+    "name": "push up on bosu ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "bosu_ball"
+  },
+  {
+    "source_id": "0662",
+    "name": "push-up",
+    "name_ko": "푸시업",
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": "horizontal_press",
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0653",
+    "name": "push-up (bosu ball)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "bosu_ball"
+  },
+  {
+    "source_id": "0655",
+    "name": "push-up (on stability ball)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "0656",
+    "name": "push-up (on stability ball)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "0659",
+    "name": "push-up (wall)",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0658",
+    "name": "push-up (wall) v. 2",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0663",
+    "name": "push-up medicine ball",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "medicine_ball"
+  },
+  {
+    "source_id": "3145",
+    "name": "push-up plus",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0666",
+    "name": "raise single arm push-up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3124",
+    "name": "resistance band seated chest press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "resistance_band"
+  },
+  {
+    "source_id": "2203",
+    "name": "roller seated shoulder flexor depresor retractor",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "roller"
+  },
+  {
+    "source_id": "2209",
+    "name": "roller seated single leg shoulder flexor depresor retractor",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "roller"
+  },
+  {
+    "source_id": "0699",
+    "name": "shoulder tap push-up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0725",
+    "name": "single arm push-up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0748",
+    "name": "smith bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0753",
+    "name": "smith decline bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0754",
+    "name": "smith decline reverse-grip press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0757",
+    "name": "smith incline bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0758",
+    "name": "smith incline reverse-grip press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "1626",
+    "name": "smith machine reverse decline close grip bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0764",
+    "name": "smith reverse-grip press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "1308",
+    "name": "smith wide grip bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "1309",
+    "name": "smith wide grip decline bench press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0803",
+    "name": "superman push-up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "core",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0806",
+    "name": "suspended push-up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1310",
+    "name": "weighted drop push up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "3313",
+    "name": "weighted straight bar dip",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "0856",
+    "name": "weighted svend press",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "1311",
+    "name": "wide hand push up",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2363",
+    "name": "wide-grip chest dip on high parallel bars",
+    "name_ko": null,
+    "primary_muscle_id": "chest",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "source_id": "0050",
+    "name": "barbell incline shoulder raise",
+    "name_ko": null,
+    "primary_muscle_id": "serratus_anterior",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "trapezius"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0328",
+    "name": "dumbbell incline shoulder raise",
+    "name_ko": null,
+    "primary_muscle_id": "serratus_anterior",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "trapezius"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3011",
+    "name": "incline scapula push up",
+    "name_ko": null,
+    "primary_muscle_id": "serratus_anterior",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3021",
+    "name": "scapula push-up",
+    "name_ko": null,
+    "primary_muscle_id": "serratus_anterior",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0759",
+    "name": "smith incline shoulder raises",
+    "name_ko": null,
+    "primary_muscle_id": "serratus_anterior",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "trapezius"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  }
+]

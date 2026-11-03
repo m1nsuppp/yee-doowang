@@ -108,13 +108,45 @@ class ChatApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         body = response.json()
         self.assertEqual(body["reply"], "조건에 맞는 운동 후보를 찾았어요.")
-        self.assertEqual(
-            {exercise["source_id"] for exercise in body["exercises"]},
-            {"0259", "0662"},
+        catalog = load_exercise_catalog()
+        focus_muscle_ids = next(
+            set(day.focus_muscle_ids)
+            for day in catalog.workout_days
+            if day.id == "push_day"
         )
-        self.assertTrue(
-            all(exercise["equipment_ko"] == "맨몸" for exercise in body["exercises"])
-        )
+        expected = {
+            exercise.source_id: exercise
+            for exercise in catalog.exercises
+            if exercise.primary_muscle_id in focus_muscle_ids
+            and exercise.equipment_id == "body_weight"
+        }
+        recommendations = {item["source_id"]: item for item in body["exercises"]}
+        self.assertEqual(set(recommendations), set(expected))
+        equipment_names = {
+            item.id: item.name_ko or item.source_term for item in catalog.equipment
+        }
+        muscle_names = {
+            item.id: item.name_ko or item.source_terms[0] for item in catalog.muscles
+        }
+        pattern_names = {item.id: item.name_ko for item in catalog.movement_patterns}
+        for source_id, source in expected.items():
+            recommendation = recommendations[source_id]
+            self.assertEqual(recommendation["name"], source.name)
+            self.assertEqual(recommendation["name_ko"], source.name_ko)
+            self.assertEqual(
+                recommendation["primary_muscle_ko"],
+                muscle_names[source.primary_muscle_id],
+            )
+            self.assertEqual(
+                recommendation["equipment_ko"],
+                equipment_names[source.equipment_id],
+            )
+            self.assertEqual(
+                recommendation["movement_pattern_ko"],
+                pattern_names.get(source.movement_pattern_id)
+                if source.movement_pattern_id is not None
+                else None,
+            )
 
     def test_missing_equipment_produces_a_clarifying_turn(self) -> None:
         app = create_app(
@@ -152,11 +184,57 @@ class ChatApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         body = response.json()
         self.assertIn("제한하지 않고", body["reply"])
-        equipment_names = {exercise["equipment_ko"] for exercise in body["exercises"]}
-        self.assertGreater(len(equipment_names), 1)
+        catalog = load_exercise_catalog()
+        focus_muscle_ids = next(
+            set(day.focus_muscle_ids)
+            for day in catalog.workout_days
+            if day.id == "push_day"
+        )
+        expected_ids = {
+            exercise.source_id
+            for exercise in catalog.exercises
+            if exercise.primary_muscle_id in focus_muscle_ids
+        }
         self.assertEqual(
             {exercise["source_id"] for exercise in body["exercises"]},
-            {exercise.source_id for exercise in load_exercise_catalog().exercises},
+            expected_ids,
+        )
+        self.assertLess(len(body["exercises"]), len(catalog.exercises))
+        source_exercises = {
+            exercise.source_id: exercise for exercise in catalog.exercises
+        }
+        equipment_names = {
+            item.id: item.name_ko or item.source_term for item in catalog.equipment
+        }
+        muscle_names = {
+            item.id: item.name_ko or item.source_terms[0] for item in catalog.muscles
+        }
+        pattern_names = {item.id: item.name_ko for item in catalog.movement_patterns}
+        for recommendation in body["exercises"]:
+            source = source_exercises[recommendation["source_id"]]
+            self.assertEqual(recommendation["name"], source.name)
+            self.assertEqual(recommendation["name_ko"], source.name_ko)
+            self.assertEqual(
+                recommendation["primary_muscle_ko"],
+                muscle_names[source.primary_muscle_id],
+            )
+            self.assertEqual(
+                recommendation["equipment_ko"], equipment_names[source.equipment_id]
+            )
+            self.assertEqual(
+                recommendation["movement_pattern_ko"],
+                pattern_names.get(source.movement_pattern_id)
+                if source.movement_pattern_id is not None
+                else None,
+            )
+        self.assertTrue(
+            all(
+                exercise["primary_muscle_ko"] and exercise["equipment_ko"]
+                for exercise in body["exercises"]
+            )
+        )
+        self.assertGreater(
+            len({exercise["equipment_ko"] for exercise in body["exercises"]}), 1
         )
 
     def test_unsupported_workout_request_does_not_return_exercises(self) -> None:

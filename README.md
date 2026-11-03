@@ -15,12 +15,13 @@
 
 서비스는 로컬 개발 단계이며 배포 설정은 포함하지 않습니다. API는 PostgreSQL에 연결하지 않으며, LLM 요청은 설정된 OpenRouter 모델로 전달합니다.
 
-## PushDay 운동 데이터
+## 운동 데이터 카탈로그
 
-- `backend/data/pushday-exercises.json`에 PushDay용 운동 17개를 로컬 파일로 큐레이션했습니다. 채팅 요청에서 PyreWire 규칙 추론에 사용하며, DB에는 저장하지 않습니다.
-- 원본: [hasaneyldrm/exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset), revision `7455efae41b330c265e7cd4b78dfa848e7ce5ebd`. 원본 운동 데이터는 MIT 라이선스이며, 고지문은 `backend/data/EXERCISES-DATA-LICENSE`에 보관합니다. 이미지/GIF는 가져오지 않았습니다.
-- 관계 모델: 운동은 주 표적 근육·보조 근육, 장비, 동작 패턴을 ID로 참조하고, 운동일은 집중 근육을 참조합니다. PushDay 후보는 주 표적 근육이 가슴·삼각근·삼두근 중 하나인 운동입니다. 보조 근육은 문맥 정보이며 PushDay 포함 여부를 단독으로 결정하지 않습니다.
-- 원본에는 동작 패턴 관계가 없어 `horizontal_press`, `vertical_press`, `shoulder_abduction`, `elbow_extension`은 로컬에서 직접 분류했습니다. 따라서 이 파일은 원본을 그대로 옮긴 데이터가 아니라 추적 가능한 큐레이션입니다.
+- `backend/data/exercise-catalog.json`은 공통 분류와 샤드 목록을 담고, `backend/data/exercises/`에는 주 표적 근육별 JSON 파일로 운동 1,324개를 나눠 보관합니다. API 시작 시 로더가 샤드를 합쳐 사용하며 DB에는 저장하지 않습니다.
+- 원본: [hasaneyldrm/exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset), revision `7455efae41b330c265e7cd4b78dfa848e7ce5ebd`. 운동 데이터는 MIT 라이선스이며 고지문은 `backend/data/EXERCISES-DATA-LICENSE`에 있습니다. 별도 라이선스가 필요한 이미지/GIF 미디어는 포함하지 않습니다.
+- 근육 taxonomy는 `abdominals`/`abs`를 `abs`로, `lower abs`를 `lower_abs`로, `obliques`와 `core`를 각각 별도 ID로 보존합니다.
+- 추론기는 `push_day`, `abs_day`, `obliques_day`를 데이터로 정의합니다. `abs_day`는 복근 주 표적을, `obliques_day`는 복사근이 보조 근육인 후보도 포함합니다. PushDay는 주 표적만으로 후보를 고르며, 채팅 화면은 아직 PushDay 데모입니다.
+- 원본에는 동작 패턴 관계가 없습니다. 이전 카탈로그에서 수동 분류한 17개 운동의 한국어 이름·동작 패턴만 유지하고, 나머지는 원문 이름을 사용하며 패턴을 추정하지 않습니다.
 
 PushDay 채팅은 대화 내역에서 운동 의도와 장비 선택을 해석합니다. 장비를 모르면 확인하지만, 사용자가 “알아서 골라줘”라고 위임하면 맨몸으로 단정하지 않고 모든 카탈로그 장비를 대상으로 후보를 추립니다. 지원 범위 밖의 요청에는 현재 지원 범위를 안내합니다.
 

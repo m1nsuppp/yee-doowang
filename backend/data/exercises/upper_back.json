@@ -1,0 +1,1061 @@
+[
+  {
+    "source_id": "3297",
+    "name": "back lever",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0988",
+    "name": "band one arm standing low row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0990",
+    "name": "band one arm twisting seated row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0027",
+    "name": "barbell bent over row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0049",
+    "name": "barbell incline row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0064",
+    "name": "barbell one arm bent over row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "3017",
+    "name": "barbell pendlay row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0118",
+    "name": "barbell reverse grip bent over row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1317",
+    "name": "barbell reverse grip incline bench row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "3168",
+    "name": "bodyweight squatting row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3167",
+    "name": "bodyweight squatting row (with towel)",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3156",
+    "name": "bodyweight standing close-grip one arm row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3158",
+    "name": "bodyweight standing close-grip row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3162",
+    "name": "bodyweight standing one arm row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3161",
+    "name": "bodyweight standing one arm row (with towel)",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3166",
+    "name": "bodyweight standing row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3165",
+    "name": "bodyweight standing row (with towel)",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0159",
+    "name": "cable decline seated wide-grip row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0160",
+    "name": "cable floor seated wide-grip row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0167",
+    "name": "cable high row (kneeling)",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1318",
+    "name": "cable incline bench row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0180",
+    "name": "cable low seated row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0189",
+    "name": "cable one arm bent over row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0193",
+    "name": "cable one arm straight back high row (kneeling)",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1319",
+    "name": "cable palm rotational row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0208",
+    "name": "cable reverse-grip straight back seated high row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1320",
+    "name": "cable rope crossover seated row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1321",
+    "name": "cable rope elevated seated row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1322",
+    "name": "cable rope extension incline bench row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1323",
+    "name": "cable rope seated row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0214",
+    "name": "cable seated one arm alternate row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0861",
+    "name": "cable seated row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0218",
+    "name": "cable seated wide-grip row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0234",
+    "name": "cable standing row (v-bar)",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0236",
+    "name": "cable standing twist row (v-bar)",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0239",
+    "name": "cable straight back seated row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1324",
+    "name": "cable upper row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0248",
+    "name": "cambered bar lying row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0253",
+    "name": "chin-ups (narrow parallel grip)",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0293",
+    "name": "dumbbell bent over row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0327",
+    "name": "dumbbell incline row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3541",
+    "name": "dumbbell incline y-raise",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1328",
+    "name": "dumbbell lying rear delt row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0292",
+    "name": "dumbbell one arm bent-over row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1329",
+    "name": "dumbbell palm rotational bent over row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1330",
+    "name": "dumbbell reverse grip incline bench one arm row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1331",
+    "name": "dumbbell reverse grip incline bench two arm row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2327",
+    "name": "dumbbell reverse grip row (female)",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3664",
+    "name": "dumbbell side plank with rear fly",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1772",
+    "name": "elbow lift - reverse push-up",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3292",
+    "name": "elevator",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "trapezius"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1344",
+    "name": "ez bar reverse grip bent over row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "3295",
+    "name": "front lever reps",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "core",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0499",
+    "name": "inverted row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2300",
+    "name": "inverted row bent knees",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2298",
+    "name": "inverted row on bench",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0497",
+    "name": "inverted row v. 2",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0498",
+    "name": "inverted row with straps",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0521",
+    "name": "kettlebell alternating renegade row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "core",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0522",
+    "name": "kettlebell alternating row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0541",
+    "name": "kettlebell one arm row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "1345",
+    "name": "kettlebell two arm row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0571",
+    "name": "lever alternating narrow grip seated row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0574",
+    "name": "lever bent over row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "3200",
+    "name": "lever bent-over row with v-bar",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0581",
+    "name": "lever high row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0588",
+    "name": "lever narrow grip seated row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0589",
+    "name": "lever one arm bent over row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1356",
+    "name": "lever one arm lateral high row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1348",
+    "name": "lever reverse grip vertical row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1349",
+    "name": "lever reverse t-bar row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1350",
+    "name": "lever seated row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0606",
+    "name": "lever t bar row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1351",
+    "name": "lever t-bar reverse grip row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1313",
+    "name": "lever unilateral row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0609",
+    "name": "london bridge",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "rope"
+  },
+  {
+    "source_id": "1354",
+    "name": "medicine ball overhead slam",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "medicine_ball"
+  },
+  {
+    "source_id": "1773",
+    "name": "one arm towel row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3144",
+    "name": "resistance band seated straight back row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "resistance_band"
+  },
+  {
+    "source_id": "0680",
+    "name": "rope climb",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "forearms",
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "rope"
+  },
+  {
+    "source_id": "3304",
+    "name": "skin the cat",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1359",
+    "name": "smith bent over row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0761",
+    "name": "smith narrow row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "1360",
+    "name": "smith one arm row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "1361",
+    "name": "smith reverse grip bent over row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "3669",
+    "name": "standing archer",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0808",
+    "name": "suspended row",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1365",
+    "name": "upper back stretch",
+    "name_ko": null,
+    "primary_muscle_id": "upper_back",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  }
+]

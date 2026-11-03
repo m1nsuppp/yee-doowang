@@ -1,0 +1,26 @@
+[
+  {
+    "source_id": "1403",
+    "name": "neck side stretch",
+    "name_ko": null,
+    "primary_muscle_id": "levator_scapulae",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "sternocleidomastoid"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0716",
+    "name": "side push neck stretch",
+    "name_ko": null,
+    "primary_muscle_id": "levator_scapulae",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "sternocleidomastoid"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  }
+]

@@ -1,0 +1,515 @@
+{
+  "source": {
+    "repository": "https://github.com/hasaneyldrm/exercises-dataset",
+    "revision": "7455efae41b330c265e7cd4b78dfa848e7ce5ebd",
+    "license": "MIT"
+  },
+  "muscles": [
+    {
+      "id": "chest",
+      "name_ko": "가슴",
+      "source_terms": [
+        "chest",
+        "pectorals",
+        "upper chest"
+      ]
+    },
+    {
+      "id": "deltoids",
+      "name_ko": "삼각근",
+      "source_terms": [
+        "deltoids",
+        "delts",
+        "rear deltoids",
+        "shoulders"
+      ]
+    },
+    {
+      "id": "triceps",
+      "name_ko": "삼두근",
+      "source_terms": [
+        "triceps"
+      ]
+    },
+    {
+      "id": "trapezius",
+      "name_ko": "승모근",
+      "source_terms": [
+        "trapezius",
+        "traps"
+      ]
+    },
+    {
+      "id": "upper_back",
+      "name_ko": "상부 등",
+      "source_terms": [
+        "upper back"
+      ]
+    },
+    {
+      "id": "forearms",
+      "name_ko": "전완근",
+      "source_terms": [
+        "forearms"
+      ]
+    },
+    {
+      "id": "abs",
+      "name_ko": "복근",
+      "source_terms": [
+        "abdominals",
+        "abs"
+      ]
+    },
+    {
+      "id": "lower_abs",
+      "name_ko": "하복근",
+      "source_terms": [
+        "lower abs"
+      ]
+    },
+    {
+      "id": "obliques",
+      "name_ko": "복사근",
+      "source_terms": [
+        "obliques"
+      ]
+    },
+    {
+      "id": "core",
+      "name_ko": "코어",
+      "source_terms": [
+        "core"
+      ]
+    },
+    {
+      "id": "abductors",
+      "name_ko": null,
+      "source_terms": [
+        "abductors"
+      ]
+    },
+    {
+      "id": "adductors",
+      "name_ko": null,
+      "source_terms": [
+        "adductors"
+      ]
+    },
+    {
+      "id": "ankle_stabilizers",
+      "name_ko": null,
+      "source_terms": [
+        "ankle stabilizers"
+      ]
+    },
+    {
+      "id": "ankles",
+      "name_ko": null,
+      "source_terms": [
+        "ankles"
+      ]
+    },
+    {
+      "id": "back",
+      "name_ko": null,
+      "source_terms": [
+        "back"
+      ]
+    },
+    {
+      "id": "biceps",
+      "name_ko": null,
+      "source_terms": [
+        "biceps"
+      ]
+    },
+    {
+      "id": "brachialis",
+      "name_ko": null,
+      "source_terms": [
+        "brachialis"
+      ]
+    },
+    {
+      "id": "calves",
+      "name_ko": null,
+      "source_terms": [
+        "calves"
+      ]
+    },
+    {
+      "id": "cardiovascular_system",
+      "name_ko": null,
+      "source_terms": [
+        "cardiovascular system"
+      ]
+    },
+    {
+      "id": "feet",
+      "name_ko": null,
+      "source_terms": [
+        "feet"
+      ]
+    },
+    {
+      "id": "glutes",
+      "name_ko": null,
+      "source_terms": [
+        "glutes"
+      ]
+    },
+    {
+      "id": "grip_muscles",
+      "name_ko": null,
+      "source_terms": [
+        "grip muscles"
+      ]
+    },
+    {
+      "id": "groin",
+      "name_ko": null,
+      "source_terms": [
+        "groin"
+      ]
+    },
+    {
+      "id": "hamstrings",
+      "name_ko": null,
+      "source_terms": [
+        "hamstrings"
+      ]
+    },
+    {
+      "id": "hands",
+      "name_ko": null,
+      "source_terms": [
+        "hands"
+      ]
+    },
+    {
+      "id": "hip_flexors",
+      "name_ko": null,
+      "source_terms": [
+        "hip flexors"
+      ]
+    },
+    {
+      "id": "inner_thighs",
+      "name_ko": null,
+      "source_terms": [
+        "inner thighs"
+      ]
+    },
+    {
+      "id": "lats",
+      "name_ko": null,
+      "source_terms": [
+        "latissimus dorsi",
+        "lats"
+      ]
+    },
+    {
+      "id": "levator_scapulae",
+      "name_ko": null,
+      "source_terms": [
+        "levator scapulae"
+      ]
+    },
+    {
+      "id": "lower_back",
+      "name_ko": null,
+      "source_terms": [
+        "lower back"
+      ]
+    },
+    {
+      "id": "quads",
+      "name_ko": null,
+      "source_terms": [
+        "quadriceps",
+        "quads"
+      ]
+    },
+    {
+      "id": "rhomboids",
+      "name_ko": null,
+      "source_terms": [
+        "rhomboids"
+      ]
+    },
+    {
+      "id": "rotator_cuff",
+      "name_ko": null,
+      "source_terms": [
+        "rotator cuff"
+      ]
+    },
+    {
+      "id": "serratus_anterior",
+      "name_ko": null,
+      "source_terms": [
+        "serratus anterior"
+      ]
+    },
+    {
+      "id": "shins",
+      "name_ko": null,
+      "source_terms": [
+        "shins"
+      ]
+    },
+    {
+      "id": "soleus",
+      "name_ko": null,
+      "source_terms": [
+        "soleus"
+      ]
+    },
+    {
+      "id": "spine",
+      "name_ko": null,
+      "source_terms": [
+        "spine"
+      ]
+    },
+    {
+      "id": "sternocleidomastoid",
+      "name_ko": null,
+      "source_terms": [
+        "sternocleidomastoid"
+      ]
+    },
+    {
+      "id": "wrist_extensors",
+      "name_ko": null,
+      "source_terms": [
+        "wrist extensors"
+      ]
+    },
+    {
+      "id": "wrist_flexors",
+      "name_ko": null,
+      "source_terms": [
+        "wrist flexors"
+      ]
+    },
+    {
+      "id": "wrists",
+      "name_ko": null,
+      "source_terms": [
+        "wrists"
+      ]
+    }
+  ],
+  "equipment": [
+    {
+      "id": "assisted",
+      "name_ko": null,
+      "source_term": "assisted"
+    },
+    {
+      "id": "band",
+      "name_ko": null,
+      "source_term": "band"
+    },
+    {
+      "id": "barbell",
+      "name_ko": "바벨",
+      "source_term": "barbell"
+    },
+    {
+      "id": "body_weight",
+      "name_ko": "맨몸",
+      "source_term": "body weight"
+    },
+    {
+      "id": "bosu_ball",
+      "name_ko": null,
+      "source_term": "bosu ball"
+    },
+    {
+      "id": "cable",
+      "name_ko": "케이블",
+      "source_term": "cable"
+    },
+    {
+      "id": "dumbbell",
+      "name_ko": "덤벨",
+      "source_term": "dumbbell"
+    },
+    {
+      "id": "elliptical_machine",
+      "name_ko": null,
+      "source_term": "elliptical machine"
+    },
+    {
+      "id": "ez_barbell",
+      "name_ko": null,
+      "source_term": "ez barbell"
+    },
+    {
+      "id": "hammer",
+      "name_ko": null,
+      "source_term": "hammer"
+    },
+    {
+      "id": "kettlebell",
+      "name_ko": null,
+      "source_term": "kettlebell"
+    },
+    {
+      "id": "leverage_machine",
+      "name_ko": "레버 머신",
+      "source_term": "leverage machine"
+    },
+    {
+      "id": "medicine_ball",
+      "name_ko": null,
+      "source_term": "medicine ball"
+    },
+    {
+      "id": "olympic_barbell",
+      "name_ko": null,
+      "source_term": "olympic barbell"
+    },
+    {
+      "id": "resistance_band",
+      "name_ko": null,
+      "source_term": "resistance band"
+    },
+    {
+      "id": "roller",
+      "name_ko": null,
+      "source_term": "roller"
+    },
+    {
+      "id": "rope",
+      "name_ko": null,
+      "source_term": "rope"
+    },
+    {
+      "id": "skierg_machine",
+      "name_ko": null,
+      "source_term": "skierg machine"
+    },
+    {
+      "id": "sled_machine",
+      "name_ko": null,
+      "source_term": "sled machine"
+    },
+    {
+      "id": "smith_machine",
+      "name_ko": null,
+      "source_term": "smith machine"
+    },
+    {
+      "id": "stability_ball",
+      "name_ko": null,
+      "source_term": "stability ball"
+    },
+    {
+      "id": "stationary_bike",
+      "name_ko": null,
+      "source_term": "stationary bike"
+    },
+    {
+      "id": "stepmill_machine",
+      "name_ko": null,
+      "source_term": "stepmill machine"
+    },
+    {
+      "id": "tire",
+      "name_ko": null,
+      "source_term": "tire"
+    },
+    {
+      "id": "trap_bar",
+      "name_ko": null,
+      "source_term": "trap bar"
+    },
+    {
+      "id": "upper_body_ergometer",
+      "name_ko": null,
+      "source_term": "upper body ergometer"
+    },
+    {
+      "id": "weighted",
+      "name_ko": null,
+      "source_term": "weighted"
+    },
+    {
+      "id": "wheel_roller",
+      "name_ko": null,
+      "source_term": "wheel roller"
+    }
+  ],
+  "movement_patterns": [
+    {
+      "id": "horizontal_press",
+      "name_ko": "수평 밀기"
+    },
+    {
+      "id": "vertical_press",
+      "name_ko": "수직 밀기"
+    },
+    {
+      "id": "shoulder_abduction",
+      "name_ko": "어깨 벌림"
+    },
+    {
+      "id": "elbow_extension",
+      "name_ko": "팔꿈치 폄"
+    }
+  ],
+  "workout_days": [
+    {
+      "id": "push_day",
+      "name_ko": "푸시 데이",
+      "focus_muscle_ids": [
+        "chest",
+        "deltoids",
+        "triceps"
+      ],
+      "include_secondary_muscles": false
+    },
+    {
+      "id": "abs_day",
+      "name_ko": "복근 운동",
+      "focus_muscle_ids": [
+        "abs",
+        "lower_abs"
+      ],
+      "include_secondary_muscles": false
+    },
+    {
+      "id": "obliques_day",
+      "name_ko": "복사근 운동",
+      "focus_muscle_ids": [
+        "obliques"
+      ],
+      "include_secondary_muscles": true
+    }
+  ],
+  "exercise_shards": [
+    "exercises/abductors.json",
+    "exercises/abs.json",
+    "exercises/adductors.json",
+    "exercises/biceps.json",
+    "exercises/calves.json",
+    "exercises/cardiovascular_system.json",
+    "exercises/chest.json",
+    "exercises/deltoids.json",
+    "exercises/forearms.json",
+    "exercises/glutes.json",
+    "exercises/hamstrings.json",
+    "exercises/lats.json",
+    "exercises/levator_scapulae.json",
+    "exercises/quads.json",
+    "exercises/serratus_anterior.json",
+    "exercises/spine.json",
+    "exercises/trapezius.json",
+    "exercises/triceps.json",
+    "exercises/upper_back.json"
+  ]
+}
