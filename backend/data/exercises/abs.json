@@ -2,7 +2,7 @@
   {
     "source_id": "0001",
     "name": "3/4 sit-up",
-    "name_ko": null,
+    "name_ko": "3/4 싯업",
     "primary_muscle_id": "abs",
     "secondary_muscle_ids": [
       "hip_flexors",
@@ -14,7 +14,7 @@
   {
     "source_id": "0002",
     "name": "45° side bend",
-    "name_ko": null,
+    "name_ko": "45도 사이드 벤드",
     "primary_muscle_id": "abs",
     "secondary_muscle_ids": [
       "obliques"
@@ -716,7 +716,7 @@
   {
     "source_id": "0274",
     "name": "crunch floor",
-    "name_ko": null,
+    "name_ko": "바닥 크런치",
     "primary_muscle_id": "abs",
     "secondary_muscle_ids": [
       "hip_flexors"
@@ -738,7 +738,7 @@
   {
     "source_id": "0276",
     "name": "dead bug",
-    "name_ko": null,
+    "name_ko": "데드 버그",
     "primary_muscle_id": "abs",
     "secondary_muscle_ids": [
       "hip_flexors",
@@ -951,7 +951,7 @@
   {
     "source_id": "0472",
     "name": "hanging leg raise",
-    "name_ko": null,
+    "name_ko": "행잉 레그 레이즈",
     "primary_muscle_id": "abs",
     "secondary_muscle_ids": [
       "hip_flexors"
@@ -1501,7 +1501,7 @@
   {
     "source_id": "0872",
     "name": "reverse crunch",
-    "name_ko": null,
+    "name_ko": "리버스 크런치",
     "primary_muscle_id": "abs",
     "secondary_muscle_ids": [
       "hip_flexors"
@@ -1549,7 +1549,7 @@
   {
     "source_id": "0687",
     "name": "russian twist",
-    "name_ko": null,
+    "name_ko": "러시안 트위스트",
     "primary_muscle_id": "abs",
     "secondary_muscle_ids": [
       "obliques"

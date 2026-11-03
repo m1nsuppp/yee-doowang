@@ -41,3 +41,14 @@ class ExerciseCatalogTests(unittest.TestCase):
 
         with self.assertRaisesRegex(ValidationError, "source exercise IDs must be unique"):
             ExerciseCatalog.model_validate(data)
+
+    def test_catalog_rejects_korean_alias_colliding_with_another_muscle(self) -> None:
+        data = self.catalog.model_dump()
+        chest = next(muscle for muscle in data["muscles"] if muscle["id"] == "chest")
+        chest["aliases_ko"] = ["삼두근"]
+
+        with self.assertRaisesRegex(
+            ValidationError,
+            "Korean muscle names and aliases must be unique",
+        ):
+            ExerciseCatalog.model_validate(data)

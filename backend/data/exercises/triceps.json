@@ -698,7 +698,7 @@
   {
     "source_id": "0333",
     "name": "dumbbell kickback",
-    "name_ko": null,
+    "name_ko": "덤벨 킥백",
     "primary_muscle_id": "triceps",
     "secondary_muscle_ids": [
       "deltoids"

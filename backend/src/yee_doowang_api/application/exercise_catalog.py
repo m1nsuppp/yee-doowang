@@ -16,8 +16,8 @@ class DataSource(_CatalogModel):
 class Muscle(_CatalogModel):
     id: str
     name_ko: str | None
+    aliases_ko: list[str] = Field(default_factory=list)
     source_terms: list[str]
-
 
 class Equipment(_CatalogModel):
     id: str
@@ -67,6 +67,18 @@ class ExerciseCatalog(_CatalogModel):
         source_terms = [term for muscle in self.muscles for term in muscle.source_terms]
         if len(source_terms) != len(set(source_terms)):
             raise ValueError("Each source muscle term must map to one muscle ID")
+        korean_names: set[str] = set()
+        for muscle in self.muscles:
+            names = ([muscle.name_ko] if muscle.name_ko is not None else [])
+            names.extend(muscle.aliases_ko)
+            for name in names:
+                if not name.strip() or name != name.strip():
+                    raise ValueError(
+                        "Korean muscle names and aliases must be non-empty and trimmed"
+                    )
+                if name in korean_names:
+                    raise ValueError("Korean muscle names and aliases must be unique")
+                korean_names.add(name)
 
         for day in self.workout_days:
             _require_known_ids(day.focus_muscle_ids, muscle_ids, "workout-day muscle")

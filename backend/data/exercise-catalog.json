@@ -17,6 +17,7 @@
     {
       "id": "deltoids",
       "name_ko": "삼각근",
+      "aliases_ko": ["어깨세모근"],
       "source_terms": [
         "deltoids",
         "delts",
@@ -27,6 +28,7 @@
     {
       "id": "triceps",
       "name_ko": "삼두근",
+      "aliases_ko": ["위팔세갈래근"],
       "source_terms": [
         "triceps"
       ]
@@ -84,77 +86,79 @@
     },
     {
       "id": "abductors",
-      "name_ko": null,
+      "name_ko": "외전근",
       "source_terms": [
         "abductors"
       ]
     },
     {
       "id": "adductors",
-      "name_ko": null,
+      "name_ko": "내전근",
       "source_terms": [
         "adductors"
       ]
     },
     {
       "id": "ankle_stabilizers",
-      "name_ko": null,
+      "name_ko": "발목 안정근",
       "source_terms": [
         "ankle stabilizers"
       ]
     },
     {
       "id": "ankles",
-      "name_ko": null,
+      "name_ko": "발목",
       "source_terms": [
         "ankles"
       ]
     },
     {
       "id": "back",
-      "name_ko": null,
+      "name_ko": "등",
       "source_terms": [
         "back"
       ]
     },
     {
       "id": "biceps",
-      "name_ko": null,
+      "name_ko": "이두근",
+      "aliases_ko": ["위팔두갈래근"],
       "source_terms": [
         "biceps"
       ]
     },
     {
       "id": "brachialis",
-      "name_ko": null,
+      "name_ko": "상완근",
+      "aliases_ko": ["위팔근"],
       "source_terms": [
         "brachialis"
       ]
     },
     {
       "id": "calves",
-      "name_ko": null,
+      "name_ko": "종아리",
       "source_terms": [
         "calves"
       ]
     },
     {
       "id": "cardiovascular_system",
-      "name_ko": null,
+      "name_ko": "심혈관계",
       "source_terms": [
         "cardiovascular system"
       ]
     },
     {
       "id": "feet",
-      "name_ko": null,
+      "name_ko": "발",
       "source_terms": [
         "feet"
       ]
     },
     {
       "id": "glutes",
-      "name_ko": null,
+      "name_ko": "둔근",
       "source_terms": [
         "glutes"
       ]
@@ -168,42 +172,43 @@
     },
     {
       "id": "groin",
-      "name_ko": null,
+      "name_ko": "사타구니",
       "source_terms": [
         "groin"
       ]
     },
     {
       "id": "hamstrings",
-      "name_ko": null,
+      "name_ko": "햄스트링",
       "source_terms": [
         "hamstrings"
       ]
     },
     {
       "id": "hands",
-      "name_ko": null,
+      "name_ko": "손",
       "source_terms": [
         "hands"
       ]
     },
     {
       "id": "hip_flexors",
-      "name_ko": null,
+      "name_ko": "고관절 굴곡근",
+      "aliases_ko": ["고관절 굽힘근"],
       "source_terms": [
         "hip flexors"
       ]
     },
     {
       "id": "inner_thighs",
-      "name_ko": null,
+      "name_ko": "허벅지 안쪽",
       "source_terms": [
         "inner thighs"
       ]
     },
     {
       "id": "lats",
-      "name_ko": null,
+      "name_ko": "광배근",
       "source_terms": [
         "latissimus dorsi",
         "lats"
@@ -211,21 +216,22 @@
     },
     {
       "id": "levator_scapulae",
-      "name_ko": null,
+      "name_ko": "견갑거근",
+      "aliases_ko": ["어깨올림근"],
       "source_terms": [
         "levator scapulae"
       ]
     },
     {
       "id": "lower_back",
-      "name_ko": null,
+      "name_ko": "허리",
       "source_terms": [
         "lower back"
       ]
     },
     {
       "id": "quads",
-      "name_ko": null,
+      "name_ko": "대퇴사두근",
       "source_terms": [
         "quadriceps",
         "quads"
@@ -233,70 +239,70 @@
     },
     {
       "id": "rhomboids",
-      "name_ko": null,
+      "name_ko": "능형근",
       "source_terms": [
         "rhomboids"
       ]
     },
     {
       "id": "rotator_cuff",
-      "name_ko": null,
+      "name_ko": "회전근개",
       "source_terms": [
         "rotator cuff"
       ]
     },
     {
       "id": "serratus_anterior",
-      "name_ko": null,
+      "name_ko": "전거근",
       "source_terms": [
         "serratus anterior"
       ]
     },
     {
       "id": "shins",
-      "name_ko": null,
+      "name_ko": "정강이",
       "source_terms": [
         "shins"
       ]
     },
     {
       "id": "soleus",
-      "name_ko": null,
+      "name_ko": "가자미근",
       "source_terms": [
         "soleus"
       ]
     },
     {
       "id": "spine",
-      "name_ko": null,
+      "name_ko": "척추",
       "source_terms": [
         "spine"
       ]
     },
     {
       "id": "sternocleidomastoid",
-      "name_ko": null,
+      "name_ko": "흉쇄유돌근",
       "source_terms": [
         "sternocleidomastoid"
       ]
     },
     {
       "id": "wrist_extensors",
-      "name_ko": null,
+      "name_ko": "손목 폄근",
       "source_terms": [
         "wrist extensors"
       ]
     },
     {
       "id": "wrist_flexors",
-      "name_ko": null,
+      "name_ko": "손목 굽힘근",
       "source_terms": [
         "wrist flexors"
       ]
     },
     {
       "id": "wrists",
-      "name_ko": null,
+      "name_ko": "손목",
       "source_terms": [
         "wrists"
       ]
@@ -310,7 +316,7 @@
     },
     {
       "id": "band",
-      "name_ko": null,
+      "name_ko": "밴드",
       "source_term": "band"
     },
     {
@@ -325,7 +331,7 @@
     },
     {
       "id": "bosu_ball",
-      "name_ko": null,
+      "name_ko": "보수볼",
       "source_term": "bosu ball"
     },
     {
@@ -340,22 +346,22 @@
     },
     {
       "id": "elliptical_machine",
-      "name_ko": null,
+      "name_ko": "일립티컬 머신",
       "source_term": "elliptical machine"
     },
     {
       "id": "ez_barbell",
-      "name_ko": null,
+      "name_ko": "EZ바",
       "source_term": "ez barbell"
     },
     {
       "id": "hammer",
-      "name_ko": null,
+      "name_ko": "슬레지 해머",
       "source_term": "hammer"
     },
     {
       "id": "kettlebell",
-      "name_ko": null,
+      "name_ko": "케틀벨",
       "source_term": "kettlebell"
     },
     {
@@ -365,72 +371,72 @@
     },
     {
       "id": "medicine_ball",
-      "name_ko": null,
+      "name_ko": "메디신볼",
       "source_term": "medicine ball"
     },
     {
       "id": "olympic_barbell",
-      "name_ko": null,
+      "name_ko": "올림픽 바벨",
       "source_term": "olympic barbell"
     },
     {
       "id": "resistance_band",
-      "name_ko": null,
+      "name_ko": "저항 밴드",
       "source_term": "resistance band"
     },
     {
       "id": "roller",
-      "name_ko": null,
+      "name_ko": "롤러",
       "source_term": "roller"
     },
     {
       "id": "rope",
-      "name_ko": null,
+      "name_ko": "로프",
       "source_term": "rope"
     },
     {
       "id": "skierg_machine",
-      "name_ko": null,
+      "name_ko": "SkiErg 머신",
       "source_term": "skierg machine"
     },
     {
       "id": "sled_machine",
-      "name_ko": null,
+      "name_ko": "슬레드 머신",
       "source_term": "sled machine"
     },
     {
       "id": "smith_machine",
-      "name_ko": null,
+      "name_ko": "스미스 머신",
       "source_term": "smith machine"
     },
     {
       "id": "stability_ball",
-      "name_ko": null,
+      "name_ko": "짐볼",
       "source_term": "stability ball"
     },
     {
       "id": "stationary_bike",
-      "name_ko": null,
+      "name_ko": "실내 자전거",
       "source_term": "stationary bike"
     },
     {
       "id": "stepmill_machine",
-      "name_ko": null,
+      "name_ko": "스텝밀",
       "source_term": "stepmill machine"
     },
     {
       "id": "tire",
-      "name_ko": null,
+      "name_ko": "타이어",
       "source_term": "tire"
     },
     {
       "id": "trap_bar",
-      "name_ko": null,
+      "name_ko": "트랩바",
       "source_term": "trap bar"
     },
     {
       "id": "upper_body_ergometer",
-      "name_ko": null,
+      "name_ko": "상체 에르고미터",
       "source_term": "upper body ergometer"
     },
     {
@@ -440,7 +446,7 @@
     },
     {
       "id": "wheel_roller",
-      "name_ko": null,
+      "name_ko": "AB 휠",
       "source_term": "wheel roller"
     }
   ],

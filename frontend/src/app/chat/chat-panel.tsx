@@ -185,7 +185,14 @@ export default function ChatPanel() {
                         className="rounded-2xl border border-[#e2e6de] bg-white p-4 text-[#162720]"
                       >
                         <p className="font-bold text-[#183d31]">
-                          {exercise.name_ko ?? exercise.name}
+                          {exercise.name_ko ? (
+                            exercise.name_ko
+                          ) : (
+                            <>
+                              원문 운동명:{" "}
+                              <span lang="en">{exercise.name}</span>
+                            </>
+                          )}
                         </p>
                         <p className="mt-2 text-xs leading-5 text-[#68756d]">
                           {exercise.primary_muscle_ko} · {exercise.equipment_ko}
