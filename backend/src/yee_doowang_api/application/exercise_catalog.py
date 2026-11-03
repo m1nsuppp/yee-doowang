@@ -1,4 +1,3 @@
-from pathlib import Path
 from typing import Self
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -85,41 +84,6 @@ class ExerciseCatalog(_CatalogModel):
 
         return self
 
-    def find_exercises(
-        self,
-        *,
-        workout_day_id: str,
-        equipment_id: str | None = None,
-        movement_pattern_id: str | None = None,
-    ) -> list[Exercise]:
-        workout_day = next(
-            (day for day in self.workout_days if day.id == workout_day_id),
-            None,
-        )
-        if workout_day is None:
-            raise ValueError(f"Unknown workout day: {workout_day_id}")
-
-        if equipment_id is not None and equipment_id not in {
-            item.id for item in self.equipment
-        }:
-            raise ValueError(f"Unknown equipment: {equipment_id}")
-        if movement_pattern_id is not None and movement_pattern_id not in {
-            item.id for item in self.movement_patterns
-        }:
-            raise ValueError(f"Unknown movement pattern: {movement_pattern_id}")
-
-        focus_muscles = set(workout_day.focus_muscle_ids)
-        return [
-            exercise
-            for exercise in self.exercises
-            if exercise.primary_muscle_id in focus_muscles
-            and (equipment_id is None or exercise.equipment_id == equipment_id)
-            and (
-                movement_pattern_id is None
-                or exercise.movement_pattern_id == movement_pattern_id
-            )
-        ]
-
 
 def _unique_ids(ids: list[str], kind: str) -> set[str]:
     if len(ids) != len(set(ids)):
@@ -132,10 +96,3 @@ def _require_known_ids(ids: list[str], known_ids: set[str], relation: str) -> No
     if unknown_ids:
         unknown = ", ".join(sorted(unknown_ids))
         raise ValueError(f"Unknown {relation} ID(s): {unknown}")
-
-
-def load_exercise_catalog(path: Path | None = None) -> ExerciseCatalog:
-    catalog_path = path or (
-        Path(__file__).resolve().parents[3] / "data" / "pushday-exercises.json"
-    )
-    return ExerciseCatalog.model_validate_json(catalog_path.read_text(encoding="utf-8"))

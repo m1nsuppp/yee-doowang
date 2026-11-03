@@ -1,44 +1,46 @@
-from fastapi import APIRouter, HTTPException, Request
-from pydantic import BaseModel, Field, field_validator
+from __future__ import annotations
 
-from yee_doowang_api.application.chat import ChatCompletionError, ChatService
+from fastapi import APIRouter, HTTPException, Request
+from pydantic import BaseModel, ConfigDict, Field, model_validator
+
+from yee_doowang_api.application.chat import (
+    ChatCompletionError,
+    ChatReply,
+    ChatService,
+    ConversationMessage,
+)
 
 router = APIRouter()
 
 
 class ChatRequest(BaseModel):
-    prompt: str = Field(min_length=1)
+    model_config = ConfigDict(extra="forbid")
 
-    @field_validator("prompt")
-    @classmethod
-    def reject_blank_prompt(cls, prompt: str) -> str:
-        if not prompt.strip():
-            raise ValueError("prompt must not be blank")
-        return prompt
+    messages: list[ConversationMessage] = Field(min_length=1, max_length=30)
 
-
-class ChatResponse(BaseModel):
-    reply: str
+    @model_validator(mode="after")
+    def require_user_message_last(self) -> ChatRequest:
+        if self.messages[-1].role != "user":
+            raise ValueError("The last conversation message must be from the user")
+        return self
 
 
-@router.post("/api/chat", response_model=ChatResponse, tags=["chat"])
-async def chat(body: ChatRequest, request: Request) -> ChatResponse:
+@router.post("/api/chat", response_model=ChatReply, tags=["chat"])
+async def chat(body: ChatRequest, request: Request) -> ChatReply:
     service: ChatService | None = request.app.state.chat_service
     if service is None:
         raise HTTPException(
             status_code=503,
             detail=(
                 "OpenRouter is not configured. Set OPENROUTER_API_KEY and "
-                "OPENROUTER_MODEL in backend/.env."
+                "OPENROUTER_MODEL in the backend environment."
             ),
         )
 
     try:
-        reply = await service.reply(body.prompt)
+        return await service.reply(body.messages)
     except ChatCompletionError as error:
         raise HTTPException(
             status_code=502,
             detail="The LLM provider request failed.",
         ) from error
-
-    return ChatResponse(reply=reply)
