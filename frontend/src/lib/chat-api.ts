@@ -5,10 +5,11 @@ export type ChatMessage = {
 
 export type RecommendedExercise = {
   source_id: string;
-  name_ko: string;
+  name: string;
+  name_ko: string | null;
   primary_muscle_ko: string;
   equipment_ko: string;
-  movement_pattern_ko: string;
+  movement_pattern_ko: string | null;
 };
 
 export type ChatResponse = {

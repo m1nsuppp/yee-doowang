@@ -7,8 +7,10 @@ from yee_doowang_api.application.exercise_catalog import Exercise, ExerciseCatal
 
 _PROGRAM = """
 .decl focus_muscle(day: symbol, muscle: symbol)
+.decl focus_secondary_muscle(day: symbol, muscle: symbol)
 .decl primary_muscle(exercise: symbol, muscle: symbol)
 .decl exercise_equipment(exercise: symbol, equipment: symbol)
+.decl secondary_muscle(exercise: symbol, muscle: symbol)
 .decl requested_day(day: symbol)
 .decl available_equipment(equipment: symbol)
 .decl unrestricted_equipment(flag: symbol)
@@ -24,6 +26,18 @@ eligible_exercise(Exercise) :-
     requested_day(Day),
     focus_muscle(Day, Muscle),
     primary_muscle(Exercise, Muscle),
+    exercise_equipment(Exercise, Equipment),
+    unrestricted_equipment("any").
+eligible_exercise(Exercise) :-
+    requested_day(Day),
+    focus_secondary_muscle(Day, Muscle),
+    secondary_muscle(Exercise, Muscle),
+    exercise_equipment(Exercise, Equipment),
+    available_equipment(Equipment).
+eligible_exercise(Exercise) :-
+    requested_day(Day),
+    focus_secondary_muscle(Day, Muscle),
+    secondary_muscle(Exercise, Muscle),
     exercise_equipment(Exercise, Equipment),
     unrestricted_equipment("any").
 """
@@ -66,12 +80,21 @@ class PyreWireExerciseReasoner(ExerciseReasoner):
             for day in self._catalog.workout_days:
                 for muscle_id in day.focus_muscle_ids:
                     session.insert("focus_muscle", [day.id, muscle_id])
+                if day.include_secondary_muscles:
+                    for muscle_id in day.focus_muscle_ids:
+                        session.insert(
+                            "focus_secondary_muscle", [day.id, muscle_id]
+                        )
 
             for exercise in self._catalog.exercises:
                 session.insert(
                     "primary_muscle",
                     [exercise.source_id, exercise.primary_muscle_id],
                 )
+                for muscle_id in exercise.secondary_muscle_ids:
+                    session.insert(
+                        "secondary_muscle", [exercise.source_id, muscle_id]
+                    )
                 session.insert(
                     "exercise_equipment",
                     [exercise.source_id, exercise.equipment_id],

@@ -1,0 +1,74 @@
+[
+  {
+    "source_id": "1712",
+    "name": "assisted side lying adductor stretch",
+    "name_ko": null,
+    "primary_muscle_id": "adductors",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "1494",
+    "name": "butterfly yoga pose",
+    "name_ko": null,
+    "primary_muscle_id": "adductors",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "groin"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0168",
+    "name": "cable hip adduction",
+    "name_ko": null,
+    "primary_muscle_id": "adductors",
+    "secondary_muscle_ids": [
+      "glutes",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0598",
+    "name": "lever seated hip adduction",
+    "name_ko": null,
+    "primary_muscle_id": "adductors",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "3667",
+    "name": "side lying hip adduction (male)",
+    "name_ko": null,
+    "primary_muscle_id": "adductors",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1775",
+    "name": "side plank hip adduction",
+    "name_ko": null,
+    "primary_muscle_id": "adductors",
+    "secondary_muscle_ids": [
+      "obliques",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  }
+]

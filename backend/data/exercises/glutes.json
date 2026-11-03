@@ -1,0 +1,1823 @@
+[
+  {
+    "source_id": "3214",
+    "name": "arms apart circular toe touch (male)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1709",
+    "name": "assisted lying glutes stretch",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "1710",
+    "name": "assisted lying gluteus and piriformis stretch",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "0980",
+    "name": "band bent-over hip extension",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1408",
+    "name": "band hip lift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0984",
+    "name": "band lying hip internal rotation",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0991",
+    "name": "band pull through",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0996",
+    "name": "band seated hip internal rotation",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1004",
+    "name": "band squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1003",
+    "name": "band squat row",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1008",
+    "name": "band step-up",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1009",
+    "name": "band stiff leg deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1023",
+    "name": "band straight back stiff leg deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0029",
+    "name": "barbell clean-grip front squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0032",
+    "name": "barbell deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0039",
+    "name": "barbell front chest squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0042",
+    "name": "barbell front squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0043",
+    "name": "barbell full squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1461",
+    "name": "barbell full squat (back pov)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1462",
+    "name": "barbell full squat (side pov)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1545",
+    "name": "barbell full zercher squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1409",
+    "name": "barbell glute bridge",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "3562",
+    "name": "barbell glute bridge two legs on bench (male)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0046",
+    "name": "barbell hack squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1436",
+    "name": "barbell high bar squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0051",
+    "name": "barbell jefferson squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0053",
+    "name": "barbell jump squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1410",
+    "name": "barbell lateral lunge",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1435",
+    "name": "barbell low bar squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0054",
+    "name": "barbell lunge",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0058",
+    "name": "barbell lying lifting (on hip)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0063",
+    "name": "barbell narrow stance squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0066",
+    "name": "barbell one arm side deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0074",
+    "name": "barbell rack pull",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0078",
+    "name": "barbell rear lunge",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0077",
+    "name": "barbell rear lunge v. 2",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0085",
+    "name": "barbell romanian deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0090",
+    "name": "barbell seated good morning",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1756",
+    "name": "barbell single leg deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0101",
+    "name": "barbell speed squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0114",
+    "name": "barbell step-up",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0115",
+    "name": "barbell stiff leg good morning",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0117",
+    "name": "barbell sumo deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0127",
+    "name": "barbell zercher squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "3212",
+    "name": "basic toe touch (male)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0130",
+    "name": "bench hip extension",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3639",
+    "name": "bent knee lying twist (male)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "obliques",
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3543",
+    "name": "bodyweight drop jump squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0157",
+    "name": "cable deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0196",
+    "name": "cable pull through (with rope)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0228",
+    "name": "cable standing hip extension",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "3769",
+    "name": "curtsey squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0291",
+    "name": "dumbbell bench squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0295",
+    "name": "dumbbell clean",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3635",
+    "name": "dumbbell contralateral forward lunge",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0300",
+    "name": "dumbbell deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0336",
+    "name": "dumbbell lunge",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3888",
+    "name": "dumbbell one arm snatch",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0371",
+    "name": "dumbbell plyo squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0381",
+    "name": "dumbbell rear lunge",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1459",
+    "name": "dumbbell romanian deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1757",
+    "name": "dumbbell single leg deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2805",
+    "name": "dumbbell single leg deadlift with stepbox support",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0411",
+    "name": "dumbbell single leg squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0413",
+    "name": "dumbbell squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0431",
+    "name": "dumbbell step-up",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0432",
+    "name": "dumbbell stiff leg deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0434",
+    "name": "dumbbell straight leg deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2808",
+    "name": "dumbbell sumo pull through",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1559",
+    "name": "exercise ball hip flexor stretch",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1416",
+    "name": "exercise ball one leg prone lower body rotation",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1417",
+    "name": "exercise ball one legged diagonal kick hamstring curl",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "0459",
+    "name": "flutter kicks",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_abs"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3470",
+    "name": "forward lunge (male)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3194",
+    "name": "frankenstein squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "3561",
+    "name": "glute bridge march",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3523",
+    "name": "glute bridge two legs on bench (male)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3218",
+    "name": "hands clasped circular toe touch (male)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3215",
+    "name": "hands reversed clasped circular toe touch (male)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1418",
+    "name": "hug keens to chest",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1419",
+    "name": "iron cross stretch",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0514",
+    "name": "jump squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0513",
+    "name": "jump squat v. 2",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0533",
+    "name": "kettlebell front squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0534",
+    "name": "kettlebell goblet squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0536",
+    "name": "kettlebell lunge pass through",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0544",
+    "name": "kettlebell pistol squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0549",
+    "name": "kettlebell swing",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0551",
+    "name": "kettlebell turkish get up (squat style)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "1420",
+    "name": "kneeling jump squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0578",
+    "name": "lever deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "2286",
+    "name": "lever hip extension v. 2",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "2611",
+    "name": "lever horizontal one leg press",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0593",
+    "name": "lever reverse hyperextension",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "3759",
+    "name": "lever seated good morning",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "3013",
+    "name": "low glute bridge on floor",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3582",
+    "name": "lunge with jump",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0624",
+    "name": "march sit (wall)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0628",
+    "name": "monster walk",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1476",
+    "name": "one leg squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0642",
+    "name": "outside leg kick push-up",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1422",
+    "name": "pelvic tilt into bridge",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3662",
+    "name": "pike-to-cobra push-up",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "core",
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3132",
+    "name": "potty squat with support",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0661",
+    "name": "push-up inside leg kick",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0668",
+    "name": "rear decline bridge",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3236",
+    "name": "resistance band hip thrusts on knees (female)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "resistance_band"
+  },
+  {
+    "source_id": "0675",
+    "name": "reverse hyper extension (on stability ball)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1423",
+    "name": "reverse hyper on flat bench",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2571",
+    "name": "rocking frog stretch",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2205",
+    "name": "roller hip lat stretch",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "roller"
+  },
+  {
+    "source_id": "2202",
+    "name": "roller hip stretch",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "roller"
+  },
+  {
+    "source_id": "1424",
+    "name": "seated glute stretch",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2567",
+    "name": "seated piriformis stretch",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3645",
+    "name": "single leg bridge with outstretched leg",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1759",
+    "name": "single leg squat (pistol) male",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1425",
+    "name": "sled 45 degrees one leg press",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "0739",
+    "name": "sled 45в° leg press",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "1464",
+    "name": "sled 45в° leg press (back pov)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "1463",
+    "name": "sled 45° leg press (side pov)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "0740",
+    "name": "sled 45в° leg wide press",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "0741",
+    "name": "sled closer hack squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "0743",
+    "name": "sled hack squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "0744",
+    "name": "sled lying squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "0749",
+    "name": "smith bent knee good morning",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0752",
+    "name": "smith deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "1433",
+    "name": "smith front squat (clean grip)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "3281",
+    "name": "smith full squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0755",
+    "name": "smith hack squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0760",
+    "name": "smith leg press",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "1434",
+    "name": "smith low bar squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0769",
+    "name": "smith sprint lunge",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0770",
+    "name": "smith squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "3142",
+    "name": "smith sumo squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0778",
+    "name": "spider crawl push up",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "core",
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3433",
+    "name": "swimmer kicks v. 2 (male)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2459",
+    "name": "tire flip",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "tire"
+  },
+  {
+    "source_id": "0811",
+    "name": "trap bar deadlift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "trap_bar"
+  },
+  {
+    "source_id": "1466",
+    "name": "twist hip lift",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "obliques",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1460",
+    "name": "walking lunge",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3643",
+    "name": "weighted cossack squats (male)",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "3644",
+    "name": "weighted lunge with swing",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "0852",
+    "name": "weighted squat",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "3642",
+    "name": "weighted stretch lunge",
+    "name_ko": null,
+    "primary_muscle_id": "glutes",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  }
+]

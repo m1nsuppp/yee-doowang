@@ -1,0 +1,1683 @@
+[
+  {
+    "source_id": "0968",
+    "name": "band alternating biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0976",
+    "name": "band concentration curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0986",
+    "name": "band one arm overhead biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0023",
+    "name": "barbell alternate biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "2407",
+    "name": "barbell biceps curl (with arm blaster)",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0031",
+    "name": "barbell curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0038",
+    "name": "barbell drag curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0059",
+    "name": "barbell lying preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0070",
+    "name": "barbell preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0072",
+    "name": "barbell prone incline curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0080",
+    "name": "barbell reverse curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0081",
+    "name": "barbell reverse preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0089",
+    "name": "barbell seated close-grip concentration curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0106",
+    "name": "barbell standing close grip curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "2414",
+    "name": "barbell standing concentration curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0110",
+    "name": "barbell standing reverse grip curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1629",
+    "name": "barbell standing wide grip biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0113",
+    "name": "barbell standing wide-grip curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1770",
+    "name": "biceps leg concentration curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0139",
+    "name": "biceps narrow pull-ups",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0140",
+    "name": "biceps pull-up",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1769",
+    "name": "bodyweight side lying biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1630",
+    "name": "cable close grip curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1631",
+    "name": "cable concentration curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0868",
+    "name": "cable curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1632",
+    "name": "cable drag curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0165",
+    "name": "cable hammer curl (with rope)",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1634",
+    "name": "cable lying bicep curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0182",
+    "name": "cable lying close-grip curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0190",
+    "name": "cable one arm curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1633",
+    "name": "cable one arm preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1635",
+    "name": "cable one arm reverse preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1636",
+    "name": "cable overhead curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1637",
+    "name": "cable overhead curl on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0195",
+    "name": "cable preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1638",
+    "name": "cable pulldown bicep curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0206",
+    "name": "cable reverse curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1413",
+    "name": "cable reverse one arm curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0209",
+    "name": "cable reverse preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1639",
+    "name": "cable rope hammer preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1640",
+    "name": "cable rope one arm hammer preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1641",
+    "name": "cable seated curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1642",
+    "name": "cable seated one arm concentration curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1643",
+    "name": "cable seated overhead curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1644",
+    "name": "cable squatting curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0229",
+    "name": "cable standing inner curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0232",
+    "name": "cable standing pulldown (with rope)",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1645",
+    "name": "cable two arm curl on incline bench",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0285",
+    "name": "dumbbell alternate biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2403",
+    "name": "dumbbell alternate biceps curl (with arm blaster)",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1646",
+    "name": "dumbbell alternate hammer preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1647",
+    "name": "dumbbell alternate preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1648",
+    "name": "dumbbell alternate seated hammer curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1649",
+    "name": "dumbbell alternating bicep curl with leg raised on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1650",
+    "name": "dumbbell alternating seated bicep curl on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1651",
+    "name": "dumbbell bicep curl lunge with bowling motion",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1652",
+    "name": "dumbbell bicep curl on exercise ball with leg raised",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1653",
+    "name": "dumbbell bicep curl with stork stance",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0294",
+    "name": "dumbbell biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2401",
+    "name": "dumbbell biceps curl (with arm blaster)",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1654",
+    "name": "dumbbell biceps curl reverse",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1655",
+    "name": "dumbbell biceps curl squat",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1656",
+    "name": "dumbbell biceps curl v sit on bosu ball",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0297",
+    "name": "dumbbell concentration curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0298",
+    "name": "dumbbell cross body hammer curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1657",
+    "name": "dumbbell cross body hammer curl v. 2",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0313",
+    "name": "dumbbell hammer curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1659",
+    "name": "dumbbell hammer curl on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0312",
+    "name": "dumbbell hammer curl v. 2",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2402",
+    "name": "dumbbell hammer curls (with arm blaster)",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1664",
+    "name": "dumbbell high curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0315",
+    "name": "dumbbell incline biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0318",
+    "name": "dumbbell incline curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0317",
+    "name": "dumbbell incline curl v. 2",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0320",
+    "name": "dumbbell incline hammer curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0322",
+    "name": "dumbbell incline inner biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1660",
+    "name": "dumbbell kneeling bicep curl exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1658",
+    "name": "dumbbell lunge with bicep curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1661",
+    "name": "dumbbell lying supine biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0350",
+    "name": "dumbbell lying supine curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1662",
+    "name": "dumbbell lying wide curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0353",
+    "name": "dumbbell one arm concentration curl (on stability ball)",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1663",
+    "name": "dumbbell one arm hammer preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1665",
+    "name": "dumbbell one arm prone curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1666",
+    "name": "dumbbell one arm prone hammer curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1414",
+    "name": "dumbbell one arm reverse preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1667",
+    "name": "dumbbell one arm reverse spider curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1668",
+    "name": "dumbbell one arm seated bicep curl on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1669",
+    "name": "dumbbell one arm seated hammer curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1670",
+    "name": "dumbbell one arm standing curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1671",
+    "name": "dumbbell one arm standing hammer curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1672",
+    "name": "dumbbell one arm zottman preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0365",
+    "name": "dumbbell over bench neutral wrist curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0366",
+    "name": "dumbbell over bench one arm neutral wrist curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0370",
+    "name": "dumbbell peacher hammer curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0372",
+    "name": "dumbbell preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1673",
+    "name": "dumbbell preacher curl over exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0374",
+    "name": "dumbbell prone incline curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1674",
+    "name": "dumbbell prone incline hammer curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0382",
+    "name": "dumbbell revers grip biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0384",
+    "name": "dumbbell reverse preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1675",
+    "name": "dumbbell reverse spider curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1676",
+    "name": "dumbbell seated alternate hammer curl on exercise ball",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1677",
+    "name": "dumbbell seated bicep curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0390",
+    "name": "dumbbell seated biceps curl (on stability ball)",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3547",
+    "name": "dumbbell seated biceps curl to shoulder press",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0391",
+    "name": "dumbbell seated curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1678",
+    "name": "dumbbell seated hammer curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0393",
+    "name": "dumbbell seated inner biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0397",
+    "name": "dumbbell seated neutral wrist curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1679",
+    "name": "dumbbell seated one arm bicep curl on exercise ball with leg raised",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0402",
+    "name": "dumbbell seated preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0403",
+    "name": "dumbbell seated revers grip concentration curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3560",
+    "name": "dumbbell standing alternate hammer curl and press",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0416",
+    "name": "dumbbell standing biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0418",
+    "name": "dumbbell standing concentration curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2321",
+    "name": "dumbbell standing inner biceps curl v. 2",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0421",
+    "name": "dumbbell standing one arm concentration curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0422",
+    "name": "dumbbell standing one arm curl (over incline bench)",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1680",
+    "name": "dumbbell standing one arm curl over incline bench",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0425",
+    "name": "dumbbell standing one arm reverse curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0428",
+    "name": "dumbbell standing preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0429",
+    "name": "dumbbell standing reverse curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2293",
+    "name": "dumbbell standing zottman preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1684",
+    "name": "dumbbell step up single leg balance with bicep curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "quads",
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "5201",
+    "name": "dumbbell waiter biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0439",
+    "name": "dumbbell zottman curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2294",
+    "name": "dumbbell zottman preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1682",
+    "name": "ez bar seated close grip concentration curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "1627",
+    "name": "ez barbell close grip preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "0446",
+    "name": "ez barbell close-grip curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "0447",
+    "name": "ez barbell curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "0451",
+    "name": "ez barbell reverse grip curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "0452",
+    "name": "ez barbell reverse grip preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "1458",
+    "name": "ez barbell seated curls",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "0454",
+    "name": "ez barbell spider curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "1628",
+    "name": "ez barbell spider curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "2404",
+    "name": "ez-bar biceps curl (with arm blaster)",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "2741",
+    "name": "ez-barbell standing wide grip biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "0525",
+    "name": "kettlebell bottoms up clean from the hang position",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0526",
+    "name": "kettlebell double alternating hang clean",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0575",
+    "name": "lever bicep curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1615",
+    "name": "lever hammer grip preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0592",
+    "name": "lever preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1614",
+    "name": "lever preacher curl v. 2",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1616",
+    "name": "lever reverse grip preacher curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0636",
+    "name": "olympic barbell hammer curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "olympic_barbell"
+  },
+  {
+    "source_id": "3123",
+    "name": "resistance band seated biceps curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "resistance_band"
+  },
+  {
+    "source_id": "1683",
+    "name": "smith machine bicep curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0847",
+    "name": "weighted seated bicep curl (on stability ball)",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "medicine_ball"
+  },
+  {
+    "source_id": "0853",
+    "name": "weighted standing curl",
+    "name_ko": null,
+    "primary_muscle_id": "biceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  }
+]

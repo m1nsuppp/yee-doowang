@@ -1,0 +1,696 @@
+[
+  {
+    "source_id": "1368",
+    "name": "ankle circles",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "ankle_stabilizers"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1708",
+    "name": "assisted lying calves stretch",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "0999",
+    "name": "band single leg calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "ankles",
+      "feet"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1000",
+    "name": "band single leg reverse calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1369",
+    "name": "band two legs calf raise - (band under both legs) v. 2",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "ankles",
+      "feet"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1370",
+    "name": "barbell floor calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0088",
+    "name": "barbell seated calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1371",
+    "name": "barbell seated calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1372",
+    "name": "barbell standing calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0108",
+    "name": "barbell standing leg calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0111",
+    "name": "barbell standing rocking leg calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1373",
+    "name": "bodyweight standing calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "ankles",
+      "feet"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1374",
+    "name": "box jump down with one leg stabilization",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1375",
+    "name": "cable standing calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1376",
+    "name": "cable standing one leg calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "ankles",
+      "feet"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1407",
+    "name": "calf push stretch with hands against wall",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1377",
+    "name": "calf stretch with hands against wall",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1378",
+    "name": "calf stretch with rope",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "rope"
+  },
+  {
+    "source_id": "0257",
+    "name": "circles knee stretch",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0284",
+    "name": "donkey calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1379",
+    "name": "dumbbell seated calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0400",
+    "name": "dumbbell seated one leg calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1380",
+    "name": "dumbbell seated one leg calf raise - hammer grip",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1381",
+    "name": "dumbbell seated one leg calf raise - palm up",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0409",
+    "name": "dumbbell single leg calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "ankles"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0417",
+    "name": "dumbbell standing calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "ankles"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1382",
+    "name": "exercise ball on the wall calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3241",
+    "name": "exercise ball on the wall calf raise (tennis ball between ankles)",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3240",
+    "name": "exercise ball on the wall calf raise (tennis ball between knees)",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1383",
+    "name": "hack calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "1384",
+    "name": "hack one leg calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "2289",
+    "name": "lever calf press",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1253",
+    "name": "lever donkey calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "2315",
+    "name": "lever rotary calf",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "soleus",
+      "ankle_stabilizers"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "2335",
+    "name": "lever seated calf press",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "soleus",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0594",
+    "name": "lever seated calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "soleus",
+      "ankle_stabilizers"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1385",
+    "name": "lever seated squat calf raise on leg press machine",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0605",
+    "name": "lever standing calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "soleus",
+      "ankle_stabilizers"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1386",
+    "name": "one leg donkey calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1387",
+    "name": "one leg floor calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "ankles",
+      "feet"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1388",
+    "name": "peroneals stretch",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "ankles",
+      "feet"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "rope"
+  },
+  {
+    "source_id": "1389",
+    "name": "posterior tibialis stretch",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "rope"
+  },
+  {
+    "source_id": "1390",
+    "name": "seated calf stretch (male)",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0727",
+    "name": "single leg calf raise (on a dumbbell)",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "ankles",
+      "feet"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0738",
+    "name": "sled 45в° calf press",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "1391",
+    "name": "sled calf press on leg press",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "0742",
+    "name": "sled forward angled calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "2334",
+    "name": "sled lying calf press",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "1392",
+    "name": "sled one leg calf press on leg press",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "sled_machine"
+  },
+  {
+    "source_id": "1393",
+    "name": "smith one leg floor calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0763",
+    "name": "smith reverse calf raises",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "1394",
+    "name": "smith reverse calf raises",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "1395",
+    "name": "smith seated one leg calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0773",
+    "name": "smith standing leg calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "1396",
+    "name": "smith toe raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "ankles",
+      "shins"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "1490",
+    "name": "standing calf raise (on a staircase)",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "ankles",
+      "feet"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1397",
+    "name": "standing calves",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1398",
+    "name": "standing calves calf stretch",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0833",
+    "name": "weighted donkey calf raise",
+    "name_ko": null,
+    "primary_muscle_id": "calves",
+    "secondary_muscle_ids": [
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  }
+]
