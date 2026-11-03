@@ -21,11 +21,13 @@ const apiBaseUrl =
 
 export async function sendChatMessage(
   messages: ChatMessage[],
+  signal: AbortSignal,
 ): Promise<ChatResponse> {
   const response = await fetch(`${apiBaseUrl}/api/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ messages }),
+    signal,
   });
 
   if (!response.ok) {

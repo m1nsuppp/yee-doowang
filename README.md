@@ -71,7 +71,7 @@ uv run python -m unittest discover -s tests
 ```
 
 - 웹 앱: <http://localhost:3000>
-- PushDay 채팅: <http://localhost:3000/chat>
+- PushDay 채팅: <http://localhost:3000/>
 - API 상태 확인: <http://localhost:8000/health>
 - API 문서: <http://localhost:8000/docs>
 - Chat API: `POST http://localhost:8000/api/chat`
