@@ -19,6 +19,11 @@ export type WorkoutSplitTemplate = {
   confirmation_status: "user_provided" | "proposed" | "confirmed";
 };
 
+export type WorkoutDayRecommendation = {
+  workout_day_ids: string[];
+  rationale: string;
+};
+
 export type RoutineContext = {
   workout_day_ids: ContextField<string[]>;
   workout_split_type: ContextField<"ab">;
@@ -109,6 +114,7 @@ export type RoutineDraft = {
 };
 
 export type ConversationState = {
+  mode: "general" | "routine";
   phase:
     | "collecting_context"
     | "confirming_context"
@@ -116,6 +122,7 @@ export type ConversationState = {
     | "reviewing_routine";
   context: RoutineContext;
   routine: RoutineDraft | null;
+  workout_day_recommendation: WorkoutDayRecommendation | null;
 };
 
 export type ChatAction = "message" | "confirm_context";
@@ -141,6 +148,7 @@ export function createInitialConversationState(): ConversationState {
     value: null,
   });
   return {
+    mode: "general",
     phase: "collecting_context",
     context: {
       workout_day_ids: field<string[]>(),
@@ -164,6 +172,7 @@ export function createInitialConversationState(): ConversationState {
       split_template: null,
     },
     routine: null,
+    workout_day_recommendation: null,
   };
 }
 

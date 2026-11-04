@@ -59,6 +59,18 @@ class WorkoutSplitTemplate(_ChatModel):
             raise ValueError("workout split groups must be distinct")
         return self
 
+class WorkoutDayRecommendation(_ChatModel):
+    workout_day_ids: list[str] = Field(min_length=1, max_length=3)
+    rationale: str = Field(min_length=1, max_length=600)
+
+    @model_validator(mode="after")
+    def validate_unique_workout_days(self) -> WorkoutDayRecommendation:
+        if len(self.workout_day_ids) != len(set(self.workout_day_ids)):
+            raise ValueError("recommended workout days must be unique")
+        return self
+
+
+
 
 class QuickReply(_ChatModel):
     label: str
@@ -160,14 +172,19 @@ class RecommendationPreferences(_ChatModel):
     experience: Literal["novice", "experienced", "skip", "unknown"]
 
 
-class IntentDecision(_ChatModel):
+class CoachTurn(_ChatModel):
     context: RoutineContext
     safety_status: Literal["none", "clarify", "urgent"]
     message: str = Field(max_length=1200)
     assistant_response: str = Field(default="", max_length=1200)
-    preserve_context: bool = False
+    conversation_action: Literal[
+        "start_routine", "continue_intake", "answer_only", "cancel_routine"
+    ] = "continue_intake"
     explicit_minutes_target: bool = False
     split_confirmation: Literal["none", "confirm", "reject", "repropose"] = "none"
+    recommendation_confirmation: Literal[
+        "none", "accept", "reject", "repropose"
+    ] = "none"
 
 
     @field_validator("message")
@@ -241,14 +258,16 @@ class RoutineDraft(_ChatModel):
     prescription_note: str | None = None
 
 class ConversationState(_ChatModel):
+    mode: Literal["general", "routine"] = "routine"
     phase: Literal["collecting_context", "confirming_context", "confirming_split", "reviewing_routine"] = (
         "collecting_context"
     )
     context: RoutineContext = Field(default_factory=RoutineContext)
     routine: RoutineDraft | None = None
+    workout_day_recommendation: WorkoutDayRecommendation | None = None
 
     @model_validator(mode="after")
-    def validate_phase_routine(self) -> ConversationState:
+    def validate_conversation_state(self) -> ConversationState:
         if (self.phase == "reviewing_routine") != (self.routine is not None):
             raise ValueError("only a reviewed routine may contain a routine draft")
         if self.phase == "confirming_split" and (
@@ -256,6 +275,11 @@ class ConversationState(_ChatModel):
             or self.context.split_template.confirmation_status != "proposed"
         ):
             raise ValueError("only an unconfirmed split proposal may be confirmed")
+        if (
+            self.workout_day_recommendation is not None
+            and self.context.workout_day_ids.status != "delegated"
+        ):
+            raise ValueError("a workout-day recommendation requires delegated selection")
         return self
 
 
@@ -278,10 +302,19 @@ class CoachModel(Protocol):
         self,
         messages: Sequence[ConversationMessage],
         current_context: RoutineContext,
+        current_mode: Literal["general", "routine"],
         equipment_options: Sequence[Equipment],
         workout_days: Sequence[WorkoutDay],
+        current_recommendation: WorkoutDayRecommendation | None,
         muscles: Sequence[Muscle],
-    ) -> IntentDecision: ...
+    ) -> CoachTurn: ...
+
+    async def recommend_workout_days(
+        self,
+        messages: Sequence[ConversationMessage],
+        context: RoutineContext,
+        workout_days: Sequence[WorkoutDay],
+    ) -> WorkoutDayRecommendation: ...
 
     async def plan_routine(
         self,
@@ -292,7 +325,6 @@ class CoachModel(Protocol):
         recommendation_profiles: Sequence[ExerciseRecommendationProfile],
         current_routine: RoutineDraft | None,
     ) -> RoutineProposal: ...
-
 
 class ExerciseReasoner(Protocol):
     async def recommend(
@@ -352,27 +384,46 @@ class ChatService:
         state: ConversationState,
         action: ChatAction,
     ) -> ChatReply:
-        if action == "confirm_context" and state.phase != "confirming_context":
-            raise ValueError("Only a reviewed context can be confirmed")
-
+        if action == "confirm_context" and (
+            state.phase != "confirming_context" or state.mode != "routine"
+        ):
+            raise ValueError("Only a reviewed routine context can be confirmed")
         intent = await self._model.interpret(
             messages,
             state.context,
+            state.mode,
             self._catalog.equipment,
             self._catalog.workout_days,
+            state.workout_day_recommendation,
             self._catalog.muscles,
         )
-        context = (
-            state.context
-            if intent.preserve_context
-            else self._merge_context(state.context, intent.context)
-        )
-        if not intent.preserve_context and not intent.explicit_minutes_target:
+        if state.mode == "general" and intent.conversation_action == "start_routine":
+            previous_context = RoutineContext()
+            context = self._merge_context(previous_context, intent.context)
+            mode: Literal["general", "routine"] = "routine"
+        elif intent.conversation_action == "answer_only":
+            previous_context = state.context
+            context = (
+                self._merge_context(state.context, intent.context)
+                if state.mode == "routine"
+                else state.context
+            )
+            mode = state.mode
+        else:
+            previous_context = state.context
+            context = self._merge_context(state.context, intent.context)
+            mode = state.mode
+
+        if (
+            intent.conversation_action != "cancel_routine"
+            and context != previous_context
+            and not intent.explicit_minutes_target
+        ):
             time_range_changed = (
                 context.minutes_per_session_range
-                != state.context.minutes_per_session_range
+                != previous_context.minutes_per_session_range
             )
-            target_changed = context.minutes_per_session != state.context.minutes_per_session
+            target_changed = context.minutes_per_session != previous_context.minutes_per_session
             if (
                 context.minutes_per_session_range.status == "provided"
                 and (time_range_changed or target_changed)
@@ -381,13 +432,14 @@ class ChatService:
                 data = context.model_dump()
                 data["minutes_per_session"] = {"status": "unknown", "value": None}
                 context = RoutineContext.model_validate(data)
+
         if intent.safety_status == "urgent":
             return ChatReply(
                 reply=(
                     "말씀하신 증상은 즉시 평가가 필요할 수 있어요. "
                     "운동을 멈추고 지금 응급 진료를 받으세요."
                 ),
-                state=ConversationState(context=context),
+                state=ConversationState(mode=mode, context=context),
                 exploration_exercises=[],
             )
         if intent.safety_status == "clarify":
@@ -397,44 +449,47 @@ class ChatService:
             )
             return ChatReply(
                 reply=intent.message or fallback,
-                state=ConversationState(context=context),
+                state=ConversationState(mode=mode, context=context),
                 exploration_exercises=[],
             )
+
+        if (
+            action != "confirm_context"
+            and intent.conversation_action == "cancel_routine"
+            and state.mode == "routine"
+        ):
+            return ChatReply(
+                reply="루틴 작성은 여기서 멈출게요. 다시 계획하고 싶을 때 말씀해 주세요.",
+                state=ConversationState(mode="general"),
+                exploration_exercises=[],
+            )
+        if action != "confirm_context" and (
+            intent.conversation_action == "answer_only"
+            or (state.mode == "general" and intent.conversation_action != "start_routine")
+        ):
+            response_state = state
+            if state.mode == "routine" and context != state.context:
+                phase = (
+                    "confirming_split"
+                    if state.phase == "confirming_split" and context.split_template is not None
+                    else "collecting_context"
+                )
+                response_state = ConversationState(
+                    mode="routine",
+                    phase=phase,
+                    context=context,
+                )
+            return ChatReply(
+                reply=intent.assistant_response or "편하게 이어서 말씀해 주세요.",
+                state=response_state,
+                exploration_exercises=[],
+                quick_replies=self._pending_quick_replies(response_state),
+            )
+
+        response_prefix = ""
         invalid_split_reply = self._invalid_split_configuration_reply(context)
         if invalid_split_reply is not None:
             return invalid_split_reply
-
-        if intent.assistant_response and intent.split_confirmation == "none":
-            continuation = self._next_context_question(context) or ""
-            if state.phase == "confirming_split" and context.split_template is not None:
-                continuation = self._split_confirmation_prompt(context)
-            phase = state.phase if context == state.context else "collecting_context"
-            if context.split_template is not None and context.split_template.confirmation_status == "proposed":
-                phase = "confirming_split"
-            return ChatReply(
-                reply="\n\n".join(part for part in (intent.assistant_response, continuation) if part),
-                state=ConversationState(phase=phase, context=context),
-                exploration_exercises=[],
-                quick_replies=(
-                    self._split_quick_replies()
-                    if phase == "confirming_split"
-                    else self._context_question_quick_replies(context)
-                    if continuation
-                    else []
-                ),
-            )
-
-        if self._has_unresolved_constraints(context.known_constraints):
-            return ChatReply(
-                reply=(
-                    "알려주신 제약을 운동별 금기로 임의 해석하지 않겠습니다. "
-                    "현재 통증·부상·의료상 제한이면 안전 확인이 필요해요. "
-                    "특정 운동이나 동작을 피하려는 선호라면 선호 항목에 구체적으로 적고, "
-                    "제약은 건너뛰어 주세요."
-                ),
-                state=ConversationState(context=context),
-                exploration_exercises=[],
-            )
 
         unknown_days = (
             set(context.workout_day_ids.value or []) - self._workout_day_names.keys()
@@ -444,7 +499,7 @@ class ChatService:
         if unknown_days:
             return ChatReply(
                 reply=self._supported_workout_days_reply(),
-                state=ConversationState(context=state.context),
+                state=ConversationState(mode=mode, context=previous_context),
                 exploration_exercises=[],
             )
 
@@ -457,19 +512,67 @@ class ChatService:
         ):
             return ChatReply(
                 reply=self._equipment_options_reply(),
-                state=ConversationState(context=state.context),
+                state=ConversationState(mode=mode, context=previous_context),
                 exploration_exercises=[],
             )
         if context.weekly_direct_sets_by_muscle.status == "provided":
-            reported_muscle_ids = set(
-                context.weekly_direct_sets_by_muscle.value or {}
-            )
+            reported_muscle_ids = set(context.weekly_direct_sets_by_muscle.value or {})
             if reported_muscle_ids - self._muscles_by_id.keys():
                 return ChatReply(
                     reply="최근 주간 세트 수에는 카탈로그의 표적 근육만 사용할 수 있어요. 부위별 세트 수를 다시 알려주세요.",
-                    state=ConversationState(context=context),
+                    state=ConversationState(mode=mode, context=previous_context),
                     exploration_exercises=[],
                 )
+
+        if self._has_unresolved_constraints(context.known_constraints):
+            return ChatReply(
+                reply=(
+                    "알려주신 제약을 운동별 금기로 임의 해석하지 않겠습니다. "
+                    "현재 통증·부상·의료상 제한이면 안전 확인이 필요해요. "
+                    "특정 운동이나 동작을 피하려는 선호라면 선호 항목에 구체적으로 적고, "
+                    "제약은 건너뛰어 주세요."
+                ),
+                state=ConversationState(mode="routine", context=context),
+                exploration_exercises=[],
+            )
+        proposal = state.workout_day_recommendation
+        if proposal is not None:
+            if intent.recommendation_confirmation == "accept":
+                data = context.model_dump()
+                data["workout_day_ids"] = {
+                    "status": "provided",
+                    "value": proposal.workout_day_ids,
+                }
+                context = RoutineContext.model_validate(data)
+                response_prefix = "좋아요. 추천한 운동 부위를 반영했어요."
+            elif context.workout_day_ids != state.context.workout_day_ids:
+                proposal = None
+            elif intent.recommendation_confirmation == "repropose":
+                return await self._propose_workout_days(messages, context)
+            elif intent.recommendation_confirmation == "reject":
+                data = context.model_dump()
+                data["workout_day_ids"] = {"status": "not_asked", "value": None}
+                context = RoutineContext.model_validate(data)
+                return ChatReply(
+                    reply=self._next_context_question(context) or "운동 부위를 직접 골라주세요.",
+                    state=ConversationState(mode="routine", context=context),
+                    exploration_exercises=[],
+                    quick_replies=self._workout_day_selection_quick_replies(),
+                )
+            elif context != state.context:
+                if context.workout_day_ids.status == "delegated":
+                    return await self._propose_workout_days(messages, context)
+                proposal = None
+            else:
+                return ChatReply(
+                    reply=self._workout_day_recommendation_prompt(proposal),
+                    state=state,
+                    exploration_exercises=[],
+                    quick_replies=self._workout_day_recommendation_quick_replies(),
+                )
+
+        if context.workout_day_ids.status == "delegated" and proposal is None:
+            return await self._propose_workout_days(messages, context)
 
         if intent.split_confirmation == "repropose" and context.split_proposal_rejected:
             data = context.model_dump()
@@ -479,41 +582,29 @@ class ChatService:
         if state.phase == "confirming_split" and context.split_template is not None:
             if intent.split_confirmation == "confirm":
                 context = self._replace_split_template_status(context, "confirmed")
-                return ChatReply(
-                    reply=(
-                        "A/B 분할을 확인했어요.\n\n" + self._context_summary(context)
-                    ),
-                    state=ConversationState(phase="confirming_context", context=context),
-                    exploration_exercises=[],
-                )
-            if intent.split_confirmation == "reject":
+                response_prefix = "A/B 분할을 확인했어요."
+            elif intent.split_confirmation == "reject":
                 context = self._reject_split_proposal(context)
                 return ChatReply(
                     reply=self._split_assignment_question(context),
-                    state=ConversationState(context=context),
+                    state=ConversationState(mode="routine", context=context),
                     exploration_exercises=[],
                     quick_replies=self._split_assignment_quick_replies(),
                 )
-            return ChatReply(
-                reply=self._split_confirmation_prompt(context),
-                state=ConversationState(phase="confirming_split", context=context),
-                exploration_exercises=[],
-                quick_replies=self._split_quick_replies(),
-            )
+            else:
+                return ChatReply(
+                    reply=self._split_confirmation_prompt(context),
+                    state=ConversationState(mode="routine", phase="confirming_split", context=context),
+                    exploration_exercises=[],
+                    quick_replies=self._split_quick_replies(),
+                )
 
-        if context.split_template is not None and context.split_template.confirmation_status == "proposed":
-            return ChatReply(
-                reply=self._split_confirmation_prompt(context),
-                state=ConversationState(phase="confirming_split", context=context),
-                exploration_exercises=[],
-                quick_replies=self._split_quick_replies(),
-            )
 
         question = self._next_context_question(context)
         if question is not None:
             return ChatReply(
-                reply=question,
-                state=ConversationState(context=context),
+                reply="\n\n".join(part for part in (response_prefix, question) if part),
+                state=ConversationState(mode="routine", context=context),
                 exploration_exercises=[],
                 quick_replies=self._context_question_quick_replies(context),
             )
@@ -531,6 +622,7 @@ class ChatService:
                 return ChatReply(
                     reply=self._context_summary(context),
                     state=ConversationState(
+                        mode="routine",
                         phase="confirming_context",
                         context=context,
                     ),
@@ -541,10 +633,70 @@ class ChatService:
             return await self._draft_routine(messages, state)
 
         return ChatReply(
-            reply=self._context_summary(context),
-            state=ConversationState(phase="confirming_context", context=context),
+            reply="\n\n".join(part for part in (response_prefix, self._context_summary(context)) if part),
+            state=ConversationState(mode="routine", phase="confirming_context", context=context),
             exploration_exercises=[],
         )
+
+
+    async def _propose_workout_days(
+        self,
+        messages: Sequence[ConversationMessage],
+        context: RoutineContext,
+    ) -> ChatReply:
+        recommendation = await self._model.recommend_workout_days(
+            messages,
+            context,
+            self._catalog.workout_days,
+        )
+        unknown_ids = set(recommendation.workout_day_ids) - self._workout_day_names.keys()
+        if unknown_ids:
+            raise ChatCompletionError("Workout-day recommendation contained unsupported IDs")
+        return ChatReply(
+            reply=self._workout_day_recommendation_prompt(recommendation),
+            state=ConversationState(
+                mode="routine",
+                context=context,
+                workout_day_recommendation=recommendation,
+            ),
+            exploration_exercises=[],
+            quick_replies=self._workout_day_recommendation_quick_replies(),
+        )
+
+    def _workout_day_recommendation_prompt(
+        self,
+        recommendation: WorkoutDayRecommendation,
+    ) -> str:
+        names = ", ".join(
+            self._workout_day_names[item]
+            for item in recommendation.workout_day_ids
+        )
+        return (
+            f"시작점으로 살펴볼 운동 부위는 다음과 같아요: {names}. "
+            f"{recommendation.rationale} 이 부위들로 진행할까요?"
+        )
+
+    @staticmethod
+    def _workout_day_recommendation_quick_replies() -> list[QuickReply]:
+        return [
+            QuickReply(label="이 부위로 진행", message="추천한 운동 부위로 진행해줘"),
+            QuickReply(label="다른 추천", message="다른 운동 부위를 다시 추천해줘"),
+            QuickReply(label="직접 고르기", message="추천한 부위 대신 직접 고를게"),
+        ]
+
+    @staticmethod
+    def _workout_day_selection_quick_replies() -> list[QuickReply]:
+        return [
+            QuickReply(label="다른 추천", message="다른 운동 부위를 다시 추천해줘"),
+            QuickReply(label="직접 고르기", message="운동 부위를 직접 고를게"),
+        ]
+
+    def _pending_quick_replies(self, state: ConversationState) -> list[QuickReply]:
+        if state.workout_day_recommendation is not None:
+            return self._workout_day_recommendation_quick_replies()
+        if state.phase == "confirming_split":
+            return self._split_quick_replies()
+        return []
 
     @staticmethod
     def _merge_context(previous: RoutineContext, updates: RoutineContext) -> RoutineContext:
@@ -601,6 +753,7 @@ class ChatService:
                 else None
             )
             merged["split_proposal_rejected"] = previous.split_proposal_rejected
+
         return RoutineContext.model_validate(merged)
 
     @staticmethod

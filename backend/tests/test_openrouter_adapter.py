@@ -120,8 +120,10 @@ class OpenRouterAdapterTests(unittest.IsolatedAsyncioTestCase):
             intent = await model.interpret(
                 messages,
                 RoutineContext(),
+                "routine",
                 catalog.equipment,
                 catalog.workout_days,
+                None,
                 catalog.muscles,
             )
             proposal = await model.plan_routine(
