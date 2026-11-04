@@ -285,14 +285,9 @@ export default function ChatPanel() {
           <span className="grid size-9 place-items-center rounded-xl bg-[#183d31] text-xs font-black tracking-tight text-[#d8f36c]">
             YD
           </span>
-          <div className="flex min-w-0 flex-1 items-baseline gap-2">
-            <span className="shrink-0 whitespace-nowrap font-extrabold tracking-tight">
-              이두왕
-            </span>
-            <span className="break-keep min-w-0 flex-1 text-xs leading-4 text-[#718077]">
-              푸시 · 등/허리 · 이두 · 전완 · 하체 · 견갑 · 코어 · 복근 · 복사근
-            </span>
-          </div>
+          <span className="shrink-0 whitespace-nowrap font-extrabold tracking-tight">
+            이두왕
+          </span>
         </div>
         <button
           className="shrink-0 whitespace-nowrap rounded-full border border-[#d9ddd4] px-4 py-2 text-sm font-semibold transition hover:border-[#183d31] hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
