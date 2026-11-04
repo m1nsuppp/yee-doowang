@@ -55,7 +55,6 @@ class OpenRouterAdapterTests(unittest.IsolatedAsyncioTestCase):
                         "exercises": [
                             {
                                 "source_id": candidate_without_name_ko.source_id,
-                                "rationale": "검증된 카탈로그 후보입니다.",
                                 "alternative_source_ids": [candidate_without_pattern.source_id],
                             }
                         ],

@@ -186,7 +186,21 @@ class FixtureCoachModel:
         elif any(term in preferences_text for term in ("선호 건너", "선호는 상관없")):
             updates["preferences"] = cls._field(status="skipped")
         elif "좋아하는 운동" in preferences_text or "피하고 싶은 운동" in preferences_text:
-            updates["preferences"] = cls._field(["사용자 선호"])
+            preference_match = re.search(
+                r"(?:좋아하는 운동은?|피하고 싶은 운동은?)\s*[:：]?\s*([^,.!?。]+)",
+                preferences_text,
+            )
+            if preference_match:
+                preference_kind = (
+                    "좋아하는 운동"
+                    if "좋아하는 운동" in preference_match.group(0)
+                    else "피하고 싶은 운동"
+                )
+                updates["preferences"] = cls._field(
+                    [f"{preference_kind}: {preference_match.group(1).strip()}"]
+                )
+            else:
+                updates["preferences"] = cls._field(["사용자 선호"])
 
         constraints_text = field_text(("제약", "제한", "불편함", "부상"))
         if any(term in constraints_text for term in ("제약 없음", "제한 없음", "불편함 없음")):
@@ -258,7 +272,6 @@ class FixtureCoachModel:
                     exercises=[
                         PlannedExercise(
                             source_id=selected.source_id,
-                            rationale="선택된 부위와 근거 기반 순위를 반영했어요.",
                             alternative_source_ids=[
                                 item.source_id for item in candidates[1:3]
                             ],
@@ -267,6 +280,22 @@ class FixtureCoachModel:
                 )
             )
         return RoutineProposal(sessions=sessions)
+
+
+class ContextPreservingCoachModel(FixtureCoachModel):
+    async def interpret(
+        self,
+        _messages: Sequence[ConversationMessage],
+        current_context: RoutineContext,
+        _equipment_options: Sequence[Equipment],
+        _workout_days: Sequence[WorkoutDay],
+        _muscles: Sequence[Muscle],
+    ) -> IntentDecision:
+        return IntentDecision(
+            context=current_context,
+            safety_status="none",
+            message="",
+        )
 
 
 class FailingCoachModel:
@@ -320,6 +349,46 @@ class ChatApiTests(unittest.TestCase):
             json={
                 "messages": [*conversation, {"role": "user", "content": "확인하고 루틴 만들기"}],
                 "state": state.model_dump(mode="json"),
+                "action": "confirm_context",
+            },
+        )
+
+    @staticmethod
+    def _push_dumbbell_context(
+        preferences: list[str],
+        known_constraints: list[str],
+    ) -> RoutineContext:
+        return RoutineContext(
+            workout_day_ids=ContextField(status="provided", value=["push_day"]),
+            goal=ContextField(status="skipped"),
+            experience=ContextField(status="skipped"),
+            sessions_per_week=ContextField(status="provided", value=1),
+            minutes_per_session=ContextField(status="skipped"),
+            equipment=ContextField(
+                status="provided",
+                value=EquipmentIntent(mode="specified", equipment_ids=["dumbbell"]),
+            ),
+            preferences=ContextField(status="provided", value=preferences),
+            known_constraints=ContextField(status="provided", value=known_constraints),
+        )
+
+    def _post_confirmed_with_context(
+        self,
+        client: TestClient,
+        messages: list[dict[str, str]],
+        context: RoutineContext,
+    ):
+        return client.post(
+            "/api/chat",
+            json={
+                "messages": [
+                    *messages,
+                    {"role": "user", "content": "확인하고 루틴 만들기"},
+                ],
+                "state": ConversationState(
+                    phase="confirming_context",
+                    context=context,
+                ).model_dump(mode="json"),
                 "action": "confirm_context",
             },
         )
@@ -503,7 +572,6 @@ class ChatApiTests(unittest.TestCase):
                             exercises=[
                                 PlannedExercise(
                                     source_id="9999",
-                                    rationale="잘못된 후보",
                                 )
                             ],
                         )
@@ -524,22 +592,21 @@ class ChatApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 502)
         self.assertEqual(response.json()["detail"], "The LLM provider request failed.")
 
-    def test_eligible_exercise_outside_shortlist_is_rejected(self) -> None:
+    def test_named_preference_promotes_eligible_exercise_outside_top_five(self) -> None:
         catalog = load_exercise_catalog()
         push_day = next(day for day in catalog.workout_days if day.id == "push_day")
-        eligible_ids = [
-            exercise.source_id
+        eligible = [
+            exercise
             for exercise in catalog.exercises
             if exercise.primary_muscle_id in push_day.focus_muscle_ids
             and exercise.equipment_id == "dumbbell"
         ]
-        self.assertGreater(len(eligible_ids), 5)
-        outside_shortlist_id = eligible_ids[5]
+        self.assertGreater(len(eligible), 5)
+        preferred = eligible[5]
+        preference = f"좋아하는 운동은 {preferred.name}"
+        context = self._push_dumbbell_context([preference], [])
 
-        class OutsideShortlistCoach(FixtureCoachModel):
-            def __init__(self, source_id: str) -> None:
-                self.source_id = source_id
-
+        class PreferenceCoach(ContextPreservingCoachModel):
             async def plan_routine(
                 self,
                 _messages: Sequence[ConversationMessage],
@@ -556,12 +623,7 @@ class ChatApiTests(unittest.TestCase):
                     sessions=[
                         PlannedSession(
                             workout_day_id=day_ids[index % len(day_ids)],
-                            exercises=[
-                                PlannedExercise(
-                                    source_id=self.source_id,
-                                    rationale="조건에는 맞지만 기본 추천 범위 밖인 후보",
-                                )
-                            ],
+                            exercises=[PlannedExercise(source_id=preferred.source_id)],
                         )
                         for index in range(session_count)
                     ]
@@ -569,21 +631,112 @@ class ChatApiTests(unittest.TestCase):
 
         app = create_app(
             settings=Settings(_env_file=None),
-            coach_model=OutsideShortlistCoach(outside_shortlist_id),
+            coach_model=PreferenceCoach(),
         )
         with TestClient(app) as client:
-            response = self._post_confirmed_routine(
+            response = self._post_confirmed_with_context(
                 client,
                 [
                     {
                         "role": "user",
-                        "content": "PushDay 덤벨 추천해줘. 목표 건너뛰고 경력 건너뛰고.",
+                        "content": f"PushDay 덤벨 운동에서 {preference}.",
                     }
                 ],
+                context,
             )
 
-        self.assertEqual(response.status_code, 502)
-        self.assertEqual(response.json()["detail"], "The LLM provider request failed.")
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        planned = body["state"]["routine"]["sessions"][0]["exercises"][0]
+        self.assertEqual(planned["exercise"]["source_id"], preferred.source_id)
+        self.assertEqual(
+            planned["rationale"],
+            "사용자가 명시한 운동명·동작 선호가 카탈로그 정보와 일치합니다.",
+        )
+        self.assertNotIn(
+            preferred.source_id,
+            {item["source_id"] for item in body["exploration_exercises"]},
+        )
+
+    def test_unmatched_preference_asks_before_planning(self) -> None:
+        context = self._push_dumbbell_context(
+            ["선호하는 운동은 고강도 인터벌 방식"],
+            [],
+        )
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=ContextPreservingCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = self._post_confirmed_with_context(
+                client,
+                [{"role": "user", "content": "PushDay 덤벨 운동을 추천해 주세요."}],
+                context,
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertIsNone(body["state"]["routine"])
+        self.assertEqual(body["exploration_exercises"], [])
+        self.assertIn("카탈로그의 운동명이나 동작 분류", body["reply"])
+
+    def test_known_constraint_blocks_candidates_even_if_interpreter_misses_safety(self) -> None:
+        context = self._push_dumbbell_context([], ["현재 무릎 통증"])
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=ContextPreservingCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = self._post_confirmed_with_context(
+                client,
+                [{"role": "user", "content": "PushDay 덤벨 운동을 추천해 주세요."}],
+                context,
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertIsNone(body["state"]["routine"])
+        self.assertEqual(body["exploration_exercises"], [])
+        self.assertIn("제약을 운동별 금기로 임의 해석하지 않겠습니다", body["reply"])
+
+    def test_avoided_catalog_exercise_is_not_recommended_or_explorable(self) -> None:
+        catalog = load_exercise_catalog()
+        push_day = next(day for day in catalog.workout_days if day.id == "push_day")
+        avoided = next(
+            exercise
+            for exercise in catalog.exercises
+            if exercise.primary_muscle_id in push_day.focus_muscle_ids
+            and exercise.equipment_id == "dumbbell"
+        )
+        context = self._push_dumbbell_context(
+            [f"피하고 싶은 운동은 {avoided.name}"],
+            [],
+        )
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=ContextPreservingCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = self._post_confirmed_with_context(
+                client,
+                [
+                    {
+                        "role": "user",
+                        "content": f"PushDay 덤벨 운동에서 {avoided.name}은 피하고 싶어요.",
+                    }
+                ],
+                context,
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertNotIn(
+            avoided.source_id,
+            {item["source_id"] for item in self._all_response_exercises(body)},
+        )
 
     def test_skipped_weekly_frequency_does_not_create_an_assumed_schedule(self) -> None:
         app = create_app(

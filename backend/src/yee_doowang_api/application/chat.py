@@ -130,7 +130,6 @@ class RecommendedExercise(_ChatModel):
 
 class PlannedExercise(_ChatModel):
     source_id: str = Field(pattern=r"^[0-9]{4}$")
-    rationale: str = Field(min_length=1, max_length=500)
     alternative_source_ids: list[str] = Field(default_factory=list)
 
 
@@ -248,6 +247,9 @@ class ChatService:
             item.id: item.name_ko for item in catalog.movement_patterns
         }
 
+        self._workout_days_by_id = {
+            day.id: day for day in catalog.workout_days
+        }
         self._workout_day_names = {day.id: day.name_ko for day in catalog.workout_days}
 
     async def reply(
@@ -283,6 +285,18 @@ class ChatService:
             )
             return ChatReply(
                 reply=intent.message or fallback,
+                state=ConversationState(context=context),
+                exploration_exercises=[],
+            )
+
+        if self._has_unresolved_constraints(context.known_constraints):
+            return ChatReply(
+                reply=(
+                    "알려주신 제약을 운동별 금기로 임의 해석하지 않겠습니다. "
+                    "현재 통증·부상·의료상 제한이면 안전 확인이 필요해요. "
+                    "특정 운동이나 동작을 피하려는 선호라면 선호 항목에 구체적으로 적고, "
+                    "제약은 건너뛰어 주세요."
+                ),
                 state=ConversationState(context=context),
                 exploration_exercises=[],
             )
@@ -409,8 +423,7 @@ class ChatService:
             constraint = EquipmentConstraint(mode="unrestricted", equipment_ids=[])
 
         preferences = self._recommendation_preferences(context)
-        candidates_by_day: dict[str, list[Exercise]] = {}
-        eligible_candidates_by_day: dict[str, list[Exercise]] = {}
+        ranked_candidates_by_day: dict[str, list[Exercise]] = {}
         for day_id in day_ids:
             candidates = await self._reasoner.recommend(
                 workout_day_id=day_id,
@@ -425,6 +438,24 @@ class ChatService:
                     state=ConversationState(context=context),
                     exploration_exercises=[],
                 )
+            ranked_candidates_by_day[day_id] = self._rank_candidates(
+                candidates, preferences
+            )
+
+        (
+            candidates_by_day,
+            preferred_candidate_ids_by_day,
+            preference_reply,
+        ) = self._apply_user_preferences(context, ranked_candidates_by_day)
+        if preference_reply is not None:
+            return ChatReply(
+                reply=preference_reply,
+                state=ConversationState(context=context),
+                exploration_exercises=[],
+            )
+
+        eligible_candidates_by_day: dict[str, list[Exercise]] = {}
+        for day_id, candidates in candidates_by_day.items():
             evidence_reply = self._evidence_coverage_reply(candidates, preferences)
             if evidence_reply is not None:
                 return ChatReply(
@@ -432,9 +463,8 @@ class ChatService:
                     state=ConversationState(context=context),
                     exploration_exercises=[],
                 )
-            ranked_candidates = self._rank_candidates(candidates, preferences)
-            eligible_candidates_by_day[day_id] = ranked_candidates
-            candidates_by_day[day_id] = ranked_candidates[
+            eligible_candidates_by_day[day_id] = candidates
+            candidates_by_day[day_id] = candidates[
                 :_MAX_RECOMMENDED_CANDIDATES_PER_DAY
             ]
 
@@ -461,6 +491,8 @@ class ChatService:
             candidates_by_day,
             day_ids,
             context.sessions_per_week.value,
+            context,
+            preferred_candidate_ids_by_day,
         )
         routine = RoutineDraft(
             sessions_per_week=context.sessions_per_week.value,
@@ -517,6 +549,8 @@ class ChatService:
         candidates_by_day: dict[str, Sequence[Exercise]],
         selected_day_ids: Sequence[str],
         expected_sessions: int,
+        context: RoutineContext,
+        preferred_candidate_ids_by_day: dict[str, set[str]],
     ) -> list[RoutineSession]:
         if len(proposal.sessions) != expected_sessions:
             raise ChatCompletionError("Routine session count did not match the request.")
@@ -551,7 +585,14 @@ class ChatService:
                 planned_items.append(
                     RoutineExercise(
                         exercise=self._present_exercise(exercise),
-                        rationale=item.rationale,
+                        rationale=self._recommendation_rationale(
+                            exercise,
+                            planned_session.workout_day_id,
+                            context,
+                            preferred_candidate_ids_by_day[
+                                planned_session.workout_day_id
+                            ],
+                        ),
                         alternatives=alternatives,
                     )
                 )
@@ -754,6 +795,228 @@ class ChatService:
             "현재 후보에는 연구에서 초보·복귀 운동자에게 적절하다고 확인된 운동이 없습니다. "
             "경력 기준 정렬을 건너뛰고 미평가 후보를 볼까요?"
         )
+
+    @staticmethod
+    def _normalize_catalog_text(value: str) -> str:
+        return " ".join(
+            "".join(char.casefold() if char.isalnum() else " " for char in value).split()
+        )
+
+    @classmethod
+    def _contains_catalog_term(cls, phrase: str, term: str) -> bool:
+        normalized_phrase = cls._normalize_catalog_text(phrase)
+        normalized_term = cls._normalize_catalog_text(term)
+        return bool(normalized_term) and f" {normalized_term} " in f" {normalized_phrase} "
+
+    def _candidate_matches_preference(
+        self,
+        phrase: str,
+        exercise: Exercise,
+    ) -> bool:
+        terms = [exercise.name, exercise.name_ko or ""]
+        if exercise.movement_pattern_id is not None:
+            terms.extend(
+                [
+                    exercise.movement_pattern_id,
+                    self._pattern_names[exercise.movement_pattern_id],
+                ]
+            )
+        return any(self._contains_catalog_term(phrase, term) for term in terms)
+
+    def _matching_catalog_candidate_ids(self, phrase: str) -> set[str]:
+        return {
+            exercise.source_id
+            for exercise in self._catalog.exercises
+            if self._candidate_matches_preference(phrase, exercise)
+        }
+
+    @classmethod
+    def _preference_direction(cls, phrase: str) -> Literal["prefer", "avoid"] | None:
+        normalized = cls._normalize_catalog_text(phrase)
+        negative_markers = (
+            "피하고",
+            "싫",
+            "선호하지",
+            "avoid",
+            "dislike",
+            "hate",
+            "do not like",
+            "don t like",
+            "not like",
+            "not prefer",
+        )
+        positive_markers = ("좋아", "선호", "prefer", "like", "love", "favorite")
+
+        def contains_marker(value: str, marker: str) -> bool:
+            normalized_marker = cls._normalize_catalog_text(marker)
+            if marker.isascii():
+                return f" {normalized_marker} " in f" {value} "
+            return normalized_marker in value
+
+        matched_negative = [
+            marker for marker in negative_markers if contains_marker(normalized, marker)
+        ]
+        positive_text = normalized
+        for marker in matched_negative:
+            normalized_marker = cls._normalize_catalog_text(marker)
+            positive_text = positive_text.replace(normalized_marker, " ")
+        is_positive = any(
+            contains_marker(positive_text, marker) for marker in positive_markers
+        )
+        is_negative = bool(matched_negative)
+        if is_negative == is_positive:
+            return None
+        return "avoid" if is_negative else "prefer"
+
+    def _apply_user_preferences(
+        self,
+        context: RoutineContext,
+        ranked_candidates_by_day: dict[str, list[Exercise]],
+    ) -> tuple[dict[str, list[Exercise]], dict[str, set[str]], str | None]:
+        all_candidates_by_id = {
+            exercise.source_id: exercise
+            for candidates in ranked_candidates_by_day.values()
+            for exercise in candidates
+        }
+        eligible_ids = set(all_candidates_by_id)
+        preferred_ids: set[str] = set()
+        avoided_ids: set[str] = set()
+        no_preference_values = {
+            "none",
+            "no preference",
+            "no preferences",
+            "없음",
+            "선호 없음",
+            "선호하는 것 없어",
+        }
+
+        if context.preferences.status == "provided":
+            for phrase in context.preferences.value or []:
+                normalized = self._normalize_catalog_text(phrase)
+                if not normalized or normalized in no_preference_values:
+                    continue
+                direction = self._preference_direction(phrase)
+                if direction is None:
+                    return {}, {}, (
+                        "말씀하신 선호를 우선할지 피할지 분명하지 않아요. "
+                        "운동명이나 동작 분류와 함께 의도를 알려주시거나 선호를 건너뛰어 주세요."
+                    )
+                matched_ids = self._matching_catalog_candidate_ids(phrase)
+                if not matched_ids:
+                    return {}, {}, (
+                        "선호 표현을 카탈로그의 운동명이나 동작 분류와 연결하지 못했어요. "
+                        "해당 항목을 구체적으로 알려주시거나 선호를 건너뛰어 주세요."
+                    )
+                matching_eligible_ids = matched_ids & eligible_ids
+                if direction == "prefer":
+                    if not matching_eligible_ids:
+                        return {}, {}, (
+                            "선호한 운동은 현재 부위·장비 조건의 후보에 없어요. "
+                            "조건을 바꾸거나 다른 카탈로그 운동명을 알려주세요."
+                        )
+                    preferred_ids.update(matching_eligible_ids)
+                else:
+                    avoided_ids.update(matching_eligible_ids)
+
+        if preferred_ids & avoided_ids:
+            return {}, {}, "같은 운동을 선호와 제외 조건에 모두 적어주셨어요. 어느 쪽인지 확인해 주세요."
+
+        ordered_by_day: dict[str, list[Exercise]] = {}
+        preferred_ids_by_day: dict[str, set[str]] = {}
+        for day_id, ranked_candidates in ranked_candidates_by_day.items():
+            remaining = [
+                exercise
+                for exercise in ranked_candidates
+                if exercise.source_id not in avoided_ids
+            ]
+            if not remaining:
+                return {}, {}, (
+                    f"{self._workout_day_names[day_id]}은 피하고 싶은 운동을 제외하면 후보가 없어요. "
+                    "선호 조건이나 부위를 수정해 주세요."
+                )
+            preferred = [
+                exercise for exercise in remaining if exercise.source_id in preferred_ids
+            ]
+            if len(preferred) > _MAX_RECOMMENDED_CANDIDATES_PER_DAY:
+                return {}, {}, (
+                    f"{self._workout_day_names[day_id]}에서 선호한 후보가 5개를 넘어요. "
+                    "우선할 운동명이나 동작을 조금 더 구체적으로 알려주세요."
+                )
+            preferred_ids_by_day[day_id] = {
+                exercise.source_id for exercise in preferred
+            }
+            ordered_by_day[day_id] = [
+                *preferred,
+                *(
+                    exercise
+                    for exercise in remaining
+                    if exercise.source_id not in preferred_ids_by_day[day_id]
+                ),
+            ]
+
+        return ordered_by_day, preferred_ids_by_day, None
+
+    def _has_unresolved_constraints(self, field: ContextField[list[str]]) -> bool:
+        if field.status != "provided":
+            return False
+        no_constraint_values = {
+            "none",
+            "no constraints",
+            "no restrictions",
+            "no limitation",
+            "no limitations",
+            "no known constraints",
+            "no physical restrictions",
+            "no injuries",
+            "제약 사항 없음",
+            "제약은 없어요",
+            "제약 없음",
+            "현재 제약 없음",
+            "제한 없음",
+            "운동 제한 없음",
+            "불편함 없음",
+            "없음",
+        }
+        return any(
+            normalized and normalized not in no_constraint_values
+            for value in field.value or []
+            if (normalized := self._normalize_catalog_text(value))
+        )
+
+    def _recommendation_rationale(
+        self,
+        exercise: Exercise,
+        workout_day_id: str,
+        context: RoutineContext,
+        preferred_candidate_ids: set[str],
+    ) -> str:
+        if exercise.source_id in preferred_candidate_ids:
+            return "사용자가 명시한 운동명·동작 선호가 카탈로그 정보와 일치합니다."
+
+        profile = self._recommendation_profiles.get(exercise.source_id)
+        evidence = profile.exercise_api if profile is not None else None
+        if (
+            context.goal.status == "provided"
+            and context.goal.value == "hypertrophy"
+            and evidence is not None
+            and evidence.modality == "hypertrophy"
+        ):
+            return "카탈로그 출처 프로필에 근비대 목표 관련 메타데이터가 있습니다."
+        if (
+            context.goal.status == "provided"
+            and context.goal.value == "strength"
+            and evidence is not None
+            and evidence.loadable
+            and evidence.e1rm_substitution_group is not None
+        ):
+            return "카탈로그 출처 프로필에 근력 진행 호환 메타데이터가 있습니다."
+        if profile is not None and profile.novice_consensus_exercise_name is not None:
+            return "이 운동에는 초보·복귀 운동 선택에 관한 전문가 합의 출처가 연결되어 있습니다."
+
+        workout_day = self._workout_days_by_id[workout_day_id]
+        if exercise.primary_muscle_id in workout_day.focus_muscle_ids:
+            return "카탈로그의 주 표적 근육이 선택한 운동 부위와 일치합니다."
+        return "카탈로그에서 허용된 보조 근육 운동으로 선택한 부위와 연결됩니다."
 
     def _rank_candidates(
         self,
