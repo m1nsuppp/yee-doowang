@@ -20,7 +20,7 @@ import {
 
 type DisplayMessage = ChatMessage & {
   id: string;
-  exercises?: RecommendedExercise[];
+  explorationExercises?: RecommendedExercise[];
   routine?: RoutineDraft | null;
   state?: ConversationState;
 };
@@ -132,7 +132,7 @@ export default function ChatPanel() {
           id: `${lastMessage.id}-reply`,
           role: "assistant",
           content: response.reply,
-          exercises: response.exercises,
+          explorationExercises: response.exploration_exercises,
           routine: response.state.routine,
           state: response.state,
         },
@@ -327,26 +327,28 @@ export default function ChatPanel() {
                     </div>
                   </section>
                 )}
-                {message.exercises && message.exercises.length > 0 && (
-                  <details className="mt-4 text-sm text-[#52645a]">
-                    <summary className="cursor-pointer font-semibold">
-                      전체 조건 일치 후보 보기 ({message.exercises.length})
-                    </summary>
-                    <p className="mt-2 text-xs leading-5 text-[#68756d]">
-                      카탈로그 규칙에 따라 주 표적 또는 허용된 보조 근육이
-                      일치한 후보입니다. 카드에서 주 표적과 보조 근육을
-                      확인하세요. 미평가는 낮은 난이도나 개인의 적합성·안전성을
-                      뜻하지 않습니다.
-                    </p>
-                    <ul className="mt-3 grid gap-3 sm:grid-cols-2">
-                      {message.exercises.map((exercise) => (
-                        <li key={exercise.source_id}>
-                          <ExerciseCard exercise={exercise} />
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                )}
+                {message.explorationExercises &&
+                  message.explorationExercises.length > 0 && (
+                    <details className="mt-4 text-sm text-[#52645a]">
+                      <summary className="cursor-pointer font-semibold">
+                        나머지 조건 일치 후보 탐색 (
+                        {message.explorationExercises.length})
+                      </summary>
+                      <p className="mt-2 text-xs leading-5 text-[#68756d]">
+                        기본 루틴 추천과 대안에서 제외된 후보입니다. 부위·장비
+                        조건에 일치하며, 카드의 표적 근육과 장비 정보를
+                        확인하세요. 미평가는 낮은 난이도나 개인의
+                        적합성·안전성을 뜻하지 않습니다.
+                      </p>
+                      <ul className="mt-3 grid gap-3 sm:grid-cols-2">
+                        {message.explorationExercises.map((exercise) => (
+                          <li key={exercise.source_id}>
+                            <ExerciseCard exercise={exercise} />
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  )}
                 {message.id === latestAssistantMessageId &&
                   conversationState.phase === "confirming_context" && (
                     <button

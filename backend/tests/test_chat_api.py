@@ -186,7 +186,21 @@ class FixtureCoachModel:
         elif any(term in preferences_text for term in ("선호 건너", "선호는 상관없")):
             updates["preferences"] = cls._field(status="skipped")
         elif "좋아하는 운동" in preferences_text or "피하고 싶은 운동" in preferences_text:
-            updates["preferences"] = cls._field(["사용자 선호"])
+            preference_match = re.search(
+                r"(?:좋아하는 운동은?|피하고 싶은 운동은?)\s*[:：]?\s*([^,.!?。]+)",
+                preferences_text,
+            )
+            if preference_match:
+                preference_kind = (
+                    "좋아하는 운동"
+                    if "좋아하는 운동" in preference_match.group(0)
+                    else "피하고 싶은 운동"
+                )
+                updates["preferences"] = cls._field(
+                    [f"{preference_kind}: {preference_match.group(1).strip()}"]
+                )
+            else:
+                updates["preferences"] = cls._field(["사용자 선호"])
 
         constraints_text = field_text(("제약", "제한", "불편함", "부상"))
         if any(term in constraints_text for term in ("제약 없음", "제한 없음", "불편함 없음")):
@@ -258,7 +272,6 @@ class FixtureCoachModel:
                     exercises=[
                         PlannedExercise(
                             source_id=selected.source_id,
-                            rationale="선택된 부위와 근거 기반 순위를 반영했어요.",
                             alternative_source_ids=[
                                 item.source_id for item in candidates[1:3]
                             ],
@@ -267,6 +280,22 @@ class FixtureCoachModel:
                 )
             )
         return RoutineProposal(sessions=sessions)
+
+
+class ContextPreservingCoachModel(FixtureCoachModel):
+    async def interpret(
+        self,
+        _messages: Sequence[ConversationMessage],
+        current_context: RoutineContext,
+        _equipment_options: Sequence[Equipment],
+        _workout_days: Sequence[WorkoutDay],
+        _muscles: Sequence[Muscle],
+    ) -> IntentDecision:
+        return IntentDecision(
+            context=current_context,
+            safety_status="none",
+            message="",
+        )
 
 
 class FailingCoachModel:
@@ -324,6 +353,69 @@ class ChatApiTests(unittest.TestCase):
             },
         )
 
+    @staticmethod
+    def _push_dumbbell_context(
+        preferences: list[str],
+        known_constraints: list[str],
+    ) -> RoutineContext:
+        return RoutineContext(
+            workout_day_ids=ContextField(status="provided", value=["push_day"]),
+            goal=ContextField(status="skipped"),
+            experience=ContextField(status="skipped"),
+            sessions_per_week=ContextField(status="provided", value=1),
+            minutes_per_session=ContextField(status="skipped"),
+            equipment=ContextField(
+                status="provided",
+                value=EquipmentIntent(mode="specified", equipment_ids=["dumbbell"]),
+            ),
+            preferences=ContextField(status="provided", value=preferences),
+            known_constraints=ContextField(status="provided", value=known_constraints),
+        )
+
+    def _post_confirmed_with_context(
+        self,
+        client: TestClient,
+        messages: list[dict[str, str]],
+        context: RoutineContext,
+    ):
+        return client.post(
+            "/api/chat",
+            json={
+                "messages": [
+                    *messages,
+                    {"role": "user", "content": "확인하고 루틴 만들기"},
+                ],
+                "state": ConversationState(
+                    phase="confirming_context",
+                    context=context,
+                ).model_dump(mode="json"),
+                "action": "confirm_context",
+            },
+        )
+
+    @staticmethod
+    def _all_response_exercises(body):
+        exercises = list(body["exploration_exercises"])
+        routine = body["state"]["routine"]
+        if routine is not None:
+            for session in routine["sessions"]:
+                for planned in session["exercises"]:
+                    exercises.append(planned["exercise"])
+                    exercises.extend(planned["alternatives"])
+        return exercises
+
+    @staticmethod
+    def _default_recommendation_ids(body):
+        routine = body["state"]["routine"]
+        if routine is None:
+            return set()
+        return {
+            exercise["source_id"]
+            for session in routine["sessions"]
+            for planned in session["exercises"]
+            for exercise in (planned["exercise"], *planned["alternatives"])
+        }
+
     def test_context_must_be_confirmed_and_schedule_edits_change_the_draft(self) -> None:
         app = create_app(
             settings=Settings(_env_file=None),
@@ -342,7 +434,7 @@ class ChatApiTests(unittest.TestCase):
             reviewed = review.json()
             self.assertEqual(reviewed["state"]["phase"], "confirming_context")
             self.assertIsNone(reviewed["state"]["routine"])
-            self.assertEqual(reviewed["exercises"], [])
+            self.assertEqual(reviewed["exploration_exercises"], [])
             self.assertIn("주당 빈도: 2회", reviewed["reply"])
             self.assertIn("회당 가능 시간: 30분", reviewed["reply"])
 
@@ -418,9 +510,12 @@ class ChatApiTests(unittest.TestCase):
             for session in routine["sessions"]
             for item in session["exercises"]
         }
-        candidate_ids = {item["source_id"] for item in body["exercises"]}
+        default_ids = self._default_recommendation_ids(body)
+        exploration_ids = {
+            item["source_id"] for item in body["exploration_exercises"]
+        }
         self.assertTrue(planned_ids)
-        self.assertLessEqual(planned_ids, candidate_ids)
+        self.assertTrue(default_ids.isdisjoint(exploration_ids))
         self.assertNotIn("sets", routine["sessions"][0]["exercises"][0])
 
 
@@ -453,7 +548,7 @@ class ChatApiTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertIn("응급 진료", response.json()["reply"])
-        self.assertEqual(response.json()["exercises"], [])
+        self.assertEqual(response.json()["exploration_exercises"], [])
         self.assertIsNone(response.json()["state"]["routine"])
 
     def test_unverified_model_exercise_is_rejected(self) -> None:
@@ -477,7 +572,6 @@ class ChatApiTests(unittest.TestCase):
                             exercises=[
                                 PlannedExercise(
                                     source_id="9999",
-                                    rationale="잘못된 후보",
                                 )
                             ],
                         )
@@ -497,6 +591,152 @@ class ChatApiTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 502)
         self.assertEqual(response.json()["detail"], "The LLM provider request failed.")
+
+    def test_named_preference_promotes_eligible_exercise_outside_top_five(self) -> None:
+        catalog = load_exercise_catalog()
+        push_day = next(day for day in catalog.workout_days if day.id == "push_day")
+        eligible = [
+            exercise
+            for exercise in catalog.exercises
+            if exercise.primary_muscle_id in push_day.focus_muscle_ids
+            and exercise.equipment_id == "dumbbell"
+        ]
+        self.assertGreater(len(eligible), 5)
+        preferred = eligible[5]
+        preference = f"좋아하는 운동은 {preferred.name}"
+        context = self._push_dumbbell_context([preference], [])
+
+        class PreferenceCoach(ContextPreservingCoachModel):
+            async def plan_routine(
+                self,
+                _messages: Sequence[ConversationMessage],
+                context: RoutineContext,
+                _candidates_by_day: dict[str, Sequence[Exercise]],
+                _workout_days: Sequence[WorkoutDay],
+                _recommendation_profiles: Sequence[ExerciseRecommendationProfile],
+                _current_routine,
+            ) -> RoutineProposal:
+                session_count = context.sessions_per_week.value
+                day_ids = context.workout_day_ids.value
+                assert session_count is not None and day_ids
+                return RoutineProposal(
+                    sessions=[
+                        PlannedSession(
+                            workout_day_id=day_ids[index % len(day_ids)],
+                            exercises=[PlannedExercise(source_id=preferred.source_id)],
+                        )
+                        for index in range(session_count)
+                    ]
+                )
+
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=PreferenceCoach(),
+        )
+        with TestClient(app) as client:
+            response = self._post_confirmed_with_context(
+                client,
+                [
+                    {
+                        "role": "user",
+                        "content": f"PushDay 덤벨 운동에서 {preference}.",
+                    }
+                ],
+                context,
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        planned = body["state"]["routine"]["sessions"][0]["exercises"][0]
+        self.assertEqual(planned["exercise"]["source_id"], preferred.source_id)
+        self.assertEqual(
+            planned["rationale"],
+            "사용자가 명시한 운동명·동작 선호가 카탈로그 정보와 일치합니다.",
+        )
+        self.assertNotIn(
+            preferred.source_id,
+            {item["source_id"] for item in body["exploration_exercises"]},
+        )
+
+    def test_unmatched_preference_asks_before_planning(self) -> None:
+        context = self._push_dumbbell_context(
+            ["선호하는 운동은 고강도 인터벌 방식"],
+            [],
+        )
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=ContextPreservingCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = self._post_confirmed_with_context(
+                client,
+                [{"role": "user", "content": "PushDay 덤벨 운동을 추천해 주세요."}],
+                context,
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertIsNone(body["state"]["routine"])
+        self.assertEqual(body["exploration_exercises"], [])
+        self.assertIn("카탈로그의 운동명이나 동작 분류", body["reply"])
+
+    def test_known_constraint_blocks_candidates_even_if_interpreter_misses_safety(self) -> None:
+        context = self._push_dumbbell_context([], ["현재 무릎 통증"])
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=ContextPreservingCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = self._post_confirmed_with_context(
+                client,
+                [{"role": "user", "content": "PushDay 덤벨 운동을 추천해 주세요."}],
+                context,
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertIsNone(body["state"]["routine"])
+        self.assertEqual(body["exploration_exercises"], [])
+        self.assertIn("제약을 운동별 금기로 임의 해석하지 않겠습니다", body["reply"])
+
+    def test_avoided_catalog_exercise_is_not_recommended_or_explorable(self) -> None:
+        catalog = load_exercise_catalog()
+        push_day = next(day for day in catalog.workout_days if day.id == "push_day")
+        avoided = next(
+            exercise
+            for exercise in catalog.exercises
+            if exercise.primary_muscle_id in push_day.focus_muscle_ids
+            and exercise.equipment_id == "dumbbell"
+        )
+        context = self._push_dumbbell_context(
+            [f"피하고 싶은 운동은 {avoided.name}"],
+            [],
+        )
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=ContextPreservingCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = self._post_confirmed_with_context(
+                client,
+                [
+                    {
+                        "role": "user",
+                        "content": f"PushDay 덤벨 운동에서 {avoided.name}은 피하고 싶어요.",
+                    }
+                ],
+                context,
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertNotIn(
+            avoided.source_id,
+            {item["source_id"] for item in self._all_response_exercises(body)},
+        )
 
     def test_skipped_weekly_frequency_does_not_create_an_assumed_schedule(self) -> None:
         app = create_app(
@@ -529,7 +769,7 @@ class ChatApiTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertIsNone(response.json()["state"]["routine"])
-        self.assertEqual(response.json()["exercises"], [])
+        self.assertEqual(response.json()["exploration_exercises"], [])
         self.assertIn("주당 횟수를 건너뛰어서", response.json()["reply"])
 
     def test_partial_interpretation_preserves_confirmed_context(self) -> None:
@@ -660,7 +900,9 @@ class ChatApiTests(unittest.TestCase):
             if exercise.primary_muscle_id in focus_muscle_ids
             and exercise.equipment_id == "body_weight"
         }
-        recommendations = {item["source_id"]: item for item in body["exercises"]}
+        recommendations = {
+            item["source_id"]: item for item in self._all_response_exercises(body)
+        }
         self.assertEqual(set(recommendations), set(expected))
         equipment_names = {
             item.id: item.name_ko or f"원문 장비명: {item.source_term}"
@@ -712,7 +954,7 @@ class ChatApiTests(unittest.TestCase):
             response = client.post("/api/chat", json={"messages": messages})
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()["exercises"], [])
+        self.assertEqual(response.json()["exploration_exercises"], [])
         self.assertIn("통증 위치", response.json()["reply"])
         self.assertIn("심해지는지", response.json()["reply"])
         self.assertIn("악화시키는 운동은 중단", response.json()["reply"])
@@ -741,7 +983,11 @@ class ChatApiTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "0334", {item["source_id"] for item in response.json()["exercises"]}
+            "0334",
+            {
+                item["source_id"]
+                for item in self._all_response_exercises(response.json())
+            },
         )
         self.assertIn("주간 루틴 초안", response.json()["reply"])
 
@@ -766,7 +1012,7 @@ class ChatApiTests(unittest.TestCase):
             )
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()["exercises"], [])
+        self.assertEqual(response.json()["exploration_exercises"], [])
         self.assertIn("응급 진료", response.json()["reply"])
 
     def test_known_technical_complexity_is_reported_but_missing_data_is_null(
@@ -785,7 +1031,8 @@ class ChatApiTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         by_id = {
-            item["source_id"]: item for item in response.json()["exercises"]
+            item["source_id"]: item
+            for item in self._all_response_exercises(response.json())
         }
         self.assertEqual(by_id["0334"]["technical_complexity"], "low")
         self.assertIsNone(by_id["0355"]["technical_complexity"])
@@ -823,12 +1070,15 @@ class ChatApiTests(unittest.TestCase):
             and exercise.equipment_id == "dumbbell"
         }
         self.assertEqual(
-            {exercise["source_id"] for exercise in body["exercises"]},
+            {
+                exercise["source_id"]
+                for exercise in self._all_response_exercises(body)
+            },
             expected_ids,
         )
         kickback = next(
             exercise
-            for exercise in body["exercises"]
+            for exercise in self._all_response_exercises(body)
             if exercise["source_id"] == "0333"
         )
         self.assertEqual(kickback["primary_muscle_ko"], "삼두근")
@@ -851,10 +1101,14 @@ class ChatApiTests(unittest.TestCase):
                 for content in requests
             ]
 
-        for response in responses:
+        for response, source_id in zip(responses, ("0178", "0025"), strict=True):
             self.assertEqual(response.status_code, 200)
-        self.assertEqual(responses[0].json()["exercises"][0]["source_id"], "0178")
-        self.assertEqual(responses[1].json()["exercises"][0]["source_id"], "0025")
+            self.assertEqual(
+                response.json()["state"]["routine"]["sessions"][0]["exercises"][0][
+                    "exercise"
+                ]["source_id"],
+                source_id,
+            )
 
     def test_novice_self_report_promotes_only_research_supported_exercises(
         self,
@@ -871,9 +1125,9 @@ class ChatApiTests(unittest.TestCase):
             )
 
         self.assertEqual(response.status_code, 200)
-        source_ids = [item["source_id"] for item in response.json()["exercises"]]
-        self.assertEqual(source_ids[0], "0334")
-        self.assertLess(source_ids.index("0333"), source_ids.index("0355"))
+        body = response.json()
+        planned = body["state"]["routine"]["sessions"][0]["exercises"][0]
+        self.assertEqual(planned["exercise"]["source_id"], "0334")
 
     def test_missing_conflicting_and_unsupported_contexts_ask_instead_of_guessing(
         self,
@@ -899,7 +1153,7 @@ class ChatApiTests(unittest.TestCase):
 
         self.assertTrue(all(response.status_code == 200 for response in responses))
         self.assertTrue(
-            all(response.json()["exercises"] == [] for response in responses)
+            all(response.json()["exploration_exercises"] == [] for response in responses)
         )
         self.assertIn("근비대와 근력", responses[0].json()["reply"])
         self.assertIn("근비대와 근력", responses[1].json()["reply"])
@@ -920,16 +1174,27 @@ class ChatApiTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         catalog = load_exercise_catalog()
-        expected_ids = {
+        eligible_order = [
             exercise.source_id
             for exercise in catalog.exercises
             if exercise.primary_muscle_id in {"abs", "lower_abs"}
             and exercise.equipment_id == "body_weight"
+        ]
+        expected_ids = set(eligible_order)
+        body = response.json()
+        all_ids = {
+            exercise["source_id"] for exercise in self._all_response_exercises(body)
         }
-        self.assertEqual(
-            {exercise["source_id"] for exercise in response.json()["exercises"]},
-            expected_ids,
-        )
+        default_ids = self._default_recommendation_ids(body)
+        exploration_ids = {
+            exercise["source_id"] for exercise in body["exploration_exercises"]
+        }
+        self.assertEqual(len(expected_ids), 89)
+        self.assertEqual(all_ids, expected_ids)
+        self.assertTrue(default_ids)
+        self.assertLessEqual(default_ids, set(eligible_order[:5]))
+        self.assertTrue(default_ids.isdisjoint(exploration_ids))
+        self.assertEqual(default_ids | exploration_ids, expected_ids)
 
     def test_added_workout_areas_match_primary_secondary_targets_and_equipment(
         self,
@@ -983,19 +1248,32 @@ class ChatApiTests(unittest.TestCase):
                     }
                     body = response.json()
                     self.assertEqual(
-                        {exercise["source_id"] for exercise in body["exercises"]},
+                        {
+                            exercise["source_id"]
+                            for exercise in self._all_response_exercises(body)
+                        },
                         expected_ids,
                     )
                     self.assertIn(
                         source_id,
-                        {exercise["source_id"] for exercise in body["exercises"]},
+                        {
+                            exercise["source_id"]
+                            for exercise in self._all_response_exercises(body)
+                        },
                     )
                     self.assertTrue(
                         all(
                             exercise["equipment_ko"] == equipment_name
-                            for exercise in body["exercises"]
+                            for exercise in self._all_response_exercises(body)
                         )
                     )
+                    default_ids = self._default_recommendation_ids(body)
+                    exploration_ids = {
+                        exercise["source_id"]
+                        for exercise in body["exploration_exercises"]
+                    }
+                    self.assertTrue(default_ids.isdisjoint(exploration_ids))
+                    self.assertEqual(default_ids | exploration_ids, expected_ids)
 
 
     def test_untranslated_catalog_labels_are_explicit(self) -> None:
@@ -1013,7 +1291,7 @@ class ChatApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         exercise = next(
             exercise
-            for exercise in response.json()["exercises"]
+            for exercise in self._all_response_exercises(response.json())
             if exercise["source_id"] == "0011"
         )
         self.assertIsNone(exercise["name_ko"])
@@ -1042,13 +1320,16 @@ class ChatApiTests(unittest.TestCase):
             or "obliques" in exercise.secondary_muscle_ids
         }
         self.assertEqual(
-            {exercise["source_id"] for exercise in response.json()["exercises"]},
+            {
+                exercise["source_id"]
+                for exercise in self._all_response_exercises(response.json())
+            },
             expected_ids,
         )
         self.assertTrue(
             any(
                 "복사근" in exercise["secondary_muscles_ko"]
-                for exercise in response.json()["exercises"]
+                for exercise in self._all_response_exercises(response.json())
             )
         )
 
@@ -1067,7 +1348,7 @@ class ChatApiTests(unittest.TestCase):
             )
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()["exercises"], [])
+        self.assertEqual(response.json()["exploration_exercises"], [])
         self.assertIn("경력 기준 정렬을 건너뛰고", response.json()["reply"])
 
     def test_generic_chat_request_asks_for_workout_area(self) -> None:
@@ -1083,7 +1364,7 @@ class ChatApiTests(unittest.TestCase):
             )
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()["exercises"], [])
+        self.assertEqual(response.json()["exploration_exercises"], [])
         self.assertIn("복근", response.json()["reply"])
         self.assertIn("복사근", response.json()["reply"])
 
@@ -1102,7 +1383,7 @@ class ChatApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("장비를 알려주세요", response.json()["reply"])
         self.assertIn("건너뛰", response.json()["reply"])
-        self.assertEqual(response.json()["exercises"], [])
+        self.assertEqual(response.json()["exploration_exercises"], [])
 
     def test_explicit_delegation_returns_candidates_across_equipment(self) -> None:
         app = create_app(
@@ -1133,10 +1414,13 @@ class ChatApiTests(unittest.TestCase):
             if exercise.primary_muscle_id in focus_muscle_ids
         }
         self.assertEqual(
-            {exercise["source_id"] for exercise in body["exercises"]},
+            {
+                exercise["source_id"]
+                for exercise in self._all_response_exercises(body)
+            },
             expected_ids,
         )
-        self.assertLess(len(body["exercises"]), len(catalog.exercises))
+        self.assertLess(len(body["exploration_exercises"]), len(catalog.exercises))
         source_exercises = {
             exercise.source_id: exercise for exercise in catalog.exercises
         }
@@ -1149,7 +1433,7 @@ class ChatApiTests(unittest.TestCase):
             for item in catalog.muscles
         }
         pattern_names = {item.id: item.name_ko for item in catalog.movement_patterns}
-        for recommendation in body["exercises"]:
+        for recommendation in self._all_response_exercises(body):
             source = source_exercises[recommendation["source_id"]]
             self.assertEqual(recommendation["name"], source.name)
             self.assertEqual(recommendation["name_ko"], source.name_ko)
@@ -1169,11 +1453,16 @@ class ChatApiTests(unittest.TestCase):
         self.assertTrue(
             all(
                 exercise["primary_muscle_ko"] and exercise["equipment_ko"]
-                for exercise in body["exercises"]
+                for exercise in self._all_response_exercises(body)
             )
         )
         self.assertGreater(
-            len({exercise["equipment_ko"] for exercise in body["exercises"]}), 1
+            len(
+                {
+                    exercise["equipment_ko"]
+                    for exercise in self._all_response_exercises(body)
+                }
+            ), 1
         )
 
     def test_unsupported_workout_request_does_not_return_exercises(self) -> None:
@@ -1194,7 +1483,7 @@ class ChatApiTests(unittest.TestCase):
 
         for response in responses:
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(response.json()["exercises"], [])
+            self.assertEqual(response.json()["exploration_exercises"], [])
             for supported_area in (
                 "푸시 데이",
                 "등·허리 운동",
