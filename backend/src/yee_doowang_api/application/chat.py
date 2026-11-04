@@ -182,7 +182,7 @@ ChatAction = Literal["message", "confirm_context"]
 class ChatReply(_ChatModel):
     reply: str
     state: ConversationState
-    exercises: list[RecommendedExercise]
+    exploration_exercises: list[RecommendedExercise]
 
 
 class ChatCompletionError(Exception):
@@ -217,6 +217,9 @@ class ExerciseReasoner(Protocol):
         workout_day_id: str,
         equipment_constraint: EquipmentConstraint,
     ) -> list[Exercise]: ...
+
+
+_MAX_RECOMMENDED_CANDIDATES_PER_DAY = 5
 
 
 class ChatService:
@@ -271,7 +274,7 @@ class ChatService:
                     "운동을 멈추고 지금 응급 진료를 받으세요."
                 ),
                 state=ConversationState(context=context),
-                exercises=[],
+                exploration_exercises=[],
             )
         if intent.safety_status == "clarify":
             fallback = (
@@ -281,7 +284,7 @@ class ChatService:
             return ChatReply(
                 reply=intent.message or fallback,
                 state=ConversationState(context=context),
-                exercises=[],
+                exploration_exercises=[],
             )
 
         unknown_days = (
@@ -293,7 +296,7 @@ class ChatService:
             return ChatReply(
                 reply=self._supported_workout_days_reply(),
                 state=ConversationState(context=state.context),
-                exercises=[],
+                exploration_exercises=[],
             )
 
 
@@ -307,14 +310,14 @@ class ChatService:
             return ChatReply(
                 reply=self._equipment_options_reply(),
                 state=ConversationState(context=state.context),
-                exercises=[],
+                exploration_exercises=[],
             )
         question = self._next_context_question(context)
         if question is not None:
             return ChatReply(
                 reply=question,
                 state=ConversationState(context=context),
-                exercises=[],
+                exploration_exercises=[],
             )
 
         if action == "confirm_context":
@@ -325,7 +328,7 @@ class ChatService:
                         phase="confirming_context",
                         context=context,
                     ),
-                    exercises=[],
+                    exploration_exercises=[],
                 )
             return await self._draft_routine(messages, state)
         if state.phase == "reviewing_routine" and context == state.context:
@@ -334,7 +337,7 @@ class ChatService:
         return ChatReply(
             reply=self._context_summary(context),
             state=ConversationState(phase="confirming_context", context=context),
-            exercises=[],
+            exploration_exercises=[],
         )
 
     @staticmethod
@@ -357,7 +360,7 @@ class ChatService:
             return ChatReply(
                 reply=question,
                 state=ConversationState(context=context),
-                exercises=[],
+                exploration_exercises=[],
             )
 
         if context.workout_day_ids.status != "provided":
@@ -367,7 +370,7 @@ class ChatService:
                     "지원 부위를 알려주시면 언제든 이어서 구성할게요."
                 ),
                 state=ConversationState(context=context),
-                exercises=[],
+                exploration_exercises=[],
             )
         day_ids = context.workout_day_ids.value or []
         if context.sessions_per_week.status != "provided":
@@ -377,7 +380,7 @@ class ChatService:
                     "운동 횟수를 알려주시면 언제든 이어서 구성할게요."
                 ),
                 state=ConversationState(context=context),
-                exercises=[],
+                exploration_exercises=[],
             )
 
         equipment_field = context.equipment
@@ -388,13 +391,13 @@ class ChatService:
                 return ChatReply(
                     reply="장비를 모르거나 답하고 싶지 않으면 건너뛰어 주세요.",
                     state=ConversationState(context=context),
-                    exercises=[],
+                    exploration_exercises=[],
                 )
             if set(equipment_ids) - self._known_equipment_ids:
                 return ChatReply(
                     reply=self._equipment_options_reply(),
                     state=ConversationState(context=context),
-                    exercises=[],
+                    exploration_exercises=[],
                 )
             constraint = EquipmentConstraint(
                 mode="specified" if equipment_intent.mode == "specified" else "unrestricted",
@@ -407,6 +410,7 @@ class ChatService:
 
         preferences = self._recommendation_preferences(context)
         candidates_by_day: dict[str, list[Exercise]] = {}
+        eligible_candidates_by_day: dict[str, list[Exercise]] = {}
         for day_id in day_ids:
             candidates = await self._reasoner.recommend(
                 workout_day_id=day_id,
@@ -419,16 +423,20 @@ class ChatService:
                         "등록 운동이 없어요. 부위나 장비 조건을 수정해 주세요."
                     ),
                     state=ConversationState(context=context),
-                    exercises=[],
+                    exploration_exercises=[],
                 )
             evidence_reply = self._evidence_coverage_reply(candidates, preferences)
             if evidence_reply is not None:
                 return ChatReply(
                     reply=evidence_reply,
                     state=ConversationState(context=context),
-                    exercises=[],
+                    exploration_exercises=[],
                 )
-            candidates_by_day[day_id] = self._rank_candidates(candidates, preferences)
+            ranked_candidates = self._rank_candidates(candidates, preferences)
+            eligible_candidates_by_day[day_id] = ranked_candidates
+            candidates_by_day[day_id] = ranked_candidates[
+                :_MAX_RECOMMENDED_CANDIDATES_PER_DAY
+            ]
 
         candidate_ids = {
             exercise.source_id
@@ -463,9 +471,15 @@ class ChatService:
             ),
             sessions=planned_sessions,
         )
+        default_recommendation_ids = {
+            exercise.source_id
+            for session in planned_sessions
+            for item in session.exercises
+            for exercise in (item.exercise, *item.alternatives)
+        }
         all_candidates = {
             exercise.source_id: exercise
-            for candidates in candidates_by_day.values()
+            for candidates in eligible_candidates_by_day.values()
             for exercise in candidates
         }
         available_minutes = (
@@ -490,7 +504,11 @@ class ChatService:
                 context=context,
                 routine=routine,
             ),
-            exercises=[self._present_exercise(item) for item in all_candidates.values()],
+            exploration_exercises=[
+                self._present_exercise(item)
+                for source_id, item in all_candidates.items()
+                if source_id not in default_recommendation_ids
+            ],
         )
 
     def _validated_sessions(

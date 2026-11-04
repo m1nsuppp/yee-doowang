@@ -65,7 +65,7 @@ export type ChatAction = "message" | "confirm_context";
 export type ChatResponse = {
   reply: string;
   state: ConversationState;
-  exercises: RecommendedExercise[];
+  exploration_exercises: RecommendedExercise[];
 };
 
 const apiBaseUrl =

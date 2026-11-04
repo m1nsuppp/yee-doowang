@@ -31,7 +31,7 @@
 
 목표·경력은 사용자가 직접 밝힌 정보만 반영합니다. 현재 근거가 연결된 목표는 근비대와 근력 진행이며, 초보·복귀 적합도 근거도 해당 운동에만 연결됩니다. 근거가 부족한 목표·경력 기준은 임의 판단하지 않고 확인하거나 건너뛰게 합니다. 성별·나이·운동 기간만으로 능력이나 초보 여부를 추정하지 않습니다.
 
-후보 순위는 `backend/data/exercise-catalog.json`의 출처 연결 프로필을 사용합니다. ExerciseAPI v1.1.0의 CC BY 4.0 메타데이터는 근비대의 `is_gold_standard`, `sfr_class`, 같은 대체 그룹 내 `preferred_rank`와 근력 진행 호환성의 `loadable`·`e1rm_substitution_group`에 사용합니다. 근력 호환성은 외부 중량 진행 기록이 가능하다는 뜻이지, 해당 운동이 모두에게 최선이라는 판정이 아닙니다. ExerciseAPI는 `is_gold_standard`를 연구·기전·훈련 관행을 종합한 편집상 지표로, SFR 등 일부 분류도 큐레이터 평가로 설명하므로 확정적 효과를 보장하지 않습니다. 초보자 표기는 Kompf, Rhodes, Lee의 전문가 합의 연구에서 특정 운동이 초보자에게 적절하다고 판단된 경우에만 연결합니다. 원문 프로필이 없는 운동은 해당 항목에서 미평가된 것이며 부적합하다는 뜻이 아닙니다.
+후보 순위는 `backend/data/exercise-catalog.json`의 출처 연결 프로필을 사용합니다. ExerciseAPI v1.1.0의 CC BY 4.0 메타데이터는 근비대의 `is_gold_standard`, `sfr_class`, 같은 대체 그룹 내 `preferred_rank`와 근력 진행 호환성의 `loadable`·`e1rm_substitution_group`에 사용합니다. 근력 호환성은 외부 중량 진행 기록이 가능하다는 뜻이지, 해당 운동이 모두에게 최선이라는 판정이 아닙니다. ExerciseAPI는 `is_gold_standard`를 연구·기전·훈련 관행을 종합한 편집상 지표로, SFR 등 일부 분류도 큐레이터 평가로 설명하므로 확정적 효과를 보장하지 않습니다. 초보자 표기는 Kompf, Rhodes, Lee의 전문가 합의 연구에서 특정 운동이 초보자에게 적절하다고 판단된 경우에만 연결합니다. 원문 프로필이 없는 운동은 해당 항목에서 미평가된 것이며 부적합하다는 뜻이 아닙니다. 각 운동일에서 순위 상위 5개만 루틴 초안 모델에 전달합니다. 기본 루틴과 설명은 그 제한 후보에서만 생성하고, 나머지 조건 일치 후보는 `exploration_exercises`로 분리해 탐색 목록에 제공합니다. `movement_pattern_id`는 분류값이며 운동 품질 점수가 아닙니다.
 
 출처: [ExerciseAPI 데이터 v1.1.0](https://github.com/aschenoni/exercise-api/tree/main/data), CC BY 4.0 (변환된 메타데이터 사용; 표시 문구: “Exercise data by ExerciseAPI (https://exercise-api.com), licensed under CC BY 4.0.”); [Kompf et al., *Selecting Resistance Training Exercises for Novices: A Delphi Study with Expert Consensus*](https://pmc.ncbi.nlm.nih.gov/articles/PMC11873903/), doi:10.1177/15598276221115662. 연구의 초보 정의는 저항 운동 경험이 없거나 여러 해 운동하지 않은 경우이며, 태그가 있는 운동에만 적용합니다.
 
@@ -98,4 +98,4 @@ curl -sS http://localhost:8000/api/chat \
 
 맥락을 검토한 응답의 `state.phase`가 `confirming_context`이면 다음 요청에 그 `state`와 `action: "confirm_context"`를 보내 초안을 만듭니다. 일반 메시지에는 `action: "message"`를 사용합니다. 요청의 `messages`는 시간순이며 마지막 메시지는 `user`, 최대 30개입니다. 구조화된 대화 상태가 최근 메시지에 없는 맥락을 보존합니다.
 
-응답은 `reply`, 다음 요청에 보낼 `state`, 조건에 맞는 카탈로그 후보 `exercises`입니다. 초안은 `state.routine`에 포함되고, 세션마다 운동과 선택 이유·대안을 제공합니다. routine schema에는 세트·횟수·중량 필드가 없습니다. `state.context`의 각 항목은 `not_asked`, `provided`, `unknown`, `skipped` 상태로 구분됩니다. `새 대화`는 브라우저 메모리의 메시지와 맥락을 함께 지웁니다. 설정이 없으면 `503`, 공급자 또는 구조화 응답 처리 실패는 `502`로 반환합니다.
+응답은 `reply`, 다음 요청에 보낼 `state`, 그리고 루틴 카드·대안에서 제외된 나머지 조건 일치 후보 `exploration_exercises`입니다. 기본 운동 카드와 선택 이유·대안은 `state.routine`에 포함되며, 세트·횟수·중량 필드는 없습니다. `state.context`의 각 항목은 `not_asked`, `provided`, `unknown`, `skipped` 상태로 구분됩니다. `새 대화`는 브라우저 메모리의 메시지와 맥락을 함께 지웁니다. 설정이 없으면 `503`, 공급자 또는 구조화 응답 처리 실패는 `502`로 반환합니다.
