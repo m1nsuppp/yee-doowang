@@ -52,6 +52,32 @@ class FixtureCoachModel:
             experience = "unknown"
         return RecommendationPreferences(goal=goal, experience=experience)
 
+    @staticmethod
+    def _safety(transcript: str) -> tuple[str, str]:
+        resolved_terms = ("통증은 이제 없어", "통증은 없어", "이제 안 아파", "완전히 나았")
+        if any(term in transcript for term in resolved_terms):
+            return "none", ""
+
+        urgent_terms = (
+            "양쪽 다리",
+            "회음부",
+            "소변을 보기 어렵",
+            "대소변",
+            "교통사고",
+        )
+        if any(term in transcript for term in urgent_terms):
+            return "urgent", "운동을 중단하고 지금 응급 진료를 받으세요."
+        pain_terms = ("통증", "아파", "아프", "엉치", "꼬리뼈", "저림", "부상")
+        if any(term in transcript for term in pain_terms):
+            return (
+                "clarify",
+                (
+                    "통증 위치와 어떤 동작에서 심해지는지 알려주세요. "
+                    "통증을 악화시키는 운동은 중단해 주세요."
+                ),
+            )
+        return "none", ""
+
     async def interpret(
         self,
         messages: Sequence[ConversationMessage],
@@ -62,13 +88,15 @@ class FixtureCoachModel:
         transcript = " ".join(
             message.content.lower() for message in messages if message.role == "user"
         )
+        safety_status, safety_message = self._safety(transcript)
         personalization = self._preferences(transcript)
         if "하체" in transcript or "등 운동" in transcript or "이두" in transcript:
             return IntentDecision(
                 workout_intent="unsupported",
                 equipment=EquipmentIntent(mode="unknown", equipment_ids=[]),
                 personalization=personalization,
-                message="현재는 푸시 데이, 복근, 복사근 운동 추천을 지원합니다.",
+                safety_status=safety_status,
+                message=safety_message or "현재는 푸시 데이, 복근, 복사근 운동 추천을 지원합니다.",
             )
 
         if "복사근" in transcript or "옆구리" in transcript:
@@ -89,7 +117,8 @@ class FixtureCoachModel:
                 workout_intent="clarify",
                 equipment=EquipmentIntent(mode="unknown", equipment_ids=[]),
                 personalization=personalization,
-                message="푸시 데이, 복근, 복사근 중 원하는 운동 부위를 알려주세요.",
+                safety_status=safety_status,
+                message=safety_message or "푸시 데이, 복근, 복사근 중 원하는 운동 부위를 알려주세요.",
             )
 
         if "알아서" in transcript or "아무거나" in transcript:
@@ -120,7 +149,8 @@ class FixtureCoachModel:
             workout_intent=workout_intent,
             equipment=equipment,
             personalization=personalization,
-            message=message,
+            safety_status=safety_status,
+            message=safety_message or message,
         )
 
     async def answer(
@@ -223,6 +253,110 @@ class ChatApiTests(unittest.TestCase):
                 if source.movement_pattern_id is not None
                 else None,
             )
+
+    def test_current_pain_is_clarified_before_candidates_are_returned(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+        messages = [
+            {
+                "role": "user",
+                "content": "PushDay 근비대 목표, 경력 건너뛰고 덤벨 추천해줘.",
+            },
+            {"role": "assistant", "content": "알겠습니다."},
+            {"role": "user", "content": "엉치뼈가 아픈데 어떤 운동을 해야 해?"},
+        ]
+
+        with TestClient(app) as client:
+            response = client.post("/api/chat", json={"messages": messages})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["exercises"], [])
+        self.assertIn("통증 위치", response.json()["reply"])
+        self.assertIn("심해지는지", response.json()["reply"])
+        self.assertIn("악화시키는 운동은 중단", response.json()["reply"])
+
+    def test_explicitly_resolved_pain_restores_normal_recommendations(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+        messages = [
+            {
+                "role": "user",
+                "content": "PushDay 근비대 목표, 경력 건너뛰고 덤벨 추천해줘.",
+            },
+            {"role": "assistant", "content": "알겠습니다."},
+            {"role": "user", "content": "엉치뼈가 아파요."},
+            {
+                "role": "assistant",
+                "content": "통증 위치와 악화되는 동작을 알려주세요.",
+            },
+            {"role": "user", "content": "통증은 이제 없어."},
+        ]
+
+        with TestClient(app) as client:
+            response = client.post("/api/chat", json={"messages": messages})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            "0334", {item["source_id"] for item in response.json()["exercises"]}
+        )
+        self.assertEqual(response.json()["reply"], "조건에 맞는 운동 후보를 찾았어요.")
+
+    def test_red_flag_symptoms_stop_recommendations_and_escalate(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": "하체 운동 추천해줘. 허리가 아프고 양쪽 다리가 저리며 "
+                            "회음부 감각이 없고 소변을 보기 어려워요.",
+                        }
+                    ]
+                },
+            )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["exercises"], [])
+        self.assertIn("응급 진료", response.json()["reply"])
+
+    def test_known_technical_complexity_is_reported_but_missing_data_is_null(
+        self,
+    ) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": "PushDay 근비대 목표, 경력 건너뛰고 덤벨 추천해줘.",
+                        }
+                    ]
+                },
+            )
+
+        self.assertEqual(response.status_code, 200)
+        by_id = {
+            item["source_id"]: item for item in response.json()["exercises"]
+        }
+        self.assertEqual(by_id["0334"]["technical_complexity"], "low")
+        self.assertIsNone(by_id["0355"]["technical_complexity"])
+
 
     def test_korean_muscle_alias_maps_to_same_push_candidates(self) -> None:
         app = create_app(

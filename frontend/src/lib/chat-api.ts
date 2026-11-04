@@ -11,6 +11,7 @@ export type RecommendedExercise = {
   secondary_muscles_ko: string[];
   equipment_ko: string;
   movement_pattern_ko: string | null;
+  technical_complexity: "low" | "moderate" | "high" | null;
 };
 
 export type ChatResponse = {

@@ -21,6 +21,7 @@ class OpenRouterAdapterTests(unittest.IsolatedAsyncioTestCase):
                 "workout_intent": "push_day",
                 "equipment": {"mode": "delegate_any", "equipment_ids": []},
                 "personalization": {"goal": "hypertrophy", "experience": "novice"},
+                "safety_status": "none",
                 "message": "",
             },
             {"reply": "장비 제한 없이 후보를 골랐어요."},
@@ -123,6 +124,7 @@ class OpenRouterAdapterTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(intent.workout_intent, "push_day")
         self.assertEqual(intent.personalization.goal, "hypertrophy")
         self.assertEqual(intent.personalization.experience, "novice")
+        self.assertEqual(intent.safety_status, "none")
         self.assertEqual(intent.equipment.mode, "delegate_any")
         self.assertEqual(intent.equipment.equipment_ids, [])
         self.assertEqual(answer.reply, "장비 제한 없이 후보를 골랐어요.")
