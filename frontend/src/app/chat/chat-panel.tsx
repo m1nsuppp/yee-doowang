@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import {
   type FormEvent,
   type KeyboardEvent,
@@ -282,9 +284,13 @@ export default function ChatPanel() {
     <section className="flex h-full min-h-0 flex-col">
       <header className="flex h-16 shrink-0 items-center justify-between border-b border-[#e2e6de] px-4 sm:px-8">
         <div className="flex min-w-0 flex-1 items-center gap-3">
-          <span className="grid size-9 place-items-center rounded-xl bg-[#183d31] text-xs font-black tracking-tight text-[#d8f36c]">
-            YD
-          </span>
+          <Image
+            alt=""
+            className="size-11 rounded-xl object-cover"
+            height={44}
+            src="/yee-dowang.png"
+            width={44}
+          />
           <span className="shrink-0 whitespace-nowrap font-extrabold tracking-tight">
             이두왕
           </span>
@@ -320,9 +326,16 @@ export default function ChatPanel() {
                 }`}
               >
                 {message.role === "assistant" && (
-                  <p className="mb-2 text-xs font-semibold text-[#718077]">
-                    이두왕
-                  </p>
+                  <div className="mb-2 flex items-center gap-2 text-xs font-semibold text-[#718077]">
+                    <Image
+                      alt=""
+                      className="size-7 rounded-md object-cover"
+                      height={28}
+                      src="/yee-dowang.png"
+                      width={28}
+                    />
+                    <span>이두왕</span>
+                  </div>
                 )}
                 <p
                   className={`whitespace-pre-wrap text-sm leading-7 ${
@@ -435,11 +448,23 @@ export default function ChatPanel() {
             </article>
           ))}
           {isSending && (
-            <p className="text-sm text-[#68756d]" role="status">
-              {conversationState.phase === "confirming_context"
-                ? "주간 루틴 초안을 만들고 있어요…"
-                : "대화 맥락을 확인하고 있어요…"}
-            </p>
+            <div
+              className="flex items-center gap-3 rounded-2xl border border-[#e2e6de] bg-white/70 px-3 py-2 text-sm text-[#52645a]"
+              role="status"
+            >
+              <Image
+                alt=""
+                className="size-9 shrink-0 rounded-lg object-cover"
+                height={36}
+                src="/yee-dowang.png"
+                width={36}
+              />
+              <span>
+                {conversationState.phase === "confirming_context"
+                  ? "이두왕이 주간 루틴을 왕답게 짜고 있어요…"
+                  : "이두왕이 운동의 왕도를 찾고 있어요…"}
+              </span>
+            </div>
           )}
           {error && (
             <div
