@@ -22,6 +22,8 @@ import {
   sendChatMessage,
 } from "../../lib/chat-api";
 
+import ConsultationSummary from "./consultation-summary";
+
 type DisplayMessage = ChatMessage & {
   id: string;
   explorationExercises?: RecommendedExercise[];
@@ -151,7 +153,8 @@ export default function ChatPanel() {
     createInitialConversationState,
   );
   const [draft, setDraft] = useState("");
-  const [isSending, setIsSending] = useState(false);
+  const [pendingAction, setPendingAction] = useState<ChatAction | null>(null);
+  const isSending = pendingAction !== null;
   const [error, setError] = useState<string | null>(null);
   const transcriptRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -180,7 +183,7 @@ export default function ChatPanel() {
     activeRequestRef.current = controller;
     lastActionRef.current = action;
     setError(null);
-    setIsSending(true);
+    setPendingAction(action);
 
     try {
       const response = await sendChatMessage(
@@ -220,7 +223,7 @@ export default function ChatPanel() {
     } finally {
       if (activeRequestRef.current === controller) {
         activeRequestRef.current = null;
-        setIsSending(false);
+        setPendingAction(null);
       }
     }
   }
@@ -277,7 +280,7 @@ export default function ChatPanel() {
     setMessages([]);
     setDraft("");
     setError(null);
-    setIsSending(false);
+    setPendingAction(null);
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
       textareaRef.current.focus();
@@ -311,6 +314,10 @@ export default function ChatPanel() {
           새 대화
         </button>
       </header>
+
+      {conversationState.mode === "routine" && (
+        <ConsultationSummary state={conversationState} />
+      )}
 
       <div
         ref={transcriptRef}
@@ -393,6 +400,22 @@ export default function ChatPanel() {
                       <p className="text-xs text-[#68756d]">
                         회당 목표 시간: {message.routine.minutes_per_session}분.
                         운동별 소요 시간 자료가 없어 완료 시간은 보장하지
+                        않습니다.
+                      </p>
+                    )}
+                    {message.state?.context.minutes_per_session_range.value && (
+                      <p className="text-xs text-[#68756d]">
+                        기록한 회당 가능 시간 범위:{" "}
+                        {
+                          message.state.context.minutes_per_session_range.value
+                            .minimum_minutes
+                        }
+                        –
+                        {
+                          message.state.context.minutes_per_session_range.value
+                            .maximum_minutes
+                        }
+                        분. 운동별 소요 시간 자료가 없어 범위 안 완료는 보장하지
                         않습니다.
                       </p>
                     )}
@@ -485,9 +508,9 @@ export default function ChatPanel() {
                 width={36}
               />
               <span>
-                {conversationState.phase === "confirming_context"
-                  ? "이두왕이 주간 루틴을 왕답게 짜고 있어요…"
-                  : "이두왕이 운동의 왕도를 찾고 있어요…"}
+                {pendingAction === "confirm_context"
+                  ? "확인한 조건으로 주간 루틴을 만들고 있어요…"
+                  : "말씀하신 내용을 살펴보고 답변하고 있어요…"}
               </span>
             </div>
           )}
@@ -528,7 +551,7 @@ export default function ChatPanel() {
           <textarea
             ref={textareaRef}
             id="chat-message"
-            className="max-h-40 min-h-11 flex-1 resize-none overflow-y-auto bg-transparent px-3 py-3 text-sm leading-6 outline-none placeholder:text-[#929c94]"
+            className="max-h-40 min-h-11 min-w-0 flex-1 resize-none overflow-y-auto bg-transparent px-3 py-3 text-sm leading-6 outline-none placeholder:text-[#929c94]"
             placeholder="운동에 관해 궁금한 점을 묻거나, 원하는 루틴을 말해주세요"
             rows={1}
             maxLength={2000}

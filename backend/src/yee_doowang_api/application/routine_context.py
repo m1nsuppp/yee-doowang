@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import Literal
 
 from yee_doowang_api.application.chat_models import (
@@ -8,9 +9,18 @@ from yee_doowang_api.application.chat_models import (
     ConversationState,
     QuickReply,
     RoutineContext,
+    RoutineContextUpdate,
     WorkoutSplitTemplate,
 )
 from yee_doowang_api.application.exercise_catalog import ExerciseCatalog
+
+
+@dataclass(frozen=True)
+class IntakeQuestion:
+    field: str
+    prompt: str
+    rationale: str
+    quick_replies: list[QuickReply]
 
 
 class RoutineContextManager:
@@ -30,14 +40,17 @@ class RoutineContextManager:
             for item in catalog.equipment
         }
 
-    def merge(self, previous: RoutineContext, updates: RoutineContext) -> RoutineContext:
+    def merge(
+        self,
+        previous: RoutineContext,
+        updates: RoutineContextUpdate,
+        *,
+        explicit_minutes_target: bool = False,
+    ) -> RoutineContext:
         merged = previous.model_dump()
         changed_fields: set[str] = set()
-        system_fields = {"split_template", "split_proposal_rejected"}
         stopped_set_report: Literal["unknown", "skipped", "delegated"] | None = None
-        for field_name in RoutineContext.model_fields:
-            if field_name in system_fields:
-                continue
+        for field_name in RoutineContextUpdate.model_fields:
             previous_field = getattr(previous, field_name)
             update_field = getattr(updates, field_name)
             if update_field.status == "not_asked":
@@ -56,6 +69,33 @@ class RoutineContextManager:
                     merged[field_name] = update_field.model_dump()
             else:
                 merged[field_name] = update_field.model_dump()
+
+        if merged["minutes_per_session_range"]["status"] == "provided":
+            target = merged["minutes_per_session"]
+            time_changed = bool(
+                changed_fields & {"minutes_per_session_range", "minutes_per_session"}
+            )
+            if target["status"] == "provided" and time_changed:
+                if not (
+                    explicit_minutes_target
+                    and updates.minutes_per_session.status == "provided"
+                ):
+                    # A changed availability range never selects a target implicitly.
+                    target["status"] = "unknown"
+                    target["value"] = None
+                elif updates.minutes_per_session_range.status == "not_asked":
+                    time_range = merged["minutes_per_session_range"]["value"]
+                    if not (
+                        time_range["minimum_minutes"]
+                        <= target["value"]
+                        <= time_range["maximum_minutes"]
+                    ):
+                        # An explicit replacement time supersedes an older range,
+                        # but a newly supplied range must still validate as given.
+                        merged["minutes_per_session_range"] = {
+                            "status": "not_asked",
+                            "value": None,
+                        }
 
         if stopped_set_report is not None:
             follow_up_status = updates.weekly_direct_sets_follow_up.status
@@ -181,23 +221,6 @@ class RoutineContextManager:
             for frequency in range(1, 8)
         ]
 
-    def context_question_quick_replies(
-        self,
-        context: RoutineContext,
-    ) -> list[QuickReply]:
-        if context.workout_day_ids.status in {"not_asked", "unknown", "delegated"}:
-            return []
-        if context.workout_split_type.status in {"unknown", "delegated"}:
-            return self._split_type_quick_replies()
-        if (
-            context.workout_split_type.status == "provided"
-            and context.workout_split_assignment.status
-            in {"not_asked", "unknown", "skipped"}
-        ):
-            return self.split_assignment_quick_replies()
-        if context.sessions_per_week.status in {"not_asked", "unknown", "delegated"}:
-            return self._session_frequency_quick_replies()
-        return []
 
     @staticmethod
     def _split_type_quick_replies() -> list[QuickReply]:
@@ -276,121 +299,181 @@ class RoutineContextManager:
             quick_replies=self.split_quick_replies(),
         )
 
-    def next_context_question(self, context: RoutineContext) -> str | None:
+    def next_context_question(self, context: RoutineContext) -> IntakeQuestion | None:
         if context.workout_day_ids.status in {"not_asked", "unknown", "delegated"}:
             supported = ", ".join(self._workout_day_names.values())
             if context.workout_day_ids.status == "unknown":
-                return f"운동 부위를 아직 모르시는 걸로 기록했어요. 지원 부위({supported}) 중 하나 이상을 직접 골라 주세요. 선택을 맡기거나 건너뛰어도 됩니다."
-            if context.workout_day_ids.status == "delegated":
-                return f"부위 선택은 맡기셨지만 임의로 고르지 않겠습니다. 지원 부위({supported}) 중 원하는 부위를 알려주시거나 건너뛰어 주세요."
-            return (
-                "주간 일정에 넣을 운동 부위를 알려주세요. 현재 지원 범위: "
-                f"{supported}. 모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
+                prompt = f"운동 부위는 아직 정하지 않으셨군요. 지원 부위({supported}) 중 골라주시거나 부위 추천을 맡겨주세요. 부위 선택을 건너뛸 수도 있어요."
+            elif context.workout_day_ids.status == "delegated":
+                prompt = f"부위 선택은 맡기셨지만 임의로 정하지 않을게요. 지원 부위({supported}) 중 원하는 부위를 알려주시거나 건너뛰어 주세요."
+            else:
+                prompt = f"주간 일정에 넣을 운동 부위를 알려주세요. 현재 지원 범위: {supported}. 부위 추천을 맡기거나 선택을 건너뛸 수도 있어요."
+            return IntakeQuestion(
+                field="workout_day_ids",
+                prompt=prompt,
+                rationale="선택한 부위를 기준으로 운동 후보와 일정을 구성해요. 선택하지 않은 부위를 임의로 추가하지 않아요.",
+                quick_replies=[
+                    QuickReply(
+                        label="부위 추천받기",
+                        message="운동 부위 선택을 맡길게요. 목표와 주당 횟수에 맞춰 추천해 주세요.",
+                    )
+                ] + [
+                    QuickReply(label=day.name_ko, message=f"{day.name_ko} 운동을 하고 싶어요.")
+                    for day in self._workout_days_by_id.values()
+                ] + [QuickReply(label="부위 건너뛰기", message="운동 부위 선택은 건너뛸게요.")],
             )
         if context.workout_split_type.status in {"unknown", "delegated"}:
-            return (
-                "주당 빈도와 분할 방식은 별개예요. 2분할 여부를 모르시거나 선택을 맡기신 것으로 기록했어요. "
-                "2분할 A/B 구성을 정할지, 분할 없이 선택 부위별 일정을 만들지 알려주세요."
+            return IntakeQuestion(
+                field="workout_split_type",
+                prompt="2분할 A/B 구성을 정할까요, 아니면 분할 없이 선택 부위별 일정을 만들까요?",
+                rationale="주당 운동 횟수와 분할 방식은 별개예요. 횟수만 보고 A/B 분할을 정하지 않아요.",
+                quick_replies=self._split_type_quick_replies(),
             )
         if context.workout_split_type.status == "provided":
             assignment_status = context.workout_split_assignment.status
             if context.split_proposal_rejected:
-                return self.split_assignment_question(context)
+                return IntakeQuestion(
+                    field="workout_split_assignment",
+                    prompt=self.split_assignment_question(context),
+                    rationale="확인하지 않은 A/B 구성은 사용하지 않아요. 원하는 구성이나 새 제안 요청을 반영할게요.",
+                    quick_replies=self.split_assignment_quick_replies(),
+                )
             if assignment_status in {"not_asked", "unknown"}:
-                return (
-                    "주당 빈도는 별도로 보존했어요. 2분할 A/B에 넣을 운동 부위를 각각 알려주세요. "
-                    "예: A는 가슴·어깨, B는 하체. 구성을 맡기려면 ‘A/B 분할을 알아서 제안해줘’라고 해주세요."
+                return IntakeQuestion(
+                    field="workout_split_assignment",
+                    prompt=(
+                        "2분할 A/B에 넣을 운동 부위를 각각 알려주세요. "
+                        "예: A는 가슴·어깨, B는 하체. 구성을 맡기려면 ‘A/B 분할을 알아서 제안해줘’라고 해주세요."
+                    ),
+                    rationale="선택한 부위가 A와 B에 어떻게 나뉘는지 알아야 2분할 일정을 만들 수 있어요. 주당 빈도는 그대로 유지해요.",
+                    quick_replies=self.split_assignment_quick_replies(),
                 )
             if assignment_status == "skipped":
-                return (
-                    "A/B 구성을 건너뛰어 2분할 초안은 만들지 않아요. A/B 부위를 직접 정하거나, "
-                    "제안을 맡기거나, 2분할 요청을 취소해 주세요."
+                return IntakeQuestion(
+                    field="workout_split_assignment",
+                    prompt="A/B 구성을 건너뛰어 2분할 초안은 아직 만들지 않아요. A/B 부위를 직접 정하거나 제안을 맡기거나, 2분할 요청을 취소해 주세요.",
+                    rationale="2분할에는 A/B 구성이 필요해요. 분할 요청을 취소해도 선택한 운동 부위와 주당 빈도는 유지해요.",
+                    quick_replies=self.split_assignment_quick_replies() + [
+                        QuickReply(label="2분할 취소", message="2분할 없이 진행합니다.")
+                    ],
                 )
         if context.sessions_per_week.status in {"not_asked", "unknown", "delegated"}:
             if context.sessions_per_week.status == "unknown":
-                return "주당 운동 횟수를 모르시는 걸로 기록했어요. 주 1~7회 중 정확한 횟수를 고르거나, 주간 일정 항목을 건너뛰어 주세요."
-            if context.sessions_per_week.status == "delegated":
-                return "주당 횟수 선택을 맡기셨지만 빈도를 임의로 정하지 않겠습니다. 주 1~7회 중 하나를 알려주시거나 주간 일정 항목을 건너뛰어 주세요."
-            return (
-                "주간 일정을 만들려면 주당 운동 횟수가 필요해요. "
-                "주 1~7회 중 알려주세요. 모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
+                prompt = "주당 운동 횟수는 아직 정하지 않으셨군요. 주 1~7회 중 하나를 고르거나 주간 일정 항목을 건너뛰어 주세요."
+            elif context.sessions_per_week.status == "delegated":
+                prompt = "주당 횟수 선택을 맡기셨지만 빈도를 임의로 정하지 않을게요. 주 1~7회 중 하나를 고르거나 주간 일정 항목을 건너뛰어 주세요."
+            else:
+                prompt = "일주일에 몇 번 운동할 수 있나요? 주 1~7회 중 알려주시거나 주간 일정 항목을 건너뛰어 주세요."
+            return IntakeQuestion(
+                field="sessions_per_week",
+                prompt=prompt,
+                rationale="주간 일정을 만들려면 주당 운동 횟수가 필요해요. 가능한 횟수만 반영하고 빈도를 대신 정하지 않아요.",
+                quick_replies=self._session_frequency_quick_replies() + [
+                    QuickReply(label="주간 일정 건너뛰기", message="주간 일정 항목은 건너뛸게요.")
+                ],
             )
-        if context.goal.status in {"not_asked", "unknown"}:
+        if context.goal.status in {"not_asked", "unknown"} or (
+            context.goal.status == "provided" and context.goal.value == "other"
+        ):
             if context.goal.status == "unknown":
-                return "우선 목표를 아직 정하지 않으신 걸로 기록했어요. 근비대, 근력 중 하나를 고르거나 두 목표를 함께 추구할 수 있어요. 목표 분류를 건너뛰어도 됩니다."
-            return (
-                "우선할 목표를 근비대, 근력 중에서 고르거나 두 목표를 함께 추구할 수 있어요. 모르거나 답하고 싶지 않으면 "
-                "목표 분류를 건너뛸 수 있어요."
-            )
-        if context.goal.status == "provided" and context.goal.value == "other":
-            return (
-                "현재 출처가 연결된 목표는 근비대와 근력 진행이에요. "
-                "하나를 고르거나 두 목표를 함께 선택하거나 목표 분류를 건너뛰어 주세요."
+                prompt = "우선 목표는 아직 정하지 않으셨군요. 근비대, 근력 또는 두 목표를 함께 선택하거나 목표 분류를 건너뛰어 주세요."
+            elif context.goal.status == "provided":
+                prompt = "말씀하신 목표는 현재 지원 범위에 없어요. 근비대, 근력 또는 두 목표를 함께 선택하거나 목표 분류를 건너뛰어 주세요."
+            else:
+                prompt = "우선할 목표가 근비대인가요, 근력인가요? 둘 다 선택하거나 목표 분류를 건너뛸 수도 있어요."
+            return IntakeQuestion(
+                field="goal",
+                prompt=prompt,
+                rationale="현재 출처가 연결된 목표는 근비대와 근력 진행이에요. 목표에 맞는 운동 후보와 근거를 살펴보기 위해 확인해요.",
+                quick_replies=[
+                    QuickReply(label="근비대", message="목표는 근비대예요."),
+                    QuickReply(label="근력", message="목표는 근력이에요."),
+                    QuickReply(label="둘 다", message="근비대와 근력을 함께 목표로 할게요."),
+                    QuickReply(label="목표 건너뛰기", message="목표 분류는 건너뛸게요."),
+                ],
             )
         if context.adult_eligibility.status in {"not_asked", "unknown", "delegated"} and (
             context.goal.status == "provided" and context.goal.value in {"hypertrophy", "both"}
         ):
-            if context.adult_eligibility.status in {"unknown", "delegated"}:
-                return "성인 여부는 추정하지 않아요. 근비대 처방의 적용 범위를 확인하려면 만 18세 이상인지 직접 알려주시거나 해당 확인을 건너뛰어 주세요."
-            return (
-                "근비대 처방 근거는 건강한 성인 대상이에요. 만 18세 이상인가요? "
-                "답하고 싶지 않으면 성인 여부를 건너뛸 수 있어요."
+            return IntakeQuestion(
+                field="adult_eligibility",
+                prompt="만 18세 이상인가요? 직접 알려주시거나 성인 여부 확인을 건너뛰어 주세요.",
+                rationale="근비대 처방 근거는 건강한 성인 대상이라 적용 범위를 확인해요. 성인 여부를 추정하거나, 성인이라는 이유만으로 건강하다고 판단하지 않아요.",
+                quick_replies=[
+                    QuickReply(label="만 18세 이상", message="만 18세 이상 성인이에요."),
+                    QuickReply(label="만 18세 미만", message="만 18세 미만이에요."),
+                    QuickReply(label="성인 확인 건너뛰기", message="성인 여부 확인은 건너뛸게요."),
+                ],
             )
         if context.experience.status in {"not_asked", "unknown"}:
-            if context.experience.status == "unknown":
-                return "운동 경력을 모르시는 걸로 기록했어요. 처음 시작·여러 해 쉬었다가 복귀·경험자 중 자기보고로 알려주시거나 경력 분류를 건너뛰어 주세요."
-            return (
-                "저항 운동을 처음 시작했거나 몇 년 쉬었다가 복귀했나요? "
-                "경력은 자기보고로만 반영하며, 모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
+            return IntakeQuestion(
+                field="experience",
+                prompt="저항 운동 경력은 처음 시작·여러 해 쉬었다가 복귀·경험자 중 어디에 가까운가요? 경력 분류를 건너뛰어도 괜찮아요.",
+                rationale="경력은 자기보고로만 반영해요. 지원하는 경력별 운동 후보와 처방 근거를 구분하기 위해 확인해요.",
+                quick_replies=[
+                    QuickReply(label="처음 시작", message="저항 운동을 처음 시작해요."),
+                    QuickReply(label="오랜만에 복귀", message="저항 운동을 여러 해 쉬었다가 복귀해요."),
+                    QuickReply(label="경험자", message="저항 운동 경험자예요."),
+                    QuickReply(label="경력 건너뛰기", message="경력 분류는 건너뛸게요."),
+                ],
             )
         if context.experience.status == "provided" and context.experience.value == "experienced" and not (
             context.goal.status == "provided" and context.goal.value in {"hypertrophy", "both"}
         ):
-            return (
-                "경험자 적합도 근거는 아직 없어요. 경력 기준을 건너뛰고 "
-                "목표·다른 조건만 반영할까요?"
+            return IntakeQuestion(
+                field="experience",
+                prompt="경력 기준을 건너뛰고 목표와 다른 조건만 반영할까요?",
+                rationale="현재 목표에는 경험자 적합도 근거가 아직 없어요. 경력 기준을 건너뛰어도 이미 알려주신 다른 조건은 유지해요.",
+                quick_replies=[
+                    QuickReply(label="경력 기준 건너뛰기", message="경력 기준은 건너뛰고 다른 조건만 반영해 주세요.")
+                ],
             )
-        if context.minutes_per_session.status in {"not_asked", "unknown"}:
-            if context.minutes_per_session_range.status == "provided":
-                time_range = context.minutes_per_session_range.value
-                return (
-                    f"회당 {time_range.minimum_minutes}~{time_range.maximum_minutes}분 범위로 기록했어요. "
-                    "초안에 사용할 목표 시간 하나를 직접 골라 주세요. 중간값을 대신 선택하지 않습니다."
-                )
+        if context.minutes_per_session.status in {"not_asked", "unknown", "delegated"} and context.minutes_per_session_range.status != "provided":
+            skip_time = QuickReply(label="시간 조건 건너뛰기", message="시간 조건은 건너뛸게요.")
             if context.minutes_per_session.status == "unknown":
-                return "회당 시간을 모르시는 걸로 기록했어요. 사용 가능한 분 수 하나를 알려주시거나 시간 조건을 건너뛰어 주세요."
-            return (
-                "한 번 운동할 때 가능한 시간을 알려주세요. 모르거나 답하고 싶지 않으면 "
-                "시간 조건을 건너뛸 수 있어요."
+                prompt = "회당 가능한 시간을 아직 정하지 않으셨군요. 가능한 분 수 하나를 알려주시거나 시간 조건을 건너뛰어 주세요."
+            elif context.minutes_per_session.status == "delegated":
+                prompt = "시간 선택을 맡기셨지만 임의로 정하지 않을게요. 가능한 분 수 하나를 알려주시거나 시간 조건을 건너뛰어 주세요."
+            else:
+                prompt = "한 번 운동할 때 가능한 시간을 알려주세요. 시간 조건을 건너뛰어도 괜찮아요."
+            return IntakeQuestion(
+                field="minutes_per_session",
+                prompt=prompt,
+                rationale="직접 알려주신 가능 시간은 루틴 맥락에 기록해요. 운동별 소요 시간 자료가 없어 완료 시간을 보장하지는 않아요.",
+                quick_replies=[skip_time],
             )
         if context.equipment.status in {"not_asked", "unknown"} or (
             context.equipment.value is not None
             and context.equipment.value.mode == "unknown"
         ):
-            if context.equipment.status == "unknown" or (
-                context.equipment.value is not None
-                and context.equipment.value.mode == "unknown"
-            ):
-                return (
-                    "장비를 모르신다고 기록했어요. 장소 이름으로 장비를 추측하지 않겠습니다. "
-                    "사용 가능한 장비를 직접 적거나 ‘알아서 선택’으로 맡기거나, 장비 조건을 건너뛰어 주세요."
-                )
-            return (
-                "사용할 수 있는 장비를 알려주세요. 모르거나 답하고 싶지 않으면 건너뛰어도 돼요. "
-                "건너뛰면 보유 장비를 가정하지 않고 장비 제한 없이 후보를 살펴봅니다."
+            return IntakeQuestion(
+                field="equipment",
+                prompt="사용할 수 있는 장비를 알려주세요. 장비 제한 없이 선택을 맡기거나 장비 조건을 건너뛸 수도 있어요.",
+                rationale="실제로 사용할 수 있는 장비에 맞춰 운동 후보를 좁혀요. 장소만 보고 장비를 추측하지 않으며, 맡기거나 건너뛰면 보유 장비를 가정하지 않아요.",
+                quick_replies=[
+                    QuickReply(label="장비 선택 맡기기", message="장비는 제한 없이 알아서 선택해 주세요."),
+                    QuickReply(label="장비 조건 건너뛰기", message="장비 조건은 건너뛸게요."),
+                ],
             )
         if context.preferences.status in {"not_asked", "unknown"}:
-            if context.preferences.status == "unknown":
-                return "선호를 모르시는 걸로 기록했어요. 선호 운동이나 피하고 싶은 동작을 알려주시거나 선호 항목을 건너뛸 수 있어요."
-            return "선호하거나 피하고 싶은 동작이 있나요? 없거나 답하고 싶지 않으면 건너뛰어도 돼요."
+            return IntakeQuestion(
+                field="preferences",
+                prompt="선호하거나 피하고 싶은 동작이 있나요? 없다고 알려주시거나 선호 항목을 건너뛸 수 있어요.",
+                rationale="원하는 동작과 피하고 싶은 동작을 운동 후보를 살펴볼 때 참고해요. 말씀하지 않은 선호는 추정하지 않아요.",
+                quick_replies=[
+                    QuickReply(label="선호 없음", message="선호하거나 피하고 싶은 동작은 없어요."),
+                    QuickReply(label="선호 건너뛰기", message="선호 항목은 건너뛸게요."),
+                ],
+            )
         if context.known_constraints.status in {"not_asked", "unknown", "delegated"}:
-            if context.known_constraints.status == "unknown":
-                return "알고 있는 제약을 모르시는 걸로 기록했어요. 진단을 추정하지 않으며, 알고 있는 제한을 말하거나 제약 확인을 건너뛸 수 있어요."
-            if context.known_constraints.status == "delegated":
-                return "제약 확인을 맡기셨지만 제약이 없다고 추정하지 않겠습니다. 알고 있는 제한을 직접 알려주시거나 확인을 건너뛰어 주세요."
-            return (
-                "운동에서 고려할 제약이나 불편함을 알고 있나요? 진단명은 추정하지 않으며, "
-                "모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
+            return IntakeQuestion(
+                field="known_constraints",
+                prompt="운동에서 고려할 제약이나 불편함이 있나요? 알고 있는 내용을 직접 알려주시거나 제약 확인을 건너뛰어 주세요.",
+                rationale="알고 있는 제약에 따라 처방 근거를 적용할 수 있는지 확인해요. 진단이나 ‘제약 없음’을 추정하지 않아요.",
+                quick_replies=[
+                    QuickReply(label="알고 있는 제약 없음", message="알고 있는 운동 제약이나 불편함은 없어요."),
+                    QuickReply(label="제약 확인 건너뛰기", message="제약 확인은 건너뛸게요."),
+                ],
             )
         if (
             context.goal.status == "provided"
@@ -418,11 +501,16 @@ class RoutineContextManager:
             if missing_muscle_ids:
                 stage_ids = missing_muscle_ids[:3]
                 missing_names = ", ".join(self._muscle_names[muscle_id] for muscle_id in stage_ids)
-                return (
-                    "최근 한 주의 근육별 직접 세트 수는 경험자 처방을 현재 보고에 맞추기 위해 필요해요. "
-                    "한 번에 세 근육씩 받을게요. "
-                    f"이번 단계: {missing_names}. 형식: 근육명마다 지난 한 주의 직접 세트 수를 적어주세요. "
-                    "값을 추정하지 않으며, 모르는 값은 비워 두거나 보고를 건너뛸 수 있어요."
+                return IntakeQuestion(
+                    field="weekly_direct_sets_by_muscle",
+                    prompt=(
+                        f"최근 한 주의 직접 세트 수를 알려주세요. 이번 단계: {missing_names}. "
+                        "근육명마다 세트 수를 적어주시고, 모르는 값은 비워 두거나 보고를 건너뛸 수 있어요."
+                    ),
+                    rationale="경험자 처방을 최근 운동량 보고에 맞추기 위해 확인해요. 한 번에 세 근육씩 받고, 빠진 세트 수를 추정하지 않아요.",
+                    quick_replies=[
+                        QuickReply(label="세트 수 보고 건너뛰기", message="최근 근육별 주간 직접 세트 수 보고는 건너뛸게요.")
+                    ],
                 )
         return None
 
@@ -449,18 +537,19 @@ class RoutineContextManager:
         else:
             equipment_text = self._field_status_label(context.equipment.status)
 
-        if context.minutes_per_session.status == "provided":
-            time_text = f"{context.minutes_per_session.value}분"
-            if context.minutes_per_session_range.status == "provided":
-                time_range = context.minutes_per_session_range.value
-                time_text += f" (보고 범위 {time_range.minimum_minutes}~{time_range.maximum_minutes}분)"
-        elif context.minutes_per_session_range.status == "provided":
+        if context.minutes_per_session_range.status == "provided":
             time_range = context.minutes_per_session_range.value
-            time_text = f"{time_range.minimum_minutes}~{time_range.maximum_minutes}분 범위"
-            if context.minutes_per_session.status in {"skipped", "delegated"}:
-                time_text += f", 목표 {self._field_status_label(context.minutes_per_session.status)}"
+            time_text = (
+                f"{time_range.minimum_minutes}~{time_range.maximum_minutes}분 가용 범위"
+            )
+            if context.minutes_per_session.status == "provided":
+                time_text += f" (목표 {context.minutes_per_session.value}분)"
+            elif context.minutes_per_session.status == "skipped":
+                time_text += " (시간 목표를 직접 건너뜀)"
             else:
-                time_text += ", 목표 미선택"
+                time_text += " (별도 목표 시간 미지정)"
+        elif context.minutes_per_session.status == "provided":
+            time_text = f"{context.minutes_per_session.value}분"
         else:
             time_text = self._field_status_label(context.minutes_per_session.status)
 

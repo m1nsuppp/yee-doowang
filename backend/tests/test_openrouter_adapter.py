@@ -44,7 +44,7 @@ class OpenRouterAdapterTests(unittest.IsolatedAsyncioTestCase):
         )
         outputs = [
             {
-                "context": context.model_dump(mode="json"),
+                "context": context.model_dump(mode="json", exclude={"split_proposal_rejected", "split_template"}),
                 "safety_status": "none",
                 "message": "",
             },
@@ -145,7 +145,7 @@ class OpenRouterAdapterTests(unittest.IsolatedAsyncioTestCase):
             server.server_close()
             worker.join(timeout=5)
 
-        self.assertEqual(intent.context, context)
+        self.assertEqual(intent.context.model_dump(), context.model_dump(exclude={"split_proposal_rejected", "split_template"}))
         self.assertEqual(intent.safety_status, "none")
         self.assertEqual(proposal.sessions[0].workout_day_id, "push_day")
         self.assertEqual(

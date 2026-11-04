@@ -26,7 +26,10 @@ from yee_doowang_api.application.hypertrophy_prescription import (
     HypertrophyProgressionRule,
     WeeklyDirectSetTarget,
 )
-from yee_doowang_api.application.routine_context import RoutineContextManager
+from yee_doowang_api.application.routine_context import (
+    IntakeQuestion,
+    RoutineContextManager,
+)
 
 _MAX_RECOMMENDED_CANDIDATES_PER_DAY = 5
 
@@ -75,15 +78,16 @@ class RoutineBuilder:
         self,
         messages: Sequence[ConversationMessage],
         state: ConversationState,
-        context_question: str | None,
+        context_question: IntakeQuestion | None,
     ) -> ChatReply:
         context = state.context
         question = context_question
         if question is not None:
             return ChatReply(
-                reply=question,
+                reply=question.prompt,
                 state=ConversationState(context=context),
                 exploration_exercises=[],
+                quick_replies=question.quick_replies,
             )
 
         if context.workout_day_ids.status != "provided":
@@ -251,12 +255,19 @@ class RoutineBuilder:
             for candidates in eligible_candidates_by_day.values()
             for exercise in candidates
         }
-        available_minutes = (
-            f" 회당 {routine.minutes_per_session}분을 목표 시간으로 반영했지만, "
-            "운동별 소요 시간 자료가 없어 완료 시간은 보장하지 않아요."
-            if routine.minutes_per_session is not None
-            else ""
-        )
+        if routine.minutes_per_session is not None:
+            available_minutes = (
+                f" 회당 {routine.minutes_per_session}분을 목표 시간으로 반영했지만, "
+                "운동별 소요 시간 자료가 없어 완료 시간은 보장하지 않아요."
+            )
+        elif context.minutes_per_session_range.status == "provided":
+            time_range = context.minutes_per_session_range.value
+            available_minutes = (
+                f" 회당 가능한 시간은 {time_range.minimum_minutes}~{time_range.maximum_minutes}분으로 기록했어요. "
+                "운동별 소요 시간 자료가 없어 이 범위 안에 완료된다고 보장하지 않아요."
+            )
+        else:
+            available_minutes = ""
         equipment_note = (
             " 장비를 제한하지 않고 후보를 살펴봤어요. 보유 장비를 가정하지 않습니다."
             if constraint.mode == "unrestricted"

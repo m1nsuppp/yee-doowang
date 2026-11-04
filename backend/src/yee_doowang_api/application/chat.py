@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from collections.abc import Sequence
 from typing import Literal
 
@@ -20,6 +21,32 @@ from yee_doowang_api.application.hypertrophy_prescription import HypertrophyGuid
 from yee_doowang_api.application.routine_builder import RoutineBuilder
 from yee_doowang_api.application.routine_context import RoutineContextManager
 
+_TIME_RANGE = re.compile(
+    r"[0-9]+\s*(?:분|시간)?\s*(?:~|～|〜|-|부터|에서)\s*[0-9]+\s*(?:분|시간)"
+)
+_SESSION_TIME = re.compile(r"[1-9][0-9]*\s*(?:분|시간)")
+
+
+def _user_explicitly_selected_session_time(content: str) -> bool:
+    ranges = [match.span() for match in _TIME_RANGE.finditer(content)]
+    return any(
+        not any(start <= match.start() and match.end() <= end for start, end in ranges)
+        for match in _SESSION_TIME.finditer(content)
+    )
+
+
+def _time_range_acknowledgement(context: RoutineContext) -> str | None:
+    if (
+        context.minutes_per_session_range.status != "provided"
+        or context.minutes_per_session.status == "provided"
+    ):
+        return None
+    time_range = context.minutes_per_session_range.value
+    return (
+        f"회당 가능한 시간은 {time_range.minimum_minutes}~{time_range.maximum_minutes}분 범위로 기록했어요. "
+        "단일 목표 시간을 정하지 않아도 루틴 상담을 진행할 수 있어요. "
+        "운동별 소요 시간 자료가 없어 이 범위 안에 완료된다고 보장할 수는 없어요."
+    )
 
 class ChatService:
     def __init__(
@@ -42,6 +69,7 @@ class ChatService:
             hypertrophy_guidelines,
             self._context_manager,
         )
+
     async def reply(
         self,
         messages: Sequence[ConversationMessage],
@@ -61,41 +89,19 @@ class ChatService:
             state.workout_day_recommendation,
             self._catalog.muscles,
         )
-        if state.mode == "general" and intent.conversation_action == "start_routine":
-            previous_context = RoutineContext()
-            context = self._context_manager.merge(previous_context, intent.context)
-            mode: Literal["general", "routine"] = "routine"
-        elif intent.conversation_action == "answer_only":
-            previous_context = state.context
-            context = (
-                self._context_manager.merge(state.context, intent.context)
-                if state.mode == "routine"
-                else state.context
+        starting_routine = state.mode == "general" and intent.conversation_action == "start_routine"
+        previous_context = RoutineContext() if starting_routine else state.context
+        mode: Literal["general", "routine"] = "routine" if starting_routine else state.mode
+        context = (
+            self._context_manager.merge(
+                previous_context, intent.context,
+                explicit_minutes_target=_user_explicitly_selected_session_time(
+                    messages[-1].content
+                ),
             )
-            mode = state.mode
-        else:
-            previous_context = state.context
-            context = self._context_manager.merge(state.context, intent.context)
-            mode = state.mode
-
-        if (
-            intent.conversation_action != "cancel_routine"
-            and context != previous_context
-            and not intent.explicit_minutes_target
-        ):
-            time_range_changed = (
-                context.minutes_per_session_range
-                != previous_context.minutes_per_session_range
-            )
-            target_changed = context.minutes_per_session != previous_context.minutes_per_session
-            if (
-                context.minutes_per_session_range.status == "provided"
-                and (time_range_changed or target_changed)
-                and context.minutes_per_session.status == "provided"
-            ):
-                data = context.model_dump()
-                data["minutes_per_session"] = {"status": "unknown", "value": None}
-                context = RoutineContext.model_validate(data)
+            if mode == "routine"
+            else previous_context
+        )
 
         if intent.safety_status == "urgent":
             return ChatReply(
@@ -127,27 +133,11 @@ class ChatService:
                 state=ConversationState(mode="general"),
                 exploration_exercises=[],
             )
-        if action != "confirm_context" and (
-            intent.conversation_action == "answer_only"
-            or (state.mode == "general" and intent.conversation_action != "start_routine")
-        ):
-            response_state = state
-            if state.mode == "routine" and context != state.context:
-                phase = (
-                    "confirming_split"
-                    if state.phase == "confirming_split" and context.split_template is not None
-                    else "collecting_context"
-                )
-                response_state = ConversationState(
-                    mode="routine",
-                    phase=phase,
-                    context=context,
-                )
+        if mode == "general":
             return ChatReply(
-                reply=intent.assistant_response or "편하게 이어서 말씀해 주세요.",
-                state=response_state,
+                reply=intent.training_answer or "운동에 관해 궁금한 점이나 만들고 싶은 루틴을 말씀해 주세요.",
+                state=state,
                 exploration_exercises=[],
-                quick_replies=self._pending_quick_replies(response_state),
             )
 
         response_prefix = ""
@@ -199,6 +189,32 @@ class ChatService:
                 state=ConversationState(mode="routine", context=context),
                 exploration_exercises=[],
             )
+        if action != "confirm_context" and intent.conversation_action == "answer_only":
+            response_state = state
+            if context != state.context:
+                phase = (
+                    "confirming_split"
+                    if context.split_template is not None
+                    and context.split_template.confirmation_status == "proposed"
+                    else "confirming_context"
+                    if self._context_manager.next_context_question(context) is None
+                    else "collecting_context"
+                )
+                response_state = ConversationState(mode="routine", phase=phase, context=context)
+            return ChatReply(
+                reply=intent.training_answer or "운동에 관해 궁금한 점을 조금 더 구체적으로 알려주세요.",
+                state=response_state,
+                exploration_exercises=[],
+                quick_replies=self._pending_quick_replies(response_state),
+            )
+
+        if intent.conversation_action == "explain_intake" and state.phase == "reviewing_routine" and context == state.context:
+            return ChatReply(
+                reply="확인하신 조건으로 만든 루틴은 그대로 유지하고 있어요. 바꾸고 싶은 운동이나 조건을 말씀해 주시면 그 부분을 함께 조정할게요.",
+                state=state,
+                exploration_exercises=[],
+            )
+
         proposal = state.workout_day_recommendation
         if proposal is not None:
             if intent.recommendation_confirmation == "accept":
@@ -217,11 +233,12 @@ class ChatService:
                 data = context.model_dump()
                 data["workout_day_ids"] = {"status": "not_asked", "value": None}
                 context = RoutineContext.model_validate(data)
+                question = self._context_manager.next_context_question(context)
                 return ChatReply(
-                    reply=self._context_manager.next_context_question(context) or "운동 부위를 직접 골라주세요.",
+                    reply=question.prompt if question is not None else "운동 부위를 직접 골라주세요.",
                     state=ConversationState(mode="routine", context=context),
                     exploration_exercises=[],
-                    quick_replies=self._workout_day_selection_quick_replies(),
+                    quick_replies=question.quick_replies if question is not None else [],
                 )
             elif context != state.context:
                 if context.workout_day_ids.status == "delegated":
@@ -265,12 +282,30 @@ class ChatService:
 
 
         question = self._context_manager.next_context_question(context)
+        time_note = (
+            _time_range_acknowledgement(context)
+            if intent.conversation_action == "explain_intake"
+            else None
+        )
         if question is not None:
             return ChatReply(
-                reply="\n\n".join(part for part in (response_prefix, question) if part),
+                reply="\n\n".join(part for part in (
+                    response_prefix,
+                    time_note,
+                    question.rationale if intent.conversation_action == "explain_intake" else "",
+                    question.prompt,
+                ) if part),
                 state=ConversationState(mode="routine", context=context),
                 exploration_exercises=[],
-                quick_replies=self._context_manager.context_question_quick_replies(context),
+                quick_replies=question.quick_replies,
+            )
+        if time_note is not None:
+            return ChatReply(
+                reply="\n\n".join((time_note, self._context_manager.context_summary(context))),
+                state=ConversationState(
+                    mode="routine", phase="confirming_context", context=context
+                ),
+                exploration_exercises=[],
             )
 
         if (
@@ -348,18 +383,16 @@ class ChatService:
             QuickReply(label="직접 고르기", message="추천한 부위 대신 직접 고를게"),
         ]
 
-    @staticmethod
-    def _workout_day_selection_quick_replies() -> list[QuickReply]:
-        return [
-            QuickReply(label="다른 추천", message="다른 운동 부위를 다시 추천해줘"),
-            QuickReply(label="직접 고르기", message="운동 부위를 직접 고를게"),
-        ]
 
     def _pending_quick_replies(self, state: ConversationState) -> list[QuickReply]:
         if state.workout_day_recommendation is not None:
             return self._workout_day_recommendation_quick_replies()
         if state.phase == "confirming_split":
             return self._context_manager.split_quick_replies()
+        if state.phase == "collecting_context":
+            question = self._context_manager.next_context_question(state.context)
+            if question is not None:
+                return question.quick_replies
         return []
 
 
@@ -377,5 +410,5 @@ class ChatService:
         messages: Sequence[ConversationMessage],
         state: ConversationState,
     ) -> ChatReply:
-        context_question = self._context_manager.next_context_question(state.context)
-        return await self._routine_builder.build(messages, state, context_question)
+        question = self._context_manager.next_context_question(state.context)
+        return await self._routine_builder.build(messages, state, question)

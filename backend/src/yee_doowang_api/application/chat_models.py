@@ -99,7 +99,7 @@ class EquipmentIntent(_ChatModel):
         return self
 
 
-class RoutineContext(_ChatModel):
+class RoutineContextUpdate(_ChatModel):
     workout_day_ids: ContextField[list[str]] = Field(default_factory=ContextField)
     goal: ContextField[Literal["hypertrophy", "strength", "both", "other"]] = Field(
         default_factory=ContextField
@@ -122,6 +122,9 @@ class RoutineContext(_ChatModel):
     workout_split_type: ContextField[Literal["ab"]] = Field(default_factory=ContextField)
     workout_split_assignment: ContextField[WorkoutSplitTemplate] = Field(default_factory=ContextField)
     weekly_direct_sets_follow_up: ContextField[Literal["remaining"]] = Field(default_factory=ContextField)
+
+
+class RoutineContext(RoutineContextUpdate):
     split_proposal_rejected: bool = False
     split_template: WorkoutSplitTemplate | None = None
 
@@ -167,14 +170,16 @@ class RecommendationPreferences(_ChatModel):
 
 
 class CoachTurn(_ChatModel):
-    context: RoutineContext
+    context: RoutineContextUpdate
     safety_status: Literal["none", "clarify", "urgent"]
     message: str = Field(max_length=1200)
-    assistant_response: str = Field(default="", max_length=1200)
+    training_answer: str = Field(
+        default="", max_length=1200,
+        description="운동 지식 질문의 답변만. 상담 조건 수락, 변경, 생략, 생성 약속은 포함하지 않는다.",
+    )
     conversation_action: Literal[
-        "start_routine", "continue_intake", "answer_only", "cancel_routine"
+        "start_routine", "continue_intake", "answer_only", "explain_intake", "cancel_routine"
     ] = "continue_intake"
-    explicit_minutes_target: bool = False
     split_confirmation: Literal["none", "confirm", "reject", "repropose"] = "none"
     recommendation_confirmation: Literal[
         "none", "accept", "reject", "repropose"
@@ -186,9 +191,9 @@ class CoachTurn(_ChatModel):
     def normalize_message(cls, message: str) -> str:
         return message.strip()
 
-    @field_validator("assistant_response")
+    @field_validator("training_answer")
     @classmethod
-    def normalize_assistant_response(cls, response: str) -> str:
+    def normalize_training_answer(cls, response: str) -> str:
         return response.strip()
 
 

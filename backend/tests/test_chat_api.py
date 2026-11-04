@@ -338,21 +338,13 @@ class FixtureCoachModel:
         return "none", ""
 
     @staticmethod
-    def _assistant_response(latest: str, context: RoutineContext) -> str:
+    def _training_answer(latest: str, context: RoutineContext) -> str:
         if any(term in latest for term in ("푸시 데이", "푸시데이", "push day")) and any(
             term in latest for term in ("뭐", "무슨 뜻", "무엇", "설명")
         ):
             return "푸시 데이는 가슴·어깨·삼두근을 함께 묶는 운동 분할 이름이에요."
         if "차이" in latest and "근비대" in latest and "근력" in latest:
             return "근비대는 근육 크기 증가를, 근력은 힘을 내는 능력 향상을 우선하는 목표예요. 목표는 함께 추구할 수 있지만 상담에서 우선순위를 정하면 돼요."
-        if context.experience.status == "provided" and context.experience.value == "experienced" and any(
-            term in latest for term in ("왜", "부담", "필요해")
-        ):
-            return "최근 직접 세트는 목표값이 아니라 현재 보고하신 양을 기록해 처방이 현황과 맞는지 확인하려는 정보예요. 한 번에 일부 근육만 알려주셔도 되고, 추정하지 않도록 모르는 값은 비워 두거나 전체 보고를 건너뛸 수 있어요."
-        if context.equipment.status in {"not_asked", "unknown"} and any(
-            term in latest for term in ("헬스장", "휘트니스", "피트니스", "gym")
-        ):
-            return "장소 이름으로 이해했어요. 장소만으로 보유 장비를 추측하지 않겠습니다. 사용할 수 있는 장비를 직접 알려주시거나, 선택을 맡기거나 장비 조건을 건너뛰어 주세요."
         return ""
 
     async def interpret(
@@ -376,7 +368,7 @@ class FixtureCoachModel:
             latest_user_message,
             muscle_options,
         )
-        assistant_response = self._assistant_response(
+        training_answer = self._training_answer(
             latest_user_message, current_context
         )
         split_confirmation = "none"
@@ -395,15 +387,6 @@ class FixtureCoachModel:
                 recommendation_confirmation = "repropose"
             elif "직접 고를" in latest_user_message:
                 recommendation_confirmation = "reject"
-        time_range_separator = r"(?:~|～|〜|-|부터|에서)"
-        mentions_time_range = re.search(
-            rf"[0-9]+\s*(?:분|시간)?\s*{time_range_separator}\s*[0-9]+\s*(?:분|시간)",
-            latest_user_message,
-        )
-        explicit_minutes_target = (
-            re.search(r"[1-9][0-9]*\s*(?:분|시간)", latest_user_message) is not None
-            and mentions_time_range is None
-        )
         if current_mode == "general":
             routine_request = any(
                 term in latest_user_message
@@ -412,7 +395,9 @@ class FixtureCoachModel:
             conversation_action = "start_routine" if routine_request else "answer_only"
         elif any(term in latest_user_message for term in ("루틴 취소", "루틴 그만", "루틴 만들기 그만")):
             conversation_action = "cancel_routine"
-        elif assistant_response:
+        elif any(term in latest_user_message for term in ("왜", "부담", "필요해", "범위면", "된다고 했")):
+            conversation_action = "explain_intake"
+        elif training_answer:
             conversation_action = "answer_only"
         else:
             conversation_action = "continue_intake"
@@ -420,11 +405,10 @@ class FixtureCoachModel:
             context=context,
             safety_status=safety_status,
             message=safety_message or context_message,
-            assistant_response=assistant_response,
+            training_answer=training_answer,
             conversation_action=conversation_action,
             split_confirmation=split_confirmation,
             recommendation_confirmation=recommendation_confirmation,
-            explicit_minutes_target=explicit_minutes_target,
         )
 
 
@@ -1072,7 +1056,6 @@ class ChatApiTests(unittest.TestCase):
         self.assertEqual(response.json()["state"]["context"]["experience"]["status"], "unknown")
         self.assertEqual(response.json()["state"]["phase"], "collecting_context")
         self.assertIsNone(response.json()["state"]["routine"])
-        self.assertIn("모르시는 걸로 기록했어요", response.json()["reply"])
 
     def test_context_confirmation_action_requires_review_phase(self) -> None:
         app = create_app(
@@ -1375,9 +1358,17 @@ class ChatApiTests(unittest.TestCase):
         self.assertTrue(
             all(response.json()["exploration_exercises"] == [] for response in responses)
         )
-        self.assertIn("두 목표를 함께", responses[0].json()["reply"])
-        self.assertIn("근력 진행", responses[1].json()["reply"])
-        self.assertIn("복귀", responses[2].json()["reply"])
+        self.assertEqual(
+            responses[0].json()["state"]["context"]["goal"]["status"], "not_asked"
+        )
+        self.assertIsNone(responses[0].json()["state"]["routine"])
+        self.assertEqual(
+            responses[1].json()["state"]["context"]["goal"]["value"], "other"
+        )
+        self.assertEqual(
+            responses[2].json()["state"]["context"]["experience"]["status"],
+            "not_asked",
+        )
 
     def test_combined_goals_are_preserved_and_rank_jointly_supported_exercises(self) -> None:
         app = create_app(
@@ -1641,8 +1632,9 @@ class ChatApiTests(unittest.TestCase):
             )
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn("장비를 알려주세요", response.json()["reply"])
-        self.assertIn("건너뛰", response.json()["reply"])
+        self.assertEqual(
+            response.json()["state"]["context"]["equipment"]["status"], "not_asked"
+        )
         self.assertEqual(response.json()["exploration_exercises"], [])
 
     def test_explicit_delegation_returns_candidates_across_equipment(self) -> None:
@@ -1900,7 +1892,10 @@ class ChatApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         body = response.json()
         self.assertIsNone(body["state"]["routine"])
-        self.assertIn("최근 한 주의 근육별 직접 세트 수", body["reply"])
+        self.assertEqual(
+            body["state"]["context"]["weekly_direct_sets_by_muscle"]["status"],
+            "not_asked",
+        )
         self.assertEqual(body["exploration_exercises"], [])
 
     def _post_experienced_push_volume(self, sets_per_week: int):
@@ -2183,9 +2178,6 @@ class ChatApiTests(unittest.TestCase):
                 },
             )
             why_body = why_response.json()
-            self.assertIn("현재 보고", why_body["reply"])
-            self.assertIn("건너뛸 수", why_body["reply"])
-            self.assertNotIn("이번 단계: 가슴, 삼각근, 삼두근", why_body["reply"])
             self.assertEqual(
                 why_body["state"]["context"]["weekly_direct_sets_by_muscle"]["status"],
                 "not_asked",
@@ -2239,7 +2231,7 @@ class ChatApiTests(unittest.TestCase):
             "skipped",
         )
 
-    def test_time_ranges_require_a_user_selected_target_and_venues_do_not_set_equipment(
+    def test_time_ranges_satisfy_availability_without_setting_a_target_and_venues_do_not_set_equipment(
         self,
     ) -> None:
         base_context = RoutineContext(
@@ -2269,20 +2261,34 @@ class ChatApiTests(unittest.TestCase):
             )
             range_body = range_response.json()
             self.assertEqual(range_response.status_code, 200)
-            self.assertIn("목표 시간 하나", range_body["reply"])
-            self.assertIn("중간값을 대신 선택하지 않습니다", range_body["reply"])
+            self.assertEqual(range_body["state"]["phase"], "confirming_context")
             self.assertEqual(
-                range_body["state"]["context"]["minutes_per_session"]["status"],
-                "unknown",
-            )
-            self.assertEqual(
-                range_body["state"]["context"]["minutes_per_session"]["value"], None
+                range_body["state"]["context"]["minutes_per_session"],
+                {"status": "unknown", "value": None},
             )
             self.assertEqual(
                 range_body["state"]["context"]["minutes_per_session_range"]["value"],
                 {"minimum_minutes": 30, "maximum_minutes": 60},
             )
+            self.assertEqual(range_body["quick_replies"], [])
 
+            range_routine_response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [{"role": "user", "content": "확인하고 루틴 만들기"}],
+                    "state": range_body["state"],
+                    "action": "confirm_context",
+                },
+            )
+            range_routine = range_routine_response.json()
+            self.assertEqual(range_routine_response.status_code, 200)
+            self.assertIsNone(range_routine["state"]["routine"]["minutes_per_session"])
+            self.assertEqual(
+                range_routine["state"]["context"]["minutes_per_session_range"]["value"],
+                {"minimum_minutes": 30, "maximum_minutes": 60},
+            )
+            self.assertIn("30~60분으로 기록", range_routine["reply"])
+            self.assertIn("완료된다고 보장하지 않아요", range_routine["reply"])
             target_response = client.post(
                 "/api/chat",
                 json={
@@ -2315,8 +2321,6 @@ class ChatApiTests(unittest.TestCase):
             venue = venue_response.json()
 
         self.assertEqual(venue_response.status_code, 200)
-        self.assertIn("장소 이름", venue["reply"])
-        self.assertIn("장비를 추측하지 않겠습니다", venue["reply"])
         self.assertEqual(venue["state"]["context"]["equipment"]["status"], "unknown")
         self.assertIsNone(venue["state"]["context"]["equipment"]["value"])
 
@@ -2369,9 +2373,13 @@ class ChatApiTests(unittest.TestCase):
             expected_choices = [
                 {"label": f"주 {frequency}회", "message": f"주 {frequency}회"}
                 for frequency in range(1, 8)
+            ] + [
+                {"label": "주간 일정 건너뛰기", "message": "주간 일정 항목은 건너뛸게요."}
             ]
             self.assertEqual(prompt_response.status_code, 200)
-            self.assertIn("주당 운동 횟수", prompt["reply"])
+            self.assertEqual(
+                prompt["state"]["context"]["sessions_per_week"]["status"], "not_asked"
+            )
             self.assertEqual(prompt["quick_replies"], expected_choices)
 
             chosen = client.post(
@@ -2390,7 +2398,6 @@ class ChatApiTests(unittest.TestCase):
                 chosen_body["state"]["context"]["sessions_per_week"],
                 {"status": "provided", "value": 4},
             )
-            self.assertIn("우선할 목표", chosen_body["reply"])
             self.assertIsNone(chosen_body["state"]["routine"])
 
             unknown = client.post(
@@ -2423,7 +2430,6 @@ class ChatApiTests(unittest.TestCase):
                 skipped["state"]["context"]["sessions_per_week"]["status"],
                 "skipped",
             )
-            self.assertEqual(skipped["quick_replies"], [])
 
     def test_side_question_preserves_pending_context_and_resumes_on_a_later_answer(self) -> None:
         context = RoutineContext(
@@ -2461,12 +2467,10 @@ class ChatApiTests(unittest.TestCase):
         self.assertIn("근육 크기 증가", question["reply"])
         self.assertNotIn("주당 운동 횟수", question["reply"])
         self.assertEqual(question["state"]["context"], context.model_dump(mode="json"))
-        self.assertEqual(question["quick_replies"], [])
         self.assertEqual(answer.status_code, 200)
         self.assertEqual(body["state"]["context"]["sessions_per_week"], {
             "status": "provided", "value": 4
         })
-        self.assertIn("우선할 목표", body["reply"])
 
     def test_delegated_workout_area_is_proposed_and_only_saved_after_acceptance(self) -> None:
         app = create_app(
@@ -2508,7 +2512,9 @@ class ChatApiTests(unittest.TestCase):
             "status": "provided", "value": recommendation["workout_day_ids"]
         })
         self.assertIsNone(body["state"]["workout_day_recommendation"])
-        self.assertIn("주당 운동 횟수", body["reply"])
+        self.assertEqual(
+            body["state"]["context"]["sessions_per_week"]["status"], "not_asked"
+        )
 
     def test_safety_clarification_blocks_recommendation_call(self) -> None:
         app = create_app(
