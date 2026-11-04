@@ -80,6 +80,7 @@ class MovementPattern(_CatalogModel):
 class WorkoutDay(_CatalogModel):
     id: str
     name_ko: str
+    aliases: list[str] = Field(default_factory=list)
     focus_muscle_ids: list[str]
     include_secondary_muscles: bool = False
 

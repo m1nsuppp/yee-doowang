@@ -27,7 +27,7 @@ class _ChatModel(BaseModel):
 
 
 class ContextField[T](_ChatModel):
-    status: Literal["not_asked", "provided", "unknown", "skipped"] = "not_asked"
+    status: Literal["not_asked", "provided", "unknown", "skipped", "delegated"] = "not_asked"
     value: T | None = None
 
     @model_validator(mode="after")
@@ -35,6 +35,34 @@ class ContextField[T](_ChatModel):
         if (self.status == "provided") != (self.value is not None):
             raise ValueError("only provided context fields may contain a value")
         return self
+class SessionTimeRange(_ChatModel):
+    minimum_minutes: int = Field(gt=0)
+    maximum_minutes: int = Field(gt=0)
+
+    @model_validator(mode="after")
+    def validate_range(self) -> SessionTimeRange:
+        if self.minimum_minutes >= self.maximum_minutes:
+            raise ValueError("time range minimum must be less than maximum")
+        return self
+
+
+class WorkoutSplitTemplate(_ChatModel):
+    day_a_ids: list[str] = Field(min_length=1)
+    day_b_ids: list[str] = Field(min_length=1)
+    confirmation_status: Literal["user_provided", "proposed", "confirmed"] = "user_provided"
+
+    @model_validator(mode="after")
+    def validate_day_groups(self) -> WorkoutSplitTemplate:
+        if len(self.day_a_ids) != len(set(self.day_a_ids)) or len(self.day_b_ids) != len(set(self.day_b_ids)):
+            raise ValueError("workout split groups must not repeat workout days")
+        if set(self.day_a_ids) & set(self.day_b_ids):
+            raise ValueError("workout split groups must be distinct")
+        return self
+
+
+class QuickReply(_ChatModel):
+    label: str
+    message: str
 
 
 
@@ -75,6 +103,7 @@ class RoutineContext(_ChatModel):
     )
     sessions_per_week: ContextField[int] = Field(default_factory=ContextField)
     minutes_per_session: ContextField[int] = Field(default_factory=ContextField)
+    minutes_per_session_range: ContextField[SessionTimeRange] = Field(default_factory=ContextField)
     equipment: ContextField[EquipmentIntent] = Field(default_factory=ContextField)
     preferences: ContextField[list[str]] = Field(default_factory=ContextField)
     known_constraints: ContextField[list[str]] = Field(default_factory=ContextField)
@@ -84,6 +113,11 @@ class RoutineContext(_ChatModel):
     weekly_direct_sets_by_muscle: ContextField[dict[str, int]] = Field(
         default_factory=ContextField
     )
+    workout_split_type: ContextField[Literal["ab"]] = Field(default_factory=ContextField)
+    workout_split_assignment: ContextField[WorkoutSplitTemplate] = Field(default_factory=ContextField)
+    weekly_direct_sets_follow_up: ContextField[Literal["remaining"]] = Field(default_factory=ContextField)
+    split_proposal_rejected: bool = False
+    split_template: WorkoutSplitTemplate | None = None
 
     @model_validator(mode="after")
     def validate_schedule_context(self) -> RoutineContext:
@@ -97,6 +131,23 @@ class RoutineContext(_ChatModel):
             raise ValueError("sessions per week must be between 1 and 7")
         if self.minutes_per_session.status == "provided" and self.minutes_per_session.value <= 0:
             raise ValueError("session minutes must be positive")
+        if self.workout_split_assignment.status == "provided":
+            if self.workout_split_type.status != "provided":
+                raise ValueError("an A/B assignment requires a requested A/B split")
+            template = self.workout_split_assignment.value
+            if template.confirmation_status != "user_provided":
+                raise ValueError("user split assignments must be explicitly supplied")
+        if self.split_template is not None:
+            if self.workout_split_type.status != "provided":
+                raise ValueError("an assistant split proposal requires an A/B split request")
+            if self.split_template.confirmation_status not in {"proposed", "confirmed"}:
+                raise ValueError("assistant split templates must be proposed or confirmed")
+        if self.minutes_per_session_range.status == "provided":
+            time_range = self.minutes_per_session_range.value
+            if self.minutes_per_session.status == "provided" and not (
+                time_range.minimum_minutes <= self.minutes_per_session.value <= time_range.maximum_minutes
+            ):
+                raise ValueError("session target must fall within the reported time range")
         if self.weekly_direct_sets_by_muscle.status == "provided":
             set_counts = self.weekly_direct_sets_by_muscle.value or {}
             if not set_counts or any(count < 0 for count in set_counts.values()):
@@ -113,11 +164,22 @@ class IntentDecision(_ChatModel):
     context: RoutineContext
     safety_status: Literal["none", "clarify", "urgent"]
     message: str = Field(max_length=1200)
+    assistant_response: str = Field(default="", max_length=1200)
+    preserve_context: bool = False
+    explicit_minutes_target: bool = False
+    split_confirmation: Literal["none", "confirm", "reject", "repropose"] = "none"
+
 
     @field_validator("message")
     @classmethod
     def normalize_message(cls, message: str) -> str:
         return message.strip()
+
+    @field_validator("assistant_response")
+    @classmethod
+    def normalize_assistant_response(cls, response: str) -> str:
+        return response.strip()
+
 
 
 class EquipmentConstraint(_ChatModel):
@@ -179,7 +241,7 @@ class RoutineDraft(_ChatModel):
     prescription_note: str | None = None
 
 class ConversationState(_ChatModel):
-    phase: Literal["collecting_context", "confirming_context", "reviewing_routine"] = (
+    phase: Literal["collecting_context", "confirming_context", "confirming_split", "reviewing_routine"] = (
         "collecting_context"
     )
     context: RoutineContext = Field(default_factory=RoutineContext)
@@ -189,6 +251,11 @@ class ConversationState(_ChatModel):
     def validate_phase_routine(self) -> ConversationState:
         if (self.phase == "reviewing_routine") != (self.routine is not None):
             raise ValueError("only a reviewed routine may contain a routine draft")
+        if self.phase == "confirming_split" and (
+            self.context.split_template is None
+            or self.context.split_template.confirmation_status != "proposed"
+        ):
+            raise ValueError("only an unconfirmed split proposal may be confirmed")
         return self
 
 
@@ -199,6 +266,7 @@ class ChatReply(_ChatModel):
     reply: str
     state: ConversationState
     exploration_exercises: list[RecommendedExercise]
+    quick_replies: list[QuickReply] = Field(default_factory=list)
 
 
 class ChatCompletionError(Exception):
@@ -294,7 +362,25 @@ class ChatService:
             self._catalog.workout_days,
             self._catalog.muscles,
         )
-        context = self._merge_context(state.context, intent.context)
+        context = (
+            state.context
+            if intent.preserve_context
+            else self._merge_context(state.context, intent.context)
+        )
+        if not intent.preserve_context and not intent.explicit_minutes_target:
+            time_range_changed = (
+                context.minutes_per_session_range
+                != state.context.minutes_per_session_range
+            )
+            target_changed = context.minutes_per_session != state.context.minutes_per_session
+            if (
+                context.minutes_per_session_range.status == "provided"
+                and (time_range_changed or target_changed)
+                and context.minutes_per_session.status == "provided"
+            ):
+                data = context.model_dump()
+                data["minutes_per_session"] = {"status": "unknown", "value": None}
+                context = RoutineContext.model_validate(data)
         if intent.safety_status == "urgent":
             return ChatReply(
                 reply=(
@@ -313,6 +399,29 @@ class ChatService:
                 reply=intent.message or fallback,
                 state=ConversationState(context=context),
                 exploration_exercises=[],
+            )
+        invalid_split_reply = self._invalid_split_configuration_reply(context)
+        if invalid_split_reply is not None:
+            return invalid_split_reply
+
+        if intent.assistant_response and intent.split_confirmation == "none":
+            continuation = self._next_context_question(context) or ""
+            if state.phase == "confirming_split" and context.split_template is not None:
+                continuation = self._split_confirmation_prompt(context)
+            phase = state.phase if context == state.context else "collecting_context"
+            if context.split_template is not None and context.split_template.confirmation_status == "proposed":
+                phase = "confirming_split"
+            return ChatReply(
+                reply="\n\n".join(part for part in (intent.assistant_response, continuation) if part),
+                state=ConversationState(phase=phase, context=context),
+                exploration_exercises=[],
+                quick_replies=(
+                    self._split_quick_replies()
+                    if phase == "confirming_split"
+                    else self._context_question_quick_replies(context)
+                    if continuation
+                    else []
+                ),
             )
 
         if self._has_unresolved_constraints(context.known_constraints):
@@ -339,7 +448,6 @@ class ChatService:
                 exploration_exercises=[],
             )
 
-
         equipment = context.equipment.value
         if (
             context.equipment.status == "provided"
@@ -363,13 +471,60 @@ class ChatService:
                     exploration_exercises=[],
                 )
 
+        if intent.split_confirmation == "repropose" and context.split_proposal_rejected:
+            data = context.model_dump()
+            data["split_proposal_rejected"] = False
+            context = RoutineContext.model_validate(data)
+            return self._propose_split(context)
+        if state.phase == "confirming_split" and context.split_template is not None:
+            if intent.split_confirmation == "confirm":
+                context = self._replace_split_template_status(context, "confirmed")
+                return ChatReply(
+                    reply=(
+                        "A/B 분할을 확인했어요.\n\n" + self._context_summary(context)
+                    ),
+                    state=ConversationState(phase="confirming_context", context=context),
+                    exploration_exercises=[],
+                )
+            if intent.split_confirmation == "reject":
+                context = self._reject_split_proposal(context)
+                return ChatReply(
+                    reply=self._split_assignment_question(context),
+                    state=ConversationState(context=context),
+                    exploration_exercises=[],
+                    quick_replies=self._split_assignment_quick_replies(),
+                )
+            return ChatReply(
+                reply=self._split_confirmation_prompt(context),
+                state=ConversationState(phase="confirming_split", context=context),
+                exploration_exercises=[],
+                quick_replies=self._split_quick_replies(),
+            )
+
+        if context.split_template is not None and context.split_template.confirmation_status == "proposed":
+            return ChatReply(
+                reply=self._split_confirmation_prompt(context),
+                state=ConversationState(phase="confirming_split", context=context),
+                exploration_exercises=[],
+                quick_replies=self._split_quick_replies(),
+            )
+
         question = self._next_context_question(context)
         if question is not None:
             return ChatReply(
                 reply=question,
                 state=ConversationState(context=context),
                 exploration_exercises=[],
+                quick_replies=self._context_question_quick_replies(context),
             )
+
+        if (
+            context.workout_split_type.status == "provided"
+            and context.workout_split_assignment.status == "delegated"
+            and context.split_template is None
+            and not context.split_proposal_rejected
+        ):
+            return self._propose_split(context)
 
         if action == "confirm_context":
             if context != state.context:
@@ -394,11 +549,248 @@ class ChatService:
     @staticmethod
     def _merge_context(previous: RoutineContext, updates: RoutineContext) -> RoutineContext:
         merged = previous.model_dump()
+        changed_fields: set[str] = set()
+        system_fields = {"split_template", "split_proposal_rejected"}
+        stopped_set_report: Literal["unknown", "skipped", "delegated"] | None = None
         for field_name in RoutineContext.model_fields:
-            field = getattr(updates, field_name)
-            if field.status != "not_asked":
-                merged[field_name] = field.model_dump()
+            if field_name in system_fields:
+                continue
+            previous_field = getattr(previous, field_name)
+            update_field = getattr(updates, field_name)
+            if update_field.status == "not_asked":
+                continue
+            if update_field.model_dump() != previous_field.model_dump():
+                changed_fields.add(field_name)
+            if field_name == "weekly_direct_sets_by_muscle" and previous_field.status == "provided":
+                if update_field.status == "provided":
+                    values = dict(previous_field.value or {})
+                    values.update(update_field.value or {})
+                    merged[field_name] = {"status": "provided", "value": values}
+                elif update_field.status in {"unknown", "skipped", "delegated"}:
+                    merged[field_name] = previous_field.model_dump()
+                    stopped_set_report = update_field.status
+                else:
+                    merged[field_name] = update_field.model_dump()
+            else:
+                merged[field_name] = update_field.model_dump()
+
+        if stopped_set_report is not None:
+            follow_up_status = updates.weekly_direct_sets_follow_up.status
+            if follow_up_status not in {"unknown", "skipped", "delegated"}:
+                follow_up_status = stopped_set_report
+            merged["weekly_direct_sets_follow_up"] = {
+                "status": follow_up_status,
+                "value": None,
+            }
+        if merged["workout_split_type"]["status"] == "skipped":
+            merged["workout_split_assignment"] = {
+                "status": "skipped",
+                "value": None,
+            }
+        context_changed_days = "workout_day_ids" in changed_fields
+        split_request_changed = bool(
+            changed_fields & {"workout_split_type", "workout_split_assignment"}
+        )
+        if context_changed_days or split_request_changed:
+            merged["split_template"] = None
+            merged["split_proposal_rejected"] = False
+        else:
+            merged["split_template"] = (
+                previous.split_template.model_dump()
+                if previous.split_template is not None
+                else None
+            )
+            merged["split_proposal_rejected"] = previous.split_proposal_rejected
         return RoutineContext.model_validate(merged)
+
+    @staticmethod
+    def _replace_split_template_status(
+        context: RoutineContext,
+        status: Literal["proposed", "confirmed"],
+    ) -> RoutineContext:
+        data = context.model_dump()
+        template = data["split_template"]
+        template["confirmation_status"] = status
+        return RoutineContext.model_validate(data)
+
+    @staticmethod
+    def _reject_split_proposal(context: RoutineContext) -> RoutineContext:
+        data = context.model_dump()
+        data["split_template"] = None
+        data["split_proposal_rejected"] = True
+        return RoutineContext.model_validate(data)
+
+    def _split_template_matches_context(
+        self,
+        template: WorkoutSplitTemplate,
+        context: RoutineContext,
+    ) -> bool:
+        if context.workout_day_ids.status != "provided":
+            return False
+        template_day_ids = set(template.day_a_ids + template.day_b_ids)
+        selected_day_ids = set(context.workout_day_ids.value or [])
+        return (
+            template_day_ids == selected_day_ids
+            and not (template_day_ids - self._workout_day_names.keys())
+        )
+
+    def _invalid_split_configuration_reply(
+        self,
+        context: RoutineContext,
+    ) -> ChatReply | None:
+        assignment = (
+            context.workout_split_assignment.value
+            if context.workout_split_assignment.status == "provided"
+            else None
+        )
+        invalid_assignment = assignment is not None and not self._split_template_matches_context(
+            assignment, context
+        )
+        invalid_proposal = (
+            context.split_template is not None
+            and not self._split_template_matches_context(context.split_template, context)
+        )
+        if not invalid_assignment and not invalid_proposal:
+            return None
+
+        data = context.model_dump()
+        if invalid_assignment:
+            data["workout_split_assignment"] = {"status": "unknown", "value": None}
+        if invalid_proposal or (invalid_assignment and context.split_template is not None):
+            data["split_template"] = None
+            data["split_proposal_rejected"] = not (
+                assignment is not None and not invalid_assignment
+            )
+        safe_context = RoutineContext.model_validate(data)
+        supported = ", ".join(self._workout_day_names.values())
+        return ChatReply(
+            reply=(
+                "A/B 구성에 지원되지 않거나 선택 부위와 맞지 않는 운동일 ID가 있어요. "
+                f"현재 지원 부위: {supported}. A/B 그룹을 지원 부위 이름으로 다시 알려주세요."
+            ),
+            state=ConversationState(context=safe_context),
+            exploration_exercises=[],
+            quick_replies=self._split_assignment_quick_replies(),
+        )
+
+    def _split_names(self, template: WorkoutSplitTemplate) -> tuple[str, str]:
+        day_a = ", ".join(self._workout_day_names[item] for item in template.day_a_ids)
+        day_b = ", ".join(self._workout_day_names[item] for item in template.day_b_ids)
+        return day_a, day_b
+
+    def _split_confirmation_prompt(self, context: RoutineContext) -> str:
+        template = context.split_template
+        if template is None:
+            raise ValueError("a split confirmation requires a proposed template")
+        day_a, day_b = self._split_names(template)
+        return (
+            "주당 운동 횟수와 별도로 2분할 구성을 제안해요. "
+            f"A: {day_a}; B: {day_b}. "
+            "이 구성을 명시적으로 확인하기 전에는 루틴 초안을 만들지 않아요. "
+            "맞으면 ‘이 A/B 분할을 확인합니다’라고 답하고, 바꾸려면 원하는 A/B 부위를 알려주세요."
+        )
+
+    @staticmethod
+    def _session_frequency_quick_replies() -> list[QuickReply]:
+        return [
+            QuickReply(label=f"주 {frequency}회", message=f"주 {frequency}회")
+            for frequency in range(1, 8)
+        ]
+
+    def _context_question_quick_replies(
+        self,
+        context: RoutineContext,
+    ) -> list[QuickReply]:
+        if context.workout_day_ids.status in {"not_asked", "unknown", "delegated"}:
+            return []
+        if context.workout_split_type.status in {"unknown", "delegated"}:
+            return self._split_type_quick_replies()
+        if (
+            context.workout_split_type.status == "provided"
+            and context.workout_split_assignment.status
+            in {"not_asked", "unknown", "skipped"}
+        ):
+            return self._split_assignment_quick_replies()
+        if context.sessions_per_week.status in {"not_asked", "unknown", "delegated"}:
+            return self._session_frequency_quick_replies()
+        return []
+
+    @staticmethod
+    def _split_type_quick_replies() -> list[QuickReply]:
+        return [
+            QuickReply(label="2분할", message="2분할을 선택합니다."),
+            QuickReply(label="분할 없이", message="분할 없이 진행합니다."),
+        ]
+
+    @staticmethod
+    def _split_quick_replies() -> list[QuickReply]:
+        return [
+            QuickReply(label="이 분할로 진행", message="이 A/B 분할을 확인합니다."),
+            QuickReply(label="분할 바꾸기", message="A/B 분할을 바꾸고 싶어요."),
+        ]
+
+    @staticmethod
+    def _split_assignment_question(context: RoutineContext) -> str:
+        requested = context.workout_split_type.status == "provided"
+        if not requested:
+            return "A/B 분할 요청이 없어졌어요. 원하는 운동 부위를 알려주세요."
+        return (
+            "앞서 제안한 A/B 구성은 확인되지 않았어요. "
+            "A와 B에 넣을 지원 운동 부위를 각각 알려주시거나, 새 제안을 맡기려면 ‘A/B 분할을 다시 제안해줘’라고 해주세요."
+        )
+
+    @staticmethod
+    def _split_assignment_quick_replies() -> list[QuickReply]:
+        return [
+            QuickReply(label="다시 제안받기", message="A/B 분할을 다시 제안해줘."),
+            QuickReply(label="직접 정하기", message="A/B 분할을 직접 정하겠습니다."),
+        ]
+
+    def _split_missing_area_reply(self, context: RoutineContext) -> ChatReply:
+        selected_ids = context.workout_day_ids.value or []
+        selected_names = ", ".join(
+            self._workout_day_names[day_id] for day_id in selected_ids
+        )
+        selected_text = f"현재 선택한 부위: {selected_names}. " if selected_names else ""
+        quick_replies = [
+            QuickReply(
+                label=f"{day.name_ko} 추가",
+                message=f"{selected_text}{day.name_ko}를 추가해 2분할 A/B를 제안해줘.",
+            )
+            for day in self._workout_days_by_id.values()
+            if day.id not in selected_ids
+        ]
+        quick_replies.append(
+            QuickReply(label="2분할 취소", message="2분할 없이 진행합니다.")
+        )
+        return ChatReply(
+            reply=(
+                "A/B 분할을 제안하려면 서로 다른 지원 운동 부위가 두 개 이상 필요해요. "
+                f"{selected_text}추가할 부위를 골라 주세요. 선택하지 않은 부위를 임의로 넣지 않습니다."
+            ),
+            state=ConversationState(context=context),
+            exploration_exercises=[],
+            quick_replies=quick_replies,
+        )
+    def _propose_split(self, context: RoutineContext) -> ChatReply:
+        day_ids = context.workout_day_ids.value or []
+        if len(day_ids) < 2:
+            return self._split_missing_area_reply(context)
+        midpoint = (len(day_ids) + 1) // 2
+        template = WorkoutSplitTemplate(
+            day_a_ids=day_ids[:midpoint],
+            day_b_ids=day_ids[midpoint:],
+            confirmation_status="proposed",
+        )
+        data = context.model_dump()
+        data["split_template"] = template.model_dump()
+        proposed_context = RoutineContext.model_validate(data)
+        return ChatReply(
+            reply=self._split_confirmation_prompt(proposed_context),
+            state=ConversationState(phase="confirming_split", context=proposed_context),
+            exploration_exercises=[],
+            quick_replies=self._split_quick_replies(),
+        )
 
     async def _draft_routine(
         self,
@@ -424,6 +816,28 @@ class ChatService:
                 exploration_exercises=[],
             )
         day_ids = context.workout_day_ids.value or []
+        split_template = None
+        if context.workout_split_type.status == "provided":
+            if context.split_template is not None:
+                split_template = context.split_template
+            elif context.workout_split_assignment.status == "provided":
+                split_template = context.workout_split_assignment.value
+            if split_template is None or split_template.confirmation_status == "proposed":
+                return ChatReply(
+                    reply=(
+                        "2분할 구성은 아직 확인되지 않아 초안을 만들지 않았어요. "
+                        "A/B 구성을 직접 정하거나 제안을 명시적으로 확인해 주세요."
+                    ),
+                    state=ConversationState(context=context),
+                    exploration_exercises=[],
+                    quick_replies=self._split_assignment_quick_replies(),
+                )
+            if set(split_template.day_a_ids + split_template.day_b_ids) != set(day_ids):
+                return ChatReply(
+                    reply="A/B 구성과 선택한 운동 부위가 맞지 않아요. 선택 부위 전체를 A 또는 B에 한 번씩 넣어 주세요.",
+                    state=ConversationState(context=context),
+                    exploration_exercises=[],
+                )
         if context.sessions_per_week.status != "provided":
             return ChatReply(
                 reply=(
@@ -608,9 +1022,21 @@ class ChatService:
 
         day_names = self._workout_day_names
         sessions: list[RoutineSession] = []
+        split_template = (
+            context.split_template
+            if context.split_template is not None
+            and context.split_template.confirmation_status == "confirmed"
+            else context.workout_split_assignment.value
+            if context.workout_split_assignment.status == "provided"
+            else None
+        )
         for index, planned_session in enumerate(proposal.sessions, start=1):
             if planned_session.workout_day_id not in selected_day_ids:
                 raise ChatCompletionError("Routine used an unrequested workout day.")
+            if split_template is not None:
+                expected_group = split_template.day_a_ids if (index - 1) % 2 == 0 else split_template.day_b_ids
+                if planned_session.workout_day_id not in expected_group:
+                    raise ChatCompletionError("Routine did not follow the confirmed A/B split.")
             day_candidates = {
                 exercise.source_id: exercise
                 for exercise in candidates_by_day[planned_session.workout_day_id]
@@ -658,18 +1084,47 @@ class ChatService:
         return sessions
 
     def _next_context_question(self, context: RoutineContext) -> str | None:
-        if context.workout_day_ids.status in {"not_asked", "unknown"}:
+        if context.workout_day_ids.status in {"not_asked", "unknown", "delegated"}:
             supported = ", ".join(self._workout_day_names.values())
+            if context.workout_day_ids.status == "unknown":
+                return f"운동 부위를 아직 모르시는 걸로 기록했어요. 지원 부위({supported}) 중 하나 이상을 직접 골라 주세요. 선택을 맡기거나 건너뛰어도 됩니다."
+            if context.workout_day_ids.status == "delegated":
+                return f"부위 선택은 맡기셨지만 임의로 고르지 않겠습니다. 지원 부위({supported}) 중 원하는 부위를 알려주시거나 건너뛰어 주세요."
             return (
                 "주간 일정에 넣을 운동 부위를 알려주세요. 현재 지원 범위: "
                 f"{supported}. 모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
             )
-        if context.sessions_per_week.status in {"not_asked", "unknown"}:
+        if context.workout_split_type.status in {"unknown", "delegated"}:
+            return (
+                "주당 빈도와 분할 방식은 별개예요. 2분할 여부를 모르시거나 선택을 맡기신 것으로 기록했어요. "
+                "2분할 A/B 구성을 정할지, 분할 없이 선택 부위별 일정을 만들지 알려주세요."
+            )
+        if context.workout_split_type.status == "provided":
+            assignment_status = context.workout_split_assignment.status
+            if context.split_proposal_rejected:
+                return self._split_assignment_question(context)
+            if assignment_status in {"not_asked", "unknown"}:
+                return (
+                    "주당 빈도는 별도로 보존했어요. 2분할 A/B에 넣을 운동 부위를 각각 알려주세요. "
+                    "예: A는 가슴·어깨, B는 하체. 구성을 맡기려면 ‘A/B 분할을 알아서 제안해줘’라고 해주세요."
+                )
+            if assignment_status == "skipped":
+                return (
+                    "A/B 구성을 건너뛰어 2분할 초안은 만들지 않아요. A/B 부위를 직접 정하거나, "
+                    "제안을 맡기거나, 2분할 요청을 취소해 주세요."
+                )
+        if context.sessions_per_week.status in {"not_asked", "unknown", "delegated"}:
+            if context.sessions_per_week.status == "unknown":
+                return "주당 운동 횟수를 모르시는 걸로 기록했어요. 주 1~7회 중 정확한 횟수를 고르거나, 주간 일정 항목을 건너뛰어 주세요."
+            if context.sessions_per_week.status == "delegated":
+                return "주당 횟수 선택을 맡기셨지만 빈도를 임의로 정하지 않겠습니다. 주 1~7회 중 하나를 알려주시거나 주간 일정 항목을 건너뛰어 주세요."
             return (
                 "주간 일정을 만들려면 주당 운동 횟수가 필요해요. "
                 "주 1~7회 중 알려주세요. 모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
             )
         if context.goal.status in {"not_asked", "unknown"}:
+            if context.goal.status == "unknown":
+                return "목표는 아직 모르시는 걸로 기록했어요. 근비대와 근력 중 우선할 목표를 고르거나 목표 분류를 건너뛸 수 있어요."
             return (
                 "우선할 목표가 근비대와 근력 중 무엇인가요? 모르거나 답하고 싶지 않으면 "
                 "목표 분류를 건너뛸 수 있어요."
@@ -679,14 +1134,18 @@ class ChatService:
                 "현재 출처가 연결된 목표는 근비대와 근력 진행이에요. "
                 "둘 중 하나를 선택하거나 목표 분류를 건너뛰어 주세요."
             )
-        if context.adult_eligibility.status in {"not_asked", "unknown"} and (
+        if context.adult_eligibility.status in {"not_asked", "unknown", "delegated"} and (
             context.goal.status == "provided" and context.goal.value == "hypertrophy"
         ):
+            if context.adult_eligibility.status in {"unknown", "delegated"}:
+                return "성인 여부는 추정하지 않아요. 근비대 처방의 적용 범위를 확인하려면 만 18세 이상인지 직접 알려주시거나 해당 확인을 건너뛰어 주세요."
             return (
                 "근비대 처방 근거는 건강한 성인 대상이에요. 만 18세 이상인가요? "
                 "답하고 싶지 않으면 성인 여부를 건너뛸 수 있어요."
             )
         if context.experience.status in {"not_asked", "unknown"}:
+            if context.experience.status == "unknown":
+                return "운동 경력을 모르시는 걸로 기록했어요. 처음 시작·여러 해 쉬었다가 복귀·경험자 중 자기보고로 알려주시거나 경력 분류를 건너뛰어 주세요."
             return (
                 "저항 운동을 처음 시작했거나 몇 년 쉬었다가 복귀했나요? "
                 "경력은 자기보고로만 반영하며, 모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
@@ -699,6 +1158,14 @@ class ChatService:
                 "목표·다른 조건만 반영할까요?"
             )
         if context.minutes_per_session.status in {"not_asked", "unknown"}:
+            if context.minutes_per_session_range.status == "provided":
+                time_range = context.minutes_per_session_range.value
+                return (
+                    f"회당 {time_range.minimum_minutes}~{time_range.maximum_minutes}분 범위로 기록했어요. "
+                    "초안에 사용할 목표 시간 하나를 직접 골라 주세요. 중간값을 대신 선택하지 않습니다."
+                )
+            if context.minutes_per_session.status == "unknown":
+                return "회당 시간을 모르시는 걸로 기록했어요. 사용 가능한 분 수 하나를 알려주시거나 시간 조건을 건너뛰어 주세요."
             return (
                 "한 번 운동할 때 가능한 시간을 알려주세요. 모르거나 답하고 싶지 않으면 "
                 "시간 조건을 건너뛸 수 있어요."
@@ -707,13 +1174,27 @@ class ChatService:
             context.equipment.value is not None
             and context.equipment.value.mode == "unknown"
         ):
+            if context.equipment.status == "unknown" or (
+                context.equipment.value is not None
+                and context.equipment.value.mode == "unknown"
+            ):
+                return (
+                    "장비를 모르신다고 기록했어요. 장소 이름으로 장비를 추측하지 않겠습니다. "
+                    "사용 가능한 장비를 직접 적거나 ‘알아서 선택’으로 맡기거나, 장비 조건을 건너뛰어 주세요."
+                )
             return (
                 "사용할 수 있는 장비를 알려주세요. 모르거나 답하고 싶지 않으면 건너뛰어도 돼요. "
                 "건너뛰면 보유 장비를 가정하지 않고 장비 제한 없이 후보를 살펴봅니다."
             )
         if context.preferences.status in {"not_asked", "unknown"}:
+            if context.preferences.status == "unknown":
+                return "선호를 모르시는 걸로 기록했어요. 선호 운동이나 피하고 싶은 동작을 알려주시거나 선호 항목을 건너뛸 수 있어요."
             return "선호하거나 피하고 싶은 동작이 있나요? 없거나 답하고 싶지 않으면 건너뛰어도 돼요."
-        if context.known_constraints.status in {"not_asked", "unknown"}:
+        if context.known_constraints.status in {"not_asked", "unknown", "delegated"}:
+            if context.known_constraints.status == "unknown":
+                return "알고 있는 제약을 모르시는 걸로 기록했어요. 진단을 추정하지 않으며, 알고 있는 제한을 말하거나 제약 확인을 건너뛸 수 있어요."
+            if context.known_constraints.status == "delegated":
+                return "제약 확인을 맡기셨지만 제약이 없다고 추정하지 않겠습니다. 알고 있는 제한을 직접 알려주시거나 확인을 건너뛰어 주세요."
             return (
                 "운동에서 고려할 제약이나 불편함을 알고 있나요? 진단명은 추정하지 않으며, "
                 "모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
@@ -727,6 +1208,8 @@ class ChatService:
             and not context.known_constraints.value
             and context.experience.status == "provided"
             and context.experience.value == "experienced"
+            and context.weekly_direct_sets_by_muscle.status not in {"unknown", "skipped", "delegated"}
+            and context.weekly_direct_sets_follow_up.status not in {"unknown", "skipped", "delegated"}
         ):
             focus_muscle_ids = {
                 muscle_id
@@ -734,22 +1217,19 @@ class ChatService:
                 for muscle_id in self._focus_muscle_ids_by_day.get(day_id, set())
             }
             reported = context.weekly_direct_sets_by_muscle.value or {}
-            missing_muscle_ids = focus_muscle_ids - reported.keys()
-            needs_current_volume = (
-                context.weekly_direct_sets_by_muscle.status in {"not_asked", "unknown"}
-                or (
-                    context.weekly_direct_sets_by_muscle.status == "provided"
-                    and bool(missing_muscle_ids)
-                )
-            )
-            if needs_current_volume:
-                missing_names = ", ".join(
-                    self._muscle_names[muscle_id]
-                    for muscle_id in sorted(missing_muscle_ids or focus_muscle_ids)
-                )
+            missing_muscle_ids = [
+                muscle.id
+                for muscle in self._catalog.muscles
+                if muscle.id in focus_muscle_ids and muscle.id not in reported
+            ]
+            if missing_muscle_ids:
+                stage_ids = missing_muscle_ids[:3]
+                missing_names = ", ".join(self._muscle_names[muscle_id] for muscle_id in stage_ids)
                 return (
-                    "경험자 맞춤 처방을 위해 최근 한 주의 근육별 직접 세트 수가 필요해요. "
-                    f"{missing_names}의 주간 세트 수를 알려주세요. 모르거나 답하고 싶지 않으면 건너뛰어 주세요."
+                    "최근 한 주의 근육별 직접 세트 수는 경험자 처방을 현재 보고에 맞추기 위해 필요해요. "
+                    "한 번에 세 근육씩 받을게요. "
+                    f"이번 단계: {missing_names}. 형식: 근육명마다 지난 한 주의 직접 세트 수를 적어주세요. "
+                    "값을 추정하지 않으며, 모르는 값은 비워 두거나 보고를 건너뛸 수 있어요."
                 )
         return None
 
@@ -769,18 +1249,50 @@ class ChatService:
                 equipment_text = ", ".join(
                     self._equipment_names[item] for item in equipment.equipment_ids
                 )
+            elif equipment.mode == "unknown":
+                equipment_text = "모름"
             else:
                 equipment_text = "선택 위임(보유 장비는 가정하지 않음)"
         else:
             equipment_text = self._field_status_label(context.equipment.status)
 
+        if context.minutes_per_session.status == "provided":
+            time_text = f"{context.minutes_per_session.value}분"
+            if context.minutes_per_session_range.status == "provided":
+                time_range = context.minutes_per_session_range.value
+                time_text += f" (보고 범위 {time_range.minimum_minutes}~{time_range.maximum_minutes}분)"
+        elif context.minutes_per_session_range.status == "provided":
+            time_range = context.minutes_per_session_range.value
+            time_text = f"{time_range.minimum_minutes}~{time_range.maximum_minutes}분 범위"
+            if context.minutes_per_session.status in {"skipped", "delegated"}:
+                time_text += f", 목표 {self._field_status_label(context.minutes_per_session.status)}"
+            else:
+                time_text += ", 목표 미선택"
+        else:
+            time_text = self._field_status_label(context.minutes_per_session.status)
+
+        split_text = self._context_value_label(
+            context.workout_split_type,
+            {"ab": "2분할(A/B)"},
+        )
+        if context.workout_split_assignment.status == "provided":
+            day_a, day_b = self._split_names(context.workout_split_assignment.value)
+            split_text += f"; A: {day_a}, B: {day_b} (사용자 지정)"
+        elif context.split_template is not None:
+            day_a, day_b = self._split_names(context.split_template)
+            confirmation = "확인됨" if context.split_template.confirmation_status == "confirmed" else "제안됨"
+            split_text += f"; A: {day_a}, B: {day_b} ({confirmation})"
+        elif context.workout_split_type.status == "provided":
+            split_text += f"; A/B 구성: {self._field_status_label(context.workout_split_assignment.status)}"
+
         context_lines = [
             "제가 이해한 내용이에요. 확인하거나 채팅으로 수정해 주세요.",
             f"- 운동 부위: {workout_days}",
             f"- 주당 빈도: {self._value_with_unit(context.sessions_per_week, '회')}",
+            f"- 운동 분할: {split_text}",
             f"- 목표: {self._context_value_label(context.goal, goal_names)}",
             f"- 운동 경력: {self._context_value_label(context.experience, experience_names)}",
-            f"- 회당 가능 시간: {self._value_with_unit(context.minutes_per_session, '분')}",
+            f"- 회당 가능 시간: {time_text}",
             f"- 장비: {equipment_text}",
             f"- 선호: {self._list_value_or_status(context.preferences)}",
             f"- 알고 있는 제약: {self._list_value_or_status(context.known_constraints)}",
@@ -790,15 +1302,17 @@ class ChatService:
                 f"- 성인 여부: {self._context_value_label(context.adult_eligibility, {'adult': '성인', 'minor': '미성년'})}"
             )
             if context.experience.status == "provided" and context.experience.value == "experienced":
-                context_lines.append(
-                    f"- 최근 근육별 주간 직접 세트: {self._weekly_sets_label(context.weekly_direct_sets_by_muscle)}"
-                )
+                sets_text = self._weekly_sets_label(context.weekly_direct_sets_by_muscle)
+                follow_up = context.weekly_direct_sets_follow_up
+                if follow_up.status in {"unknown", "skipped", "delegated"}:
+                    sets_text += f"; 추가 보고 {self._field_status_label(follow_up.status)}"
+                context_lines.append(f"- 최근 근육별 주간 직접 세트: {sets_text}")
         context_lines.append("이 요약이 맞으면 ‘확인하고 루틴 만들기’를 눌러주세요.")
         return "\n".join(context_lines)
 
     @staticmethod
     def _field_status_label(status: str) -> str:
-        return {"unknown": "모름", "skipped": "건너뜀"}.get(status, "미입력")
+        return {"unknown": "모름", "skipped": "건너뜀", "delegated": "선택 위임"}.get(status, "미입력")
 
     @classmethod
     def _value_with_unit(cls, field: ContextField[int], unit: str) -> str:
@@ -888,13 +1402,10 @@ class ChatService:
             if context.experience.value == "novice":
                 set_count = self._hypertrophy_guidelines.initial_direct_sets_per_muscle_per_week
                 basis = "source_starting_point"
-            elif muscle_id in reported_sets and reported_sets[muscle_id] > 0:
+            elif muscle_id in reported_sets:
                 set_count = reported_sets[muscle_id]
                 basis = "user_reported"
             else:
-                set_count = self._hypertrophy_guidelines.initial_direct_sets_per_muscle_per_week
-                basis = "source_starting_point"
-            if context.experience.value == "experienced" and muscle_id not in reported_sets:
                 return None, "선택된 표적 근육의 최근 주간 세트 수가 없어 처방을 적용하지 않았어요."
             weekly_targets.append(
                 WeeklyDirectSetTarget(

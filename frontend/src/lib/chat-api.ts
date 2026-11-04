@@ -4,7 +4,7 @@ export type ChatMessage = {
 };
 
 export type ContextField<T> = {
-  status: "not_asked" | "provided" | "unknown" | "skipped";
+  status: "not_asked" | "provided" | "unknown" | "skipped" | "delegated";
   value: T | null;
 };
 
@@ -13,17 +13,32 @@ export type EquipmentIntent = {
   equipment_ids: string[];
 };
 
+export type WorkoutSplitTemplate = {
+  day_a_ids: string[];
+  day_b_ids: string[];
+  confirmation_status: "user_provided" | "proposed" | "confirmed";
+};
+
 export type RoutineContext = {
   workout_day_ids: ContextField<string[]>;
+  workout_split_type: ContextField<"ab">;
+  workout_split_assignment: ContextField<WorkoutSplitTemplate>;
   goal: ContextField<"hypertrophy" | "strength" | "other">;
   experience: ContextField<"novice" | "experienced">;
   sessions_per_week: ContextField<number>;
   minutes_per_session: ContextField<number>;
+  minutes_per_session_range: ContextField<{
+    minimum_minutes: number;
+    maximum_minutes: number;
+  }>;
   equipment: ContextField<EquipmentIntent>;
   preferences: ContextField<string[]>;
   known_constraints: ContextField<string[]>;
   adult_eligibility: ContextField<"adult" | "minor">;
   weekly_direct_sets_by_muscle: ContextField<Record<string, number>>;
+  weekly_direct_sets_follow_up: ContextField<"remaining">;
+  split_proposal_rejected: boolean;
+  split_template: WorkoutSplitTemplate | null;
 };
 
 export type RecommendedExercise = {
@@ -94,17 +109,27 @@ export type RoutineDraft = {
 };
 
 export type ConversationState = {
-  phase: "collecting_context" | "confirming_context" | "reviewing_routine";
+  phase:
+    | "collecting_context"
+    | "confirming_context"
+    | "confirming_split"
+    | "reviewing_routine";
   context: RoutineContext;
   routine: RoutineDraft | null;
 };
 
 export type ChatAction = "message" | "confirm_context";
 
+export type QuickReply = {
+  label: string;
+  message: string;
+};
+
 export type ChatResponse = {
   reply: string;
   state: ConversationState;
   exploration_exercises: RecommendedExercise[];
+  quick_replies: QuickReply[];
 };
 
 const apiBaseUrl =
@@ -119,15 +144,24 @@ export function createInitialConversationState(): ConversationState {
     phase: "collecting_context",
     context: {
       workout_day_ids: field<string[]>(),
+      workout_split_type: field<"ab">(),
+      workout_split_assignment: field<WorkoutSplitTemplate>(),
       goal: field<"hypertrophy" | "strength" | "other">(),
       experience: field<"novice" | "experienced">(),
       sessions_per_week: field<number>(),
       minutes_per_session: field<number>(),
+      minutes_per_session_range: field<{
+        minimum_minutes: number;
+        maximum_minutes: number;
+      }>(),
       equipment: field<EquipmentIntent>(),
       preferences: field<string[]>(),
       known_constraints: field<string[]>(),
       adult_eligibility: field<"adult" | "minor">(),
       weekly_direct_sets_by_muscle: field<Record<string, number>>(),
+      weekly_direct_sets_follow_up: field<"remaining">(),
+      split_proposal_rejected: false,
+      split_template: null,
     },
     routine: null,
   };
