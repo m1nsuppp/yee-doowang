@@ -28,7 +28,7 @@ export type RoutineContext = {
   workout_day_ids: ContextField<string[]>;
   workout_split_type: ContextField<"ab">;
   workout_split_assignment: ContextField<WorkoutSplitTemplate>;
-  goal: ContextField<"hypertrophy" | "strength" | "other">;
+  goal: ContextField<"hypertrophy" | "strength" | "both" | "other">;
   experience: ContextField<"novice" | "experienced">;
   sessions_per_week: ContextField<number>;
   minutes_per_session: ContextField<number>;
@@ -154,7 +154,7 @@ export function createInitialConversationState(): ConversationState {
       workout_day_ids: field<string[]>(),
       workout_split_type: field<"ab">(),
       workout_split_assignment: field<WorkoutSplitTemplate>(),
-      goal: field<"hypertrophy" | "strength" | "other">(),
+      goal: field<"hypertrophy" | "strength" | "both" | "other">(),
       experience: field<"novice" | "experienced">(),
       sessions_per_week: field<number>(),
       minutes_per_session: field<number>(),

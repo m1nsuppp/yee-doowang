@@ -107,7 +107,7 @@ class EquipmentIntent(_ChatModel):
 
 class RoutineContext(_ChatModel):
     workout_day_ids: ContextField[list[str]] = Field(default_factory=ContextField)
-    goal: ContextField[Literal["hypertrophy", "strength", "other"]] = Field(
+    goal: ContextField[Literal["hypertrophy", "strength", "both", "other"]] = Field(
         default_factory=ContextField
     )
     experience: ContextField[Literal["novice", "experienced"]] = Field(
@@ -168,7 +168,7 @@ class RoutineContext(_ChatModel):
 
 
 class RecommendationPreferences(_ChatModel):
-    goal: Literal["hypertrophy", "strength", "skip", "unknown", "unsupported"]
+    goal: Literal["hypertrophy", "strength", "both", "skip", "unknown", "unsupported"]
     experience: Literal["novice", "experienced", "skip", "unknown"]
 
 
@@ -1139,7 +1139,7 @@ class ChatService:
             prescription_reply = (
                 " 근비대 처방에는 적용 범위와 출처를 표시했고, 개인별 절대 중량은 제시하지 않았어요."
             )
-        elif context.goal.status == "provided" and context.goal.value == "hypertrophy":
+        elif context.goal.status == "provided" and context.goal.value in {"hypertrophy", "both"}:
             prescription_reply = f" 근비대 처방은 생략했어요. {prescription_note}"
         else:
             prescription_reply = " 근비대 목적의 근거가 연결되지 않아 세트·반복·휴식 처방은 포함하지 않았어요."
@@ -1277,18 +1277,18 @@ class ChatService:
             )
         if context.goal.status in {"not_asked", "unknown"}:
             if context.goal.status == "unknown":
-                return "목표는 아직 모르시는 걸로 기록했어요. 근비대와 근력 중 우선할 목표를 고르거나 목표 분류를 건너뛸 수 있어요."
+                return "우선 목표를 아직 정하지 않으신 걸로 기록했어요. 근비대, 근력 중 하나를 고르거나 두 목표를 함께 추구할 수 있어요. 목표 분류를 건너뛰어도 됩니다."
             return (
-                "우선할 목표가 근비대와 근력 중 무엇인가요? 모르거나 답하고 싶지 않으면 "
+                "우선할 목표를 근비대, 근력 중에서 고르거나 두 목표를 함께 추구할 수 있어요. 모르거나 답하고 싶지 않으면 "
                 "목표 분류를 건너뛸 수 있어요."
             )
         if context.goal.status == "provided" and context.goal.value == "other":
             return (
                 "현재 출처가 연결된 목표는 근비대와 근력 진행이에요. "
-                "둘 중 하나를 선택하거나 목표 분류를 건너뛰어 주세요."
+                "하나를 고르거나 두 목표를 함께 선택하거나 목표 분류를 건너뛰어 주세요."
             )
         if context.adult_eligibility.status in {"not_asked", "unknown", "delegated"} and (
-            context.goal.status == "provided" and context.goal.value == "hypertrophy"
+            context.goal.status == "provided" and context.goal.value in {"hypertrophy", "both"}
         ):
             if context.adult_eligibility.status in {"unknown", "delegated"}:
                 return "성인 여부는 추정하지 않아요. 근비대 처방의 적용 범위를 확인하려면 만 18세 이상인지 직접 알려주시거나 해당 확인을 건너뛰어 주세요."
@@ -1304,7 +1304,7 @@ class ChatService:
                 "경력은 자기보고로만 반영하며, 모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
             )
         if context.experience.status == "provided" and context.experience.value == "experienced" and not (
-            context.goal.status == "provided" and context.goal.value == "hypertrophy"
+            context.goal.status == "provided" and context.goal.value in {"hypertrophy", "both"}
         ):
             return (
                 "경험자 적합도 근거는 아직 없어요. 경력 기준을 건너뛰고 "
@@ -1354,7 +1354,7 @@ class ChatService:
             )
         if (
             context.goal.status == "provided"
-            and context.goal.value == "hypertrophy"
+            and context.goal.value in {"hypertrophy", "both"}
             and context.adult_eligibility.status == "provided"
             and context.adult_eligibility.value == "adult"
             and context.known_constraints.status == "provided"
@@ -1387,7 +1387,7 @@ class ChatService:
         return None
 
     def _context_summary(self, context: RoutineContext) -> str:
-        goal_names = {"hypertrophy": "근비대", "strength": "근력", "other": "기타 목표"}
+        goal_names = {"hypertrophy": "근비대", "strength": "근력", "both": "근비대와 근력 진행", "other": "기타 목표"}
         experience_names = {"novice": "초보·복귀(자기보고)", "experienced": "경험자(자기보고)"}
         if context.workout_day_ids.status == "provided":
             workout_days = ", ".join(
@@ -1450,7 +1450,7 @@ class ChatService:
             f"- 선호: {self._list_value_or_status(context.preferences)}",
             f"- 알고 있는 제약: {self._list_value_or_status(context.known_constraints)}",
         ]
-        if context.goal.status == "provided" and context.goal.value == "hypertrophy":
+        if context.goal.status == "provided" and context.goal.value in {"hypertrophy", "both"}:
             context_lines.append(
                 f"- 성인 여부: {self._context_value_label(context.adult_eligibility, {'adult': '성인', 'minor': '미성년'})}"
             )
@@ -1519,7 +1519,7 @@ class ChatService:
         context: RoutineContext,
         sessions: Sequence[RoutineSession],
     ) -> tuple[HypertrophyPrescription | None, str | None]:
-        if context.goal.status != "provided" or context.goal.value != "hypertrophy":
+        if context.goal.status != "provided" or context.goal.value not in {"hypertrophy", "both"}:
             return None, None
         if context.adult_eligibility.status != "provided" or context.adult_eligibility.value != "adult":
             return None, "성인 여부가 확인되지 않거나 근거 적용 범위 밖이에요."
@@ -1632,6 +1632,15 @@ class ChatService:
                 profile is not None
                 and profile.exercise_api is not None
                 and profile.exercise_api.modality == "hypertrophy"
+                for profile in profiles
+            )
+        elif preferences.goal == "both":
+            goal_supported = any(
+                profile is not None
+                and profile.exercise_api is not None
+                and profile.exercise_api.modality == "hypertrophy"
+                and profile.exercise_api.loadable
+                and profile.exercise_api.e1rm_substitution_group is not None
                 for profile in profiles
             )
         elif preferences.goal == "strength":
@@ -1867,14 +1876,23 @@ class ChatService:
         evidence = profile.exercise_api if profile is not None else None
         if (
             context.goal.status == "provided"
-            and context.goal.value == "hypertrophy"
+            and context.goal.value == "both"
+            and evidence is not None
+            and evidence.modality == "hypertrophy"
+            and evidence.loadable
+            and evidence.e1rm_substitution_group is not None
+        ):
+            return "카탈로그 출처 프로필에 근비대와 근력 진행 양쪽의 목표 관련 메타데이터가 있습니다."
+        if (
+            context.goal.status == "provided"
+            and context.goal.value in {"hypertrophy", "both"}
             and evidence is not None
             and evidence.modality == "hypertrophy"
         ):
             return "카탈로그 출처 프로필에 근비대 목표 관련 메타데이터가 있습니다."
         if (
             context.goal.status == "provided"
-            and context.goal.value == "strength"
+            and context.goal.value in {"strength", "both"}
             and evidence is not None
             and evidence.loadable
             and evidence.e1rm_substitution_group is not None
@@ -1905,9 +1923,13 @@ class ChatService:
             evidence = profile.exercise_api if profile is not None else None
             if evidence is None or evidence.e1rm_substitution_group is None:
                 continue
-            if preferences.goal == "hypertrophy" and evidence.modality != "hypertrophy":
+            supports_hypertrophy = evidence.modality == "hypertrophy"
+            supports_strength = evidence.loadable
+            if preferences.goal == "hypertrophy" and not supports_hypertrophy:
                 continue
-            if preferences.goal == "strength" and not evidence.loadable:
+            if preferences.goal == "strength" and not supports_strength:
+                continue
+            if preferences.goal == "both" and not (supports_hypertrophy and supports_strength):
                 continue
             group_order.setdefault(
                 evidence.e1rm_substitution_group,
@@ -1927,6 +1949,15 @@ class ChatService:
                 goal_rank = (
                     0
                     if evidence is not None
+                    and evidence.loadable
+                    and evidence.e1rm_substitution_group is not None
+                    else 1
+                )
+            elif preferences.goal == "both":
+                goal_rank = (
+                    0
+                    if evidence is not None
+                    and evidence.modality == "hypertrophy"
                     and evidence.loadable
                     and evidence.e1rm_substitution_group is not None
                     else 1
@@ -1957,6 +1988,16 @@ class ChatService:
                     group_order.get(evidence.e1rm_substitution_group, index)
                     if evidence.e1rm_substitution_group is not None
                     else index
+                )
+                within_group_rank = evidence.preferred_rank or 1_000_000
+                gold_standard_rank = 0 if evidence.is_gold_standard else 1
+            elif preferences.goal == "both" and goal_rank == 0:
+                sfr_rank = {"high": 0, "moderate": 1, "low": 2}.get(
+                    evidence.sfr_class, 3
+                )
+                group_rank = group_order.get(
+                    evidence.e1rm_substitution_group,
+                    index,
                 )
                 within_group_rank = evidence.preferred_rank or 1_000_000
                 gold_standard_rank = 0 if evidence.is_gold_standard else 1

@@ -154,8 +154,10 @@ class FixtureCoachModel:
         has_strength = "근력" in goal_text
         if any(term in goal_text for term in ("목표 건너", "목표는 상관없")):
             updates["goal"] = cls._field(status="skipped")
-        elif "목표 모르" in goal_text or (has_hypertrophy and has_strength):
+        elif "목표 모르" in goal_text:
             updates["goal"] = cls._field(status="unknown")
+        elif has_hypertrophy and has_strength:
+            updates["goal"] = cls._field("both")
         elif has_hypertrophy:
             updates["goal"] = cls._field("hypertrophy")
         elif has_strength:
@@ -1347,7 +1349,7 @@ class ChatApiTests(unittest.TestCase):
         planned = body["state"]["routine"]["sessions"][0]["exercises"][0]
         self.assertEqual(planned["exercise"]["source_id"], "0334")
 
-    def test_missing_conflicting_and_unsupported_contexts_ask_instead_of_guessing(
+    def test_missing_and_unsupported_contexts_ask_instead_of_guessing(
         self,
     ) -> None:
         app = create_app(
@@ -1356,7 +1358,6 @@ class ChatApiTests(unittest.TestCase):
         )
         requests = (
             "PushDay 덤벨 추천해줘.",
-            "PushDay 근비대와 근력 목표 둘 다, 초보자, 덤벨 추천해줘.",
             "PushDay 감량 목표, 초보자, 덤벨 추천해줘.",
             "PushDay 근비대 목표, 덤벨 추천해줘.",
         )
@@ -1373,10 +1374,50 @@ class ChatApiTests(unittest.TestCase):
         self.assertTrue(
             all(response.json()["exploration_exercises"] == [] for response in responses)
         )
-        self.assertIn("근비대와 근력", responses[0].json()["reply"])
-        self.assertIn("근비대와 근력", responses[1].json()["reply"])
-        self.assertIn("근력 진행", responses[2].json()["reply"])
-        self.assertIn("복귀", responses[3].json()["reply"])
+        self.assertIn("두 목표를 함께", responses[0].json()["reply"])
+        self.assertIn("근력 진행", responses[1].json()["reply"])
+        self.assertIn("복귀", responses[2].json()["reply"])
+
+    def test_combined_goals_are_preserved_and_rank_jointly_supported_exercises(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = self._post_confirmed_routine(
+                client,
+                [{
+                    "role": "user",
+                    "content": "PushDay 근비대와 근력 목표 둘 다, 초보자, 덤벨 추천해줘.",
+                }],
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(
+            body["state"]["context"]["goal"],
+            {"status": "provided", "value": "both"},
+        )
+        routine = body["state"]["routine"]
+        self.assertIsNotNone(routine)
+        self.assertIsNotNone(routine["hypertrophy_prescription"])
+        exercise_ids = [
+            item["exercise"]["source_id"]
+            for session in routine["sessions"]
+            for item in session["exercises"]
+        ]
+        profiles = {
+            profile.source_id: profile.exercise_api
+            for profile in load_exercise_catalog().recommendations.profiles
+        }
+        self.assertTrue(exercise_ids)
+        for source_id in exercise_ids:
+            evidence = profiles[source_id]
+            self.assertIsNotNone(evidence)
+            self.assertEqual(evidence.modality, "hypertrophy")
+            self.assertTrue(evidence.loadable)
+            self.assertIsNotNone(evidence.e1rm_substitution_group)
 
     def test_abs_day_chat_returns_only_abdominal_primary_targets(self) -> None:
         app = create_app(
