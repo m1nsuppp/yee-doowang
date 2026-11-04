@@ -218,17 +218,21 @@ export default function ChatPanel() {
   return (
     <section className="flex h-full min-h-0 flex-col">
       <header className="flex h-16 shrink-0 items-center justify-between border-b border-[#e2e6de] px-4 sm:px-8">
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
           <span className="grid size-9 place-items-center rounded-xl bg-[#183d31] text-xs font-black tracking-tight text-[#d8f36c]">
             YD
           </span>
-          <div className="flex items-baseline gap-2">
-            <span className="font-extrabold tracking-tight">이두왕</span>
-            <span className="text-xs text-[#718077]">푸시 · 복근 · 복사근</span>
+          <div className="flex min-w-0 flex-1 items-baseline gap-2">
+            <span className="shrink-0 whitespace-nowrap font-extrabold tracking-tight">
+              이두왕
+            </span>
+            <span className="break-keep min-w-0 flex-1 text-xs leading-4 text-[#718077]">
+              푸시 · 등/허리 · 이두 · 전완 · 하체 · 견갑 · 코어 · 복근 · 복사근
+            </span>
           </div>
         </div>
         <button
-          className="rounded-full border border-[#d9ddd4] px-4 py-2 text-sm font-semibold transition hover:border-[#183d31] hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+          className="shrink-0 whitespace-nowrap rounded-full border border-[#d9ddd4] px-4 py-2 text-sm font-semibold transition hover:border-[#183d31] hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
           type="button"
           onClick={startNewChat}
           disabled={messages.length === 0 && !draft.trim() && !isSending}
@@ -329,8 +333,10 @@ export default function ChatPanel() {
                       전체 조건 일치 후보 보기 ({message.exercises.length})
                     </summary>
                     <p className="mt-2 text-xs leading-5 text-[#68756d]">
-                      카탈로그 후보 전체입니다. 미평가는 낮은 난이도나 개인의
-                      적합성·안전성을 뜻하지 않습니다.
+                      카탈로그 규칙에 따라 주 표적 또는 허용된 보조 근육이
+                      일치한 후보입니다. 카드에서 주 표적과 보조 근육을
+                      확인하세요. 미평가는 낮은 난이도나 개인의 적합성·안전성을
+                      뜻하지 않습니다.
                     </p>
                     <ul className="mt-3 grid gap-3 sm:grid-cols-2">
                       {message.exercises.map((exercise) => (
