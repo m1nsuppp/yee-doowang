@@ -4,10 +4,12 @@ from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from yee_doowang_api.application.chat import (
+    ChatAction,
     ChatCompletionError,
     ChatReply,
     ChatService,
     ConversationMessage,
+    ConversationState,
 )
 
 router = APIRouter()
@@ -18,10 +20,15 @@ class ChatRequest(BaseModel):
 
     messages: list[ConversationMessage] = Field(min_length=1, max_length=30)
 
+    state: ConversationState = Field(default_factory=ConversationState)
+    action: ChatAction = "message"
+
     @model_validator(mode="after")
     def require_user_message_last(self) -> ChatRequest:
         if self.messages[-1].role != "user":
             raise ValueError("The last conversation message must be from the user")
+        if self.action == "confirm_context" and self.state.phase != "confirming_context":
+            raise ValueError("Only a reviewed context can be confirmed")
         return self
 
 
@@ -38,7 +45,7 @@ async def chat(body: ChatRequest, request: Request) -> ChatReply:
         )
 
     try:
-        return await service.reply(body.messages)
+        return await service.reply(body.messages, body.state, body.action)
     except ChatCompletionError as error:
         raise HTTPException(
             status_code=502,

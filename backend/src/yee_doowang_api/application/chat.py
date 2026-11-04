@@ -20,6 +20,19 @@ class _ChatModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
+class ContextField[T](_ChatModel):
+    status: Literal["not_asked", "provided", "unknown", "skipped"] = "not_asked"
+    value: T | None = None
+
+    @model_validator(mode="after")
+    def validate_status_value(self) -> ContextField[T]:
+        if (self.status == "provided") != (self.value is not None):
+            raise ValueError("only provided context fields may contain a value")
+        return self
+
+
+
+
 class ConversationMessage(_ChatModel):
     role: Literal["user", "assistant"]
     content: str = Field(min_length=1, max_length=2000)
@@ -46,17 +59,42 @@ class EquipmentIntent(_ChatModel):
         return self
 
 
+class RoutineContext(_ChatModel):
+    workout_day_ids: ContextField[list[str]] = Field(default_factory=ContextField)
+    goal: ContextField[Literal["hypertrophy", "strength", "other"]] = Field(
+        default_factory=ContextField
+    )
+    experience: ContextField[Literal["novice", "experienced"]] = Field(
+        default_factory=ContextField
+    )
+    sessions_per_week: ContextField[int] = Field(default_factory=ContextField)
+    minutes_per_session: ContextField[int] = Field(default_factory=ContextField)
+    equipment: ContextField[EquipmentIntent] = Field(default_factory=ContextField)
+    preferences: ContextField[list[str]] = Field(default_factory=ContextField)
+    known_constraints: ContextField[list[str]] = Field(default_factory=ContextField)
+
+    @model_validator(mode="after")
+    def validate_schedule_context(self) -> RoutineContext:
+        if self.workout_day_ids.status == "provided":
+            day_ids = self.workout_day_ids.value or []
+            if not day_ids:
+                raise ValueError("provided workout days must not be empty")
+            if len(day_ids) != len(set(day_ids)):
+                raise ValueError("workout day IDs must be unique")
+        if self.sessions_per_week.status == "provided" and not 1 <= self.sessions_per_week.value <= 7:
+            raise ValueError("sessions per week must be between 1 and 7")
+        if self.minutes_per_session.status == "provided" and self.minutes_per_session.value <= 0:
+            raise ValueError("session minutes must be positive")
+        return self
+
+
 class RecommendationPreferences(_ChatModel):
     goal: Literal["hypertrophy", "strength", "skip", "unknown", "unsupported"]
     experience: Literal["novice", "experienced", "skip", "unknown"]
 
 
 class IntentDecision(_ChatModel):
-    workout_intent: Literal[
-        "push_day", "abs_day", "obliques_day", "clarify", "unsupported"
-    ]
-    equipment: EquipmentIntent
-    personalization: RecommendationPreferences
+    context: RoutineContext
     safety_status: Literal["none", "clarify", "urgent"]
     message: str = Field(max_length=1200)
 
@@ -79,18 +117,6 @@ class EquipmentConstraint(_ChatModel):
         return self
 
 
-class CoachAnswer(_ChatModel):
-    reply: str = Field(min_length=1, max_length=2000)
-
-    @field_validator("reply")
-    @classmethod
-    def reject_blank_reply(cls, reply: str) -> str:
-        reply = reply.strip()
-        if not reply:
-            raise ValueError("reply must not be blank")
-        return reply
-
-
 class RecommendedExercise(_ChatModel):
     source_id: str
     name: str
@@ -102,8 +128,60 @@ class RecommendedExercise(_ChatModel):
     technical_complexity: TechnicalComplexity | None
 
 
+class PlannedExercise(_ChatModel):
+    source_id: str = Field(pattern=r"^[0-9]{4}$")
+    rationale: str = Field(min_length=1, max_length=500)
+    alternative_source_ids: list[str] = Field(default_factory=list)
+
+
+class PlannedSession(_ChatModel):
+    workout_day_id: str
+    exercises: list[PlannedExercise] = Field(min_length=1)
+
+
+class RoutineProposal(_ChatModel):
+    sessions: list[PlannedSession] = Field(min_length=1)
+
+
+class RoutineExercise(_ChatModel):
+    exercise: RecommendedExercise
+    rationale: str
+    alternatives: list[RecommendedExercise]
+
+
+class RoutineSession(_ChatModel):
+    index: int = Field(ge=1)
+    workout_day_id: str
+    workout_day_name_ko: str
+    exercises: list[RoutineExercise]
+
+
+class RoutineDraft(_ChatModel):
+    sessions_per_week: int | None
+    minutes_per_session: int | None
+    sessions: list[RoutineSession]
+
+
+class ConversationState(_ChatModel):
+    phase: Literal["collecting_context", "confirming_context", "reviewing_routine"] = (
+        "collecting_context"
+    )
+    context: RoutineContext = Field(default_factory=RoutineContext)
+    routine: RoutineDraft | None = None
+
+    @model_validator(mode="after")
+    def validate_phase_routine(self) -> ConversationState:
+        if (self.phase == "reviewing_routine") != (self.routine is not None):
+            raise ValueError("only a reviewed routine may contain a routine draft")
+        return self
+
+
+ChatAction = Literal["message", "confirm_context"]
+
+
 class ChatReply(_ChatModel):
     reply: str
+    state: ConversationState
     exercises: list[RecommendedExercise]
 
 
@@ -115,19 +193,21 @@ class CoachModel(Protocol):
     async def interpret(
         self,
         messages: Sequence[ConversationMessage],
+        current_context: RoutineContext,
         equipment_options: Sequence[Equipment],
         workout_days: Sequence[WorkoutDay],
         muscles: Sequence[Muscle],
     ) -> IntentDecision: ...
 
-    async def answer(
+    async def plan_routine(
         self,
         messages: Sequence[ConversationMessage],
-        candidates: Sequence[Exercise],
-        equipment_constraint: EquipmentConstraint,
-        personalization: RecommendationPreferences,
+        context: RoutineContext,
+        candidates_by_day: dict[str, Sequence[Exercise]],
+        workout_days: Sequence[WorkoutDay],
         recommendation_profiles: Sequence[ExerciseRecommendationProfile],
-    ) -> CoachAnswer: ...
+        current_routine: RoutineDraft | None,
+    ) -> RoutineProposal: ...
 
 
 class ExerciseReasoner(Protocol):
@@ -165,19 +245,32 @@ class ChatService:
             item.id: item.name_ko for item in catalog.movement_patterns
         }
 
-    async def reply(self, messages: Sequence[ConversationMessage]) -> ChatReply:
+        self._workout_day_names = {day.id: day.name_ko for day in catalog.workout_days}
+
+    async def reply(
+        self,
+        messages: Sequence[ConversationMessage],
+        state: ConversationState,
+        action: ChatAction,
+    ) -> ChatReply:
+        if action == "confirm_context" and state.phase != "confirming_context":
+            raise ValueError("Only a reviewed context can be confirmed")
+
         intent = await self._model.interpret(
             messages,
+            state.context,
             self._catalog.equipment,
             self._catalog.workout_days,
             self._catalog.muscles,
         )
+        context = self._merge_context(state.context, intent.context)
         if intent.safety_status == "urgent":
             return ChatReply(
                 reply=(
                     "말씀하신 증상은 즉시 평가가 필요할 수 있어요. "
                     "운동을 멈추고 지금 응급 진료를 받으세요."
                 ),
+                state=ConversationState(context=context),
                 exercises=[],
             )
         if intent.safety_status == "clarify":
@@ -185,88 +278,414 @@ class ChatService:
                 "운동 추천 전에 통증 위치와 어떤 동작에서 심해지는지 확인할게요. "
                 "통증을 악화시키는 운동은 중단해 주세요."
             )
-            return ChatReply(reply=intent.message or fallback, exercises=[])
-
-        if intent.workout_intent in {"clarify", "unsupported"}:
-            reply = intent.message or (
-                "현재는 푸시 데이, 복근, 복사근 운동을 추천해요. 어떤 부위를 원하시나요?"
+            return ChatReply(
+                reply=intent.message or fallback,
+                state=ConversationState(context=context),
+                exercises=[],
             )
-            return ChatReply(reply=reply, exercises=[])
-        personalization_reply = self._personalization_reply(intent)
-        if personalization_reply is not None:
-            return ChatReply(reply=personalization_reply, exercises=[])
 
-        equipment_intent = intent.equipment
-        if equipment_intent.mode == "unknown":
-            reply = intent.message or (
-                "사용할 장비를 모르셔도 괜찮아요. 장비를 알려주시거나 "
-                "‘알아서 골라줘’라고 말씀해 주세요."
+        unknown_days = (
+            set(context.workout_day_ids.value or []) - self._workout_day_names.keys()
+            if context.workout_day_ids.status == "provided"
+            else set()
+        )
+        if unknown_days:
+            return ChatReply(
+                reply=self._supported_workout_days_reply(),
+                state=ConversationState(context=state.context),
+                exercises=[],
             )
-            return ChatReply(reply=reply, exercises=[])
 
-        if equipment_intent.mode == "specified":
+
+        equipment = context.equipment.value
+        if (
+            context.equipment.status == "provided"
+            and equipment is not None
+            and equipment.mode == "specified"
+            and set(equipment.equipment_ids) - self._known_equipment_ids
+        ):
+            return ChatReply(
+                reply=self._equipment_options_reply(),
+                state=ConversationState(context=state.context),
+                exercises=[],
+            )
+        question = self._next_context_question(context)
+        if question is not None:
+            return ChatReply(
+                reply=question,
+                state=ConversationState(context=context),
+                exercises=[],
+            )
+
+        if action == "confirm_context":
+            if context != state.context:
+                return ChatReply(
+                    reply=self._context_summary(context),
+                    state=ConversationState(
+                        phase="confirming_context",
+                        context=context,
+                    ),
+                    exercises=[],
+                )
+            return await self._draft_routine(messages, state)
+        if state.phase == "reviewing_routine" and context == state.context:
+            return await self._draft_routine(messages, state)
+
+        return ChatReply(
+            reply=self._context_summary(context),
+            state=ConversationState(phase="confirming_context", context=context),
+            exercises=[],
+        )
+
+    @staticmethod
+    def _merge_context(previous: RoutineContext, updates: RoutineContext) -> RoutineContext:
+        merged = previous.model_dump()
+        for field_name in RoutineContext.model_fields:
+            field = getattr(updates, field_name)
+            if field.status != "not_asked":
+                merged[field_name] = field.model_dump()
+        return RoutineContext.model_validate(merged)
+
+    async def _draft_routine(
+        self,
+        messages: Sequence[ConversationMessage],
+        state: ConversationState,
+    ) -> ChatReply:
+        context = state.context
+        question = self._next_context_question(context)
+        if question is not None:
+            return ChatReply(
+                reply=question,
+                state=ConversationState(context=context),
+                exercises=[],
+            )
+
+        if context.workout_day_ids.status != "provided":
+            return ChatReply(
+                reply=(
+                    "운동 부위를 건너뛰어서 주간 일정은 만들지 않았어요. "
+                    "지원 부위를 알려주시면 언제든 이어서 구성할게요."
+                ),
+                state=ConversationState(context=context),
+                exercises=[],
+            )
+        day_ids = context.workout_day_ids.value or []
+        if context.sessions_per_week.status != "provided":
+            return ChatReply(
+                reply=(
+                    "주당 횟수를 건너뛰어서 주간 일정은 만들지 않았어요. "
+                    "운동 횟수를 알려주시면 언제든 이어서 구성할게요."
+                ),
+                state=ConversationState(context=context),
+                exercises=[],
+            )
+
+        equipment_field = context.equipment
+        equipment_intent = equipment_field.value
+        if equipment_field.status == "provided" and equipment_intent is not None:
             equipment_ids = list(dict.fromkeys(equipment_intent.equipment_ids))
+            if equipment_intent.mode == "unknown":
+                return ChatReply(
+                    reply="장비를 모르거나 답하고 싶지 않으면 건너뛰어 주세요.",
+                    state=ConversationState(context=context),
+                    exercises=[],
+                )
             if set(equipment_ids) - self._known_equipment_ids:
-                options = ", ".join(self._equipment_names.values())
-                reply = f"장비 조건을 확인하지 못했어요. 현재 지원하는 장비: {options}."
-                return ChatReply(reply=reply, exercises=[])
+                return ChatReply(
+                    reply=self._equipment_options_reply(),
+                    state=ConversationState(context=context),
+                    exercises=[],
+                )
             constraint = EquipmentConstraint(
-                mode="specified",
-                equipment_ids=equipment_ids,
+                mode="specified" if equipment_intent.mode == "specified" else "unrestricted",
+                equipment_ids=(
+                    equipment_ids if equipment_intent.mode == "specified" else []
+                ),
             )
         else:
             constraint = EquipmentConstraint(mode="unrestricted", equipment_ids=[])
 
-        candidates = await self._reasoner.recommend(
-            workout_day_id=intent.workout_intent,
-            equipment_constraint=constraint,
-        )
-        evidence_reply = self._evidence_coverage_reply(
-            candidates,
-            intent.personalization,
-        )
-        if evidence_reply is not None:
-            return ChatReply(reply=evidence_reply, exercises=[])
-        candidates = self._rank_candidates(candidates, intent.personalization)
-        candidate_ids = {exercise.source_id for exercise in candidates}
-        recommendation_profiles = [
+        preferences = self._recommendation_preferences(context)
+        candidates_by_day: dict[str, list[Exercise]] = {}
+        for day_id in day_ids:
+            candidates = await self._reasoner.recommend(
+                workout_day_id=day_id,
+                equipment_constraint=constraint,
+            )
+            if not candidates:
+                return ChatReply(
+                    reply=(
+                        f"{self._workout_day_names[day_id]}과 장비 조건에 맞는 "
+                        "등록 운동이 없어요. 부위나 장비 조건을 수정해 주세요."
+                    ),
+                    state=ConversationState(context=context),
+                    exercises=[],
+                )
+            evidence_reply = self._evidence_coverage_reply(candidates, preferences)
+            if evidence_reply is not None:
+                return ChatReply(
+                    reply=evidence_reply,
+                    state=ConversationState(context=context),
+                    exercises=[],
+                )
+            candidates_by_day[day_id] = self._rank_candidates(candidates, preferences)
+
+        candidate_ids = {
+            exercise.source_id
+            for candidates in candidates_by_day.values()
+            for exercise in candidates
+        }
+        profiles = [
             profile
             for profile in self._catalog.recommendations.profiles
             if profile.source_id in candidate_ids
         ]
-        answer = await self._model.answer(
+        proposal = await self._model.plan_routine(
             messages,
-            candidates,
-            constraint,
-            intent.personalization,
-            recommendation_profiles,
+            context,
+            candidates_by_day,
+            self._catalog.workout_days,
+            profiles,
+            state.routine,
+        )
+        planned_sessions = self._validated_sessions(
+            proposal,
+            candidates_by_day,
+            day_ids,
+            context.sessions_per_week.value,
+        )
+        routine = RoutineDraft(
+            sessions_per_week=context.sessions_per_week.value,
+            minutes_per_session=(
+                context.minutes_per_session.value
+                if context.minutes_per_session.status == "provided"
+                else None
+            ),
+            sessions=planned_sessions,
+        )
+        all_candidates = {
+            exercise.source_id: exercise
+            for candidates in candidates_by_day.values()
+            for exercise in candidates
+        }
+        available_minutes = (
+            f" 회당 {routine.minutes_per_session}분을 목표 시간으로 반영했지만, "
+            "운동별 소요 시간 자료가 없어 완료 시간은 보장하지 않아요."
+            if routine.minutes_per_session is not None
+            else ""
+        )
+        equipment_note = (
+            " 장비를 제한하지 않고 후보를 살펴봤어요. 보유 장비를 가정하지 않습니다."
+            if constraint.mode == "unrestricted"
+            else ""
         )
         return ChatReply(
-            reply=answer.reply,
-            exercises=[self._present_exercise(exercise) for exercise in candidates],
+            reply=(
+                "조건에 맞는 운동 후보를 찾았어요. 주간 루틴 초안을 만들었어요."
+                f"{equipment_note} 세트·횟수·중량은 근거가 확인되지 않아 포함하지 않았어요."
+                f"{available_minutes}"
+            ),
+            state=ConversationState(
+                phase="reviewing_routine",
+                context=context,
+                routine=routine,
+            ),
+            exercises=[self._present_exercise(item) for item in all_candidates.values()],
+        )
+
+    def _validated_sessions(
+        self,
+        proposal: RoutineProposal,
+        candidates_by_day: dict[str, Sequence[Exercise]],
+        selected_day_ids: Sequence[str],
+        expected_sessions: int,
+    ) -> list[RoutineSession]:
+        if len(proposal.sessions) != expected_sessions:
+            raise ChatCompletionError("Routine session count did not match the request.")
+
+        day_names = self._workout_day_names
+        sessions: list[RoutineSession] = []
+        for index, planned_session in enumerate(proposal.sessions, start=1):
+            if planned_session.workout_day_id not in selected_day_ids:
+                raise ChatCompletionError("Routine used an unrequested workout day.")
+            day_candidates = {
+                exercise.source_id: exercise
+                for exercise in candidates_by_day[planned_session.workout_day_id]
+            }
+
+            selected_ids: set[str] = set()
+            planned_items: list[RoutineExercise] = []
+            for item in planned_session.exercises:
+                if item.source_id in selected_ids:
+                    raise ChatCompletionError("Routine repeats an exercise within a session.")
+                selected_ids.add(item.source_id)
+                exercise = day_candidates.get(item.source_id)
+                if exercise is None:
+                    raise ChatCompletionError("Routine used an unverified exercise.")
+                if len(item.alternative_source_ids) != len(set(item.alternative_source_ids)):
+                    raise ChatCompletionError("Routine contains duplicate alternatives.")
+                alternatives = []
+                for alternative_id in item.alternative_source_ids:
+                    alternative = day_candidates.get(alternative_id)
+                    if alternative is None or alternative_id == item.source_id:
+                        raise ChatCompletionError("Routine used an unverified alternative.")
+                    alternatives.append(self._present_exercise(alternative))
+                planned_items.append(
+                    RoutineExercise(
+                        exercise=self._present_exercise(exercise),
+                        rationale=item.rationale,
+                        alternatives=alternatives,
+                    )
+                )
+            sessions.append(
+                RoutineSession(
+                    index=index,
+                    workout_day_id=planned_session.workout_day_id,
+                    workout_day_name_ko=day_names[planned_session.workout_day_id],
+                    exercises=planned_items,
+                )
+            )
+        return sessions
+
+    def _next_context_question(self, context: RoutineContext) -> str | None:
+        if context.workout_day_ids.status in {"not_asked", "unknown"}:
+            supported = ", ".join(self._workout_day_names.values())
+            return (
+                "주간 일정에 넣을 운동 부위를 알려주세요. 현재 지원 범위: "
+                f"{supported}. 모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
+            )
+        if context.sessions_per_week.status in {"not_asked", "unknown"}:
+            return (
+                "주간 일정을 만들려면 주당 운동 횟수가 필요해요. "
+                "주 1~7회 중 알려주세요. 모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
+            )
+        if context.goal.status in {"not_asked", "unknown"}:
+            return (
+                "우선할 목표가 근비대와 근력 중 무엇인가요? 모르거나 답하고 싶지 않으면 "
+                "목표 분류를 건너뛸 수 있어요."
+            )
+        if context.goal.status == "provided" and context.goal.value == "other":
+            return (
+                "현재 출처가 연결된 목표는 근비대와 근력 진행이에요. "
+                "둘 중 하나를 선택하거나 목표 분류를 건너뛰어 주세요."
+            )
+        if context.experience.status in {"not_asked", "unknown"}:
+            return (
+                "저항 운동을 처음 시작했거나 몇 년 쉬었다가 복귀했나요? "
+                "경력은 자기보고로만 반영하며, 모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
+            )
+        if context.experience.status == "provided" and context.experience.value == "experienced":
+            return (
+                "경험자 적합도 근거는 아직 없어요. 경력 기준을 건너뛰고 "
+                "목표·다른 조건만 반영할까요?"
+            )
+        if context.minutes_per_session.status in {"not_asked", "unknown"}:
+            return (
+                "한 번 운동할 때 가능한 시간을 알려주세요. 모르거나 답하고 싶지 않으면 "
+                "시간 조건을 건너뛸 수 있어요."
+            )
+        if context.equipment.status in {"not_asked", "unknown"} or (
+            context.equipment.value is not None
+            and context.equipment.value.mode == "unknown"
+        ):
+            return (
+                "사용할 수 있는 장비를 알려주세요. 모르거나 답하고 싶지 않으면 건너뛰어도 돼요. "
+                "건너뛰면 보유 장비를 가정하지 않고 장비 제한 없이 후보를 살펴봅니다."
+            )
+        if context.preferences.status in {"not_asked", "unknown"}:
+            return "선호하거나 피하고 싶은 동작이 있나요? 없거나 답하고 싶지 않으면 건너뛰어도 돼요."
+        if context.known_constraints.status in {"not_asked", "unknown"}:
+            return (
+                "운동에서 고려할 제약이나 불편함을 알고 있나요? 진단명은 추정하지 않으며, "
+                "모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
+            )
+        return None
+
+    def _context_summary(self, context: RoutineContext) -> str:
+        goal_names = {"hypertrophy": "근비대", "strength": "근력", "other": "기타 목표"}
+        experience_names = {"novice": "초보·복귀(자기보고)", "experienced": "경험자(자기보고)"}
+        if context.workout_day_ids.status == "provided":
+            workout_days = ", ".join(
+                self._workout_day_names[item]
+                for item in context.workout_day_ids.value or []
+            )
+        else:
+            workout_days = self._field_status_label(context.workout_day_ids.status)
+        if context.equipment.status == "provided" and context.equipment.value is not None:
+            equipment = context.equipment.value
+            if equipment.mode == "specified":
+                equipment_text = ", ".join(
+                    self._equipment_names[item] for item in equipment.equipment_ids
+                )
+            else:
+                equipment_text = "선택 위임(보유 장비는 가정하지 않음)"
+        else:
+            equipment_text = self._field_status_label(context.equipment.status)
+
+        return "\n".join(
+            [
+                "제가 이해한 내용이에요. 확인하거나 채팅으로 수정해 주세요.",
+                f"- 운동 부위: {workout_days}",
+                f"- 주당 빈도: {self._value_with_unit(context.sessions_per_week, '회')}",
+                f"- 목표: {self._context_value_label(context.goal, goal_names)}",
+                f"- 운동 경력: {self._context_value_label(context.experience, experience_names)}",
+                f"- 회당 가능 시간: {self._value_with_unit(context.minutes_per_session, '분')}",
+                f"- 장비: {equipment_text}",
+                f"- 선호: {self._list_value_or_status(context.preferences)}",
+                f"- 알고 있는 제약: {self._list_value_or_status(context.known_constraints)}",
+                "이 요약이 맞으면 ‘확인하고 루틴 만들기’를 눌러주세요.",
+            ]
         )
 
     @staticmethod
-    def _personalization_reply(intent: IntentDecision) -> str | None:
-        preferences = intent.personalization
-        if preferences.goal == "unsupported":
-            return intent.message or (
-                "현재 외부 근거가 연결된 목표는 근비대와 근력 진행이에요. "
-                "둘 중 하나를 고르거나 목표 분류를 건너뛰어 주세요."
-            )
-        if preferences.goal == "unknown":
-            return intent.message or "근비대와 근력 중 우선할 목표를 알려주세요."
-        if preferences.experience == "unknown":
-            return intent.message or (
-                "운동을 처음 시작했거나 몇 년 쉬었다가 복귀했는지 알려주세요. "
-                "모르거나 답하고 싶지 않으면 경력 분류를 건너뛸 수 있어요."
-            )
-        if preferences.experience == "experienced":
-            return intent.message or (
-                "확인된 운동 경력 근거는 초보·복귀 운동자에 한정돼요. "
-                "경력 기준 정렬을 건너뛰고 목표 기준으로만 추천할까요?"
-            )
-        return None
+    def _field_status_label(status: str) -> str:
+        return {"unknown": "모름", "skipped": "건너뜀"}.get(status, "미입력")
+
+    @classmethod
+    def _value_with_unit(cls, field: ContextField[int], unit: str) -> str:
+        if field.status == "provided":
+            return f"{field.value}{unit}"
+        return cls._field_status_label(field.status)
+
+    @classmethod
+    def _context_value_label(
+        cls,
+        field: ContextField[str],
+        labels: dict[str, str],
+    ) -> str:
+        if field.status == "provided" and field.value is not None:
+            return labels[field.value]
+        return cls._field_status_label(field.status)
+
+    @classmethod
+    def _list_value_or_status(cls, field: ContextField[list[str]]) -> str:
+        if field.status != "provided":
+            return cls._field_status_label(field.status)
+        return ", ".join(field.value or []) or "없음"
+
+    @staticmethod
+    def _recommendation_preferences(context: RoutineContext) -> RecommendationPreferences:
+        if context.goal.status == "skipped":
+            goal = "skip"
+        elif context.goal.status == "provided":
+            goal = "unsupported" if context.goal.value == "other" else context.goal.value
+        else:
+            goal = "unknown"
+        if context.experience.status == "skipped":
+            experience = "skip"
+        elif context.experience.status == "provided":
+            experience = context.experience.value
+        else:
+            experience = "unknown"
+        return RecommendationPreferences(goal=goal, experience=experience)
+
+    def _supported_workout_days_reply(self) -> str:
+        options = ", ".join(self._workout_day_names.values())
+        return f"요청한 부위는 아직 지원하지 않아요. 현재 지원 범위: {options}."
+
+    def _equipment_options_reply(self) -> str:
+        options = ", ".join(self._equipment_names.values())
+        return f"장비 조건을 확인하지 못했어요. 현재 지원하는 장비: {options}."
 
     def _evidence_coverage_reply(
         self,
