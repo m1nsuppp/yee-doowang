@@ -481,21 +481,26 @@
     },
     {
       "id": "back_day",
-      "name_ko": "등 운동",
+      "name_ko": "등·허리 운동",
       "focus_muscle_ids": [
         "lats",
         "upper_back",
-        "trapezius"
+        "trapezius",
+        "spine",
+        "lower_back",
+        "rhomboids",
+        "back"
       ],
-      "include_secondary_muscles": false
+      "include_secondary_muscles": true
     },
     {
       "id": "biceps_day",
       "name_ko": "이두 운동",
       "focus_muscle_ids": [
-        "biceps"
+        "biceps",
+        "brachialis"
       ],
-      "include_secondary_muscles": false
+      "include_secondary_muscles": true
     },
     {
       "id": "legs_day",
@@ -506,9 +511,44 @@
         "glutes",
         "calves",
         "adductors",
-        "abductors"
+        "abductors",
+        "hip_flexors",
+        "soleus",
+        "shins",
+        "ankles",
+        "ankle_stabilizers",
+        "feet",
+        "inner_thighs",
+        "groin"
+      ],
+      "include_secondary_muscles": true
+    },
+    {
+      "id": "forearms_day",
+      "name_ko": "전완·손목 운동",
+      "focus_muscle_ids": [
+        "forearms",
+        "wrist_flexors",
+        "wrist_extensors"
+      ],
+      "include_secondary_muscles": true
+    },
+    {
+      "id": "scapula_day",
+      "name_ko": "견갑·전거근 운동",
+      "focus_muscle_ids": [
+        "serratus_anterior",
+        "levator_scapulae"
       ],
       "include_secondary_muscles": false
+    },
+    {
+      "id": "core_day",
+      "name_ko": "코어 보조 운동",
+      "focus_muscle_ids": [
+        "core"
+      ],
+      "include_secondary_muscles": true
     },
     {
       "id": "abs_day",

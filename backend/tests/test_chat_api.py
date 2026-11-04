@@ -51,16 +51,43 @@ class FixtureCoachModel:
 
         area_terms = {
             "push_day": ("push", "가슴", "삼두", "어깨", "위팔세갈래근"),
-            "back_day": ("등", "광배근", "상부 등", "승모근"),
-            "biceps_day": ("이두", "위팔두갈래근"),
-            "legs_day": ("하체", "대퇴사두근", "햄스트링", "둔근", "종아리", "내전근", "외전근"),
+            "back_day": (
+                "등",
+                "허리",
+                "척추",
+                "광배근",
+                "상부 등",
+                "승모근",
+                "능형근",
+            ),
+            "biceps_day": ("이두", "위팔두갈래근", "상완근"),
+            "legs_day": (
+                "하체",
+                "대퇴사두근",
+                "햄스트링",
+                "둔근",
+                "종아리",
+                "내전근",
+                "외전근",
+                "고관절 굴곡근",
+                "가자미근",
+                "정강이",
+                "발목",
+                "발",
+                "사타구니",
+                "허벅지 안쪽",
+            ),
+            "forearms_day": ("전완", "전완근", "손목", "손목 굽힘근", "손목 폄근"),
+            "scapula_day": ("견갑", "전거근", "견갑거근"),
+            "core_day": ("코어",),
             "abs_day": ("복근", "하복근"),
             "obliques_day": ("복사근", "옆구리"),
         }
+        unsupported_terms = ("심혈관계", "회전근개")
         workout_terms = tuple(
             term for terms in area_terms.values() for term in terms
         )
-        workout_text = field_text((*workout_terms, "전완"))
+        workout_text = field_text((*workout_terms, *unsupported_terms))
         selected_days = [
             day.id
             for day in workout_days
@@ -68,7 +95,7 @@ class FixtureCoachModel:
         ]
         if selected_days:
             updates["workout_day_ids"] = cls._field(list(dict.fromkeys(selected_days)))
-        elif "전완" in workout_text:
+        elif any(term in workout_text for term in unsupported_terms):
             updates["workout_day_ids"] = cls._field(status="unknown")
             message = "요청한 운동 부위는 아직 지원하지 않습니다."
 
@@ -904,16 +931,25 @@ class ChatApiTests(unittest.TestCase):
             expected_ids,
         )
 
-    def test_added_workout_areas_match_primary_targets_and_equipment(self) -> None:
+    def test_added_workout_areas_match_primary_secondary_targets_and_equipment(
+        self,
+    ) -> None:
         app = create_app(
             settings=Settings(_env_file=None),
             coach_model=FixtureCoachModel(),
         )
         catalog = load_exercise_catalog()
-        cases = (("등", "back_day"), ("이두", "biceps_day"), ("하체", "legs_day"))
+        cases = (
+            ("등/허리", "back_day", "덤벨", "dumbbell", "0326"),
+            ("이두", "biceps_day", "덤벨", "dumbbell", "0285"),
+            ("하체", "legs_day", "맨몸", "body_weight", "0001"),
+            ("전완", "forearms_day", "덤벨", "dumbbell", "0285"),
+            ("견갑", "scapula_day", "맨몸", "body_weight", "1403"),
+            ("코어", "core_day", "맨몸", "body_weight", "3297"),
+        )
 
         with TestClient(app) as client:
-            for area_name, day_id in cases:
+            for area_name, day_id, equipment_name, equipment_id, source_id in cases:
                 with self.subTest(area=area_name):
                     response = self._post_confirmed_routine(
                         client,
@@ -921,7 +957,7 @@ class ChatApiTests(unittest.TestCase):
                             {
                                 "role": "user",
                                 "content": (
-                                    f"덤벨 {area_name} 운동 추천해줘. "
+                                    f"{equipment_name} {area_name} 운동 추천해줘. "
                                     "목표 건너뛰고 경력 건너뛰고."
                                 ),
                             }
@@ -936,20 +972,31 @@ class ChatApiTests(unittest.TestCase):
                     expected_ids = {
                         exercise.source_id
                         for exercise in catalog.exercises
-                        if exercise.primary_muscle_id in focus_muscles
-                        and exercise.equipment_id == "dumbbell"
+                        if exercise.equipment_id == equipment_id
+                        and (
+                            exercise.primary_muscle_id in focus_muscles
+                            or day.include_secondary_muscles
+                            and not focus_muscles.isdisjoint(
+                                exercise.secondary_muscle_ids
+                            )
+                        )
                     }
                     body = response.json()
                     self.assertEqual(
                         {exercise["source_id"] for exercise in body["exercises"]},
                         expected_ids,
                     )
+                    self.assertIn(
+                        source_id,
+                        {exercise["source_id"] for exercise in body["exercises"]},
+                    )
                     self.assertTrue(
                         all(
-                            exercise["equipment_ko"] == "덤벨"
+                            exercise["equipment_ko"] == equipment_name
                             for exercise in body["exercises"]
                         )
                     )
+
 
     def test_untranslated_catalog_labels_are_explicit(self) -> None:
         app = create_app(
@@ -1134,20 +1181,33 @@ class ChatApiTests(unittest.TestCase):
             settings=Settings(_env_file=None),
             coach_model=FixtureCoachModel(),
         )
+        requests = ("심혈관계 운동 추천해줘.", "회전근개 운동 추천해줘.")
 
         with TestClient(app) as client:
-            response = client.post(
-                "/api/chat",
-                json={"messages": [{"role": "user", "content": "전완 운동 추천해줘."}]},
-            )
+            responses = [
+                client.post(
+                    "/api/chat",
+                    json={"messages": [{"role": "user", "content": request}]},
+                )
+                for request in requests
+            ]
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()["exercises"], [])
-        self.assertIn("등 운동", response.json()["reply"])
-        self.assertIn("이두 운동", response.json()["reply"])
-        self.assertIn("하체 운동", response.json()["reply"])
-        self.assertIn("복근", response.json()["reply"])
-        self.assertIn("복사근", response.json()["reply"])
+        for response in responses:
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.json()["exercises"], [])
+            for supported_area in (
+                "푸시 데이",
+                "등·허리 운동",
+                "이두 운동",
+                "하체 운동",
+                "전완·손목 운동",
+                "견갑·전거근 운동",
+                "코어 보조 운동",
+                "복근 운동",
+                "복사근 운동",
+            ):
+                self.assertIn(supported_area, response.json()["reply"])
+
 
     def test_chat_rejects_blank_messages_and_non_user_final_message(self) -> None:
         app = create_app(
