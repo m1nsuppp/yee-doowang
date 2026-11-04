@@ -22,6 +22,8 @@ export type RoutineContext = {
   equipment: ContextField<EquipmentIntent>;
   preferences: ContextField<string[]>;
   known_constraints: ContextField<string[]>;
+  adult_eligibility: ContextField<"adult" | "minor">;
+  weekly_direct_sets_by_muscle: ContextField<Record<string, number>>;
 };
 
 export type RecommendedExercise = {
@@ -48,10 +50,47 @@ export type RoutineSession = {
   exercises: RoutineExercise[];
 };
 
+export type PrescriptionEvidenceSource = {
+  id: string;
+  title: string;
+  url: string;
+  doi: string;
+  year: number;
+  license: string | null;
+  scope: string;
+  limitations: string;
+};
+
+export type WeeklyDirectSetTarget = {
+  muscle_id: string;
+  muscle_name_ko: string;
+  sets_per_week: number;
+  basis: "source_starting_point" | "user_reported";
+};
+
+export type HypertrophyPrescription = {
+  population_scope: string;
+  weekly_direct_sets: WeeklyDirectSetTarget[];
+  higher_volume_reference_sets_per_muscle_per_week: number;
+  repetition_range_rm: [number, number];
+  rest_seconds_range: [number, number];
+  progression: {
+    extra_repetitions_min: number;
+    extra_repetitions_max: number;
+    load_increase_percent_min: number;
+    load_increase_percent_max: number;
+    instruction: string;
+  };
+  sources: PrescriptionEvidenceSource[];
+  caveats: string[];
+};
+
 export type RoutineDraft = {
   sessions_per_week: number | null;
   minutes_per_session: number | null;
   sessions: RoutineSession[];
+  hypertrophy_prescription: HypertrophyPrescription | null;
+  prescription_note: string | null;
 };
 
 export type ConversationState = {
@@ -87,6 +126,8 @@ export function createInitialConversationState(): ConversationState {
       equipment: field<EquipmentIntent>(),
       preferences: field<string[]>(),
       known_constraints: field<string[]>(),
+      adult_eligibility: field<"adult" | "minor">(),
+      weekly_direct_sets_by_muscle: field<Record<string, number>>(),
     },
     routine: null,
   };

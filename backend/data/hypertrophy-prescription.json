@@ -1,0 +1,53 @@
+{
+  "sources": [
+    {
+      "id": "acsm_2026_overview",
+      "title": "American College of Sports Medicine Position Stand. Resistance Training Prescription for Muscle Function, Hypertrophy, and Physical Performance in Healthy Adults: An Overview of Reviews",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12965823/",
+      "doi": "10.1249/MSS.0000000000003897",
+      "year": 2026,
+      "license": "CC BY-NC-ND 4.0",
+      "scope": "건강한 18세 이상 성인 대상 체계적 문헌고찰 개관. 검색 기준일 2024년 10월, 체계적 문헌고찰 137건 포함.",
+      "limitations": "근육별 주 10세트 이상 및 편심성 과부하가 근비대 향상과 연관됐다. 부하 30–100% 1RM, 실패까지 수행, 주간 빈도(총 볼륨 동일), 주기화는 근비대 차이를 보이지 않았고, 세트 간 휴식은 결론을 내릴 근거가 부족하다. 개인 최적값이나 운동별 용량을 제공하지 않는다."
+    },
+    {
+      "id": "acsm_2009_progression",
+      "title": "American College of Sports Medicine position stand. Progression models in resistance training for healthy adults",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19204579/",
+      "doi": "10.1249/MSS.0b013e3181915670",
+      "year": 2009,
+      "license": null,
+      "scope": "건강한 성인의 저항 운동 진행 지침.",
+      "limitations": "2026 ACSM 개관에 앞선 지침이다. 6–12 RM과 세트 간 1–2분은 실용적 선택지로만 사용하며 근비대에 고유한 최적값으로 주장하지 않는다. 진행 규칙은 사용자가 이미 선택한 부하에만 적용하고 개인별 kg을 계산하지 않는다."
+    },
+    {
+      "id": "iversen_2021_time_efficiency",
+      "title": "No Time to Lift? Designing Time-Efficient Training Programs for Strength and Hypertrophy: A Narrative Review",
+      "url": "https://link.springer.com/article/10.1007/s40279-021-01490-1",
+      "doi": "10.1007/s40279-021-01490-1",
+      "year": 2021,
+      "license": "CC BY 4.0",
+      "scope": "시간 효율을 주제로 한 서술형 문헌고찰. 연구 표본은 주로 비훈련자 또는 여가 운동자.",
+      "limitations": "근육별 주 4세트 이상을 시간 효율적 권고로 제안한 서술형 리뷰다. 보편적 최소량이나 개인별 처방으로 해석하지 않는다."
+    }
+  ],
+  "initial_direct_sets_per_muscle_per_week": 4,
+  "higher_volume_direct_sets_per_muscle_per_week": 10,
+  "repetition_range_rm": [6, 12],
+  "rest_seconds_range": [60, 120],
+  "progression_extra_repetitions_range": [1, 2],
+  "progression_load_increase_percent_range": [2, 10],
+  "sources_by_variable": {
+    "initial_sets": ["iversen_2021_time_efficiency"],
+    "higher_volume": ["acsm_2026_overview"],
+    "repetitions": ["acsm_2009_progression", "acsm_2026_overview"],
+    "rest": ["acsm_2009_progression", "acsm_2026_overview"],
+    "progression": ["acsm_2009_progression"]
+  },
+  "caveats": [
+    "세트 수는 카탈로그의 주 표적 근육 기준 직접 세트이며 보조 근육의 기여량은 계산하지 않는다.",
+    "근거는 주간 근육별 총량을 다루며 운동별 세트 배분을 정하지 않으므로 개별 운동별 세트 수는 산출하지 않는다.",
+    "반복 범위는 유일한 최적값으로 입증되지 않았고, 세트 간 휴식은 효과를 결론내릴 근거가 부족하다.",
+    "건강한 성인 대상 일반 정보이며 미성년자, 질환·재활 또는 개인별 안전 보장을 다루지 않는다."
+  ]
+}

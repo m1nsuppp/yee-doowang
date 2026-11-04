@@ -14,6 +14,12 @@ from yee_doowang_api.application.exercise_catalog import (
     TechnicalComplexity,
     WorkoutDay,
 )
+from yee_doowang_api.application.hypertrophy_prescription import (
+    HypertrophyGuidelines,
+    HypertrophyPrescription,
+    HypertrophyProgressionRule,
+    WeeklyDirectSetTarget,
+)
 
 
 class _ChatModel(BaseModel):
@@ -72,6 +78,12 @@ class RoutineContext(_ChatModel):
     equipment: ContextField[EquipmentIntent] = Field(default_factory=ContextField)
     preferences: ContextField[list[str]] = Field(default_factory=ContextField)
     known_constraints: ContextField[list[str]] = Field(default_factory=ContextField)
+    adult_eligibility: ContextField[Literal["adult", "minor"]] = Field(
+        default_factory=ContextField
+    )
+    weekly_direct_sets_by_muscle: ContextField[dict[str, int]] = Field(
+        default_factory=ContextField
+    )
 
     @model_validator(mode="after")
     def validate_schedule_context(self) -> RoutineContext:
@@ -85,6 +97,10 @@ class RoutineContext(_ChatModel):
             raise ValueError("sessions per week must be between 1 and 7")
         if self.minutes_per_session.status == "provided" and self.minutes_per_session.value <= 0:
             raise ValueError("session minutes must be positive")
+        if self.weekly_direct_sets_by_muscle.status == "provided":
+            set_counts = self.weekly_direct_sets_by_muscle.value or {}
+            if not set_counts or any(count < 0 for count in set_counts.values()):
+                raise ValueError("reported weekly direct sets must be non-negative and non-empty")
         return self
 
 
@@ -159,7 +175,8 @@ class RoutineDraft(_ChatModel):
     sessions_per_week: int | None
     minutes_per_session: int | None
     sessions: list[RoutineSession]
-
+    hypertrophy_prescription: HypertrophyPrescription | None = None
+    prescription_note: str | None = None
 
 class ConversationState(_ChatModel):
     phase: Literal["collecting_context", "confirming_context", "reviewing_routine"] = (
@@ -227,6 +244,7 @@ class ChatService:
         model: CoachModel,
         reasoner: ExerciseReasoner,
         catalog: ExerciseCatalog,
+        hypertrophy_guidelines: HypertrophyGuidelines,
     ) -> None:
         self._model = model
         self._reasoner = reasoner
@@ -234,6 +252,11 @@ class ChatService:
         self._recommendation_profiles = {
             item.source_id: item for item in catalog.recommendations.profiles
         }
+        self._hypertrophy_guidelines = hypertrophy_guidelines
+        self._exercises_by_id = {
+            exercise.source_id: exercise for exercise in catalog.exercises
+        }
+        self._muscles_by_id = {muscle.id: muscle for muscle in catalog.muscles}
         self._known_equipment_ids = {item.id for item in catalog.equipment}
         self._muscle_names = {
             item.id: item.name_ko or f"원문 근육명: {item.source_terms[0]}"
@@ -251,6 +274,9 @@ class ChatService:
             day.id: day for day in catalog.workout_days
         }
         self._workout_day_names = {day.id: day.name_ko for day in catalog.workout_days}
+        self._focus_muscle_ids_by_day = {
+            day.id: set(day.focus_muscle_ids) for day in catalog.workout_days
+        }
 
     async def reply(
         self,
@@ -326,6 +352,17 @@ class ChatService:
                 state=ConversationState(context=state.context),
                 exploration_exercises=[],
             )
+        if context.weekly_direct_sets_by_muscle.status == "provided":
+            reported_muscle_ids = set(
+                context.weekly_direct_sets_by_muscle.value or {}
+            )
+            if reported_muscle_ids - self._muscles_by_id.keys():
+                return ChatReply(
+                    reply="최근 주간 세트 수에는 카탈로그의 표적 근육만 사용할 수 있어요. 부위별 세트 수를 다시 알려주세요.",
+                    state=ConversationState(context=context),
+                    exploration_exercises=[],
+                )
+
         question = self._next_context_question(context)
         if question is not None:
             return ChatReply(
@@ -494,6 +531,10 @@ class ChatService:
             context,
             preferred_candidate_ids_by_day,
         )
+        prescription, prescription_note = self._build_hypertrophy_prescription(
+            context,
+            planned_sessions,
+        )
         routine = RoutineDraft(
             sessions_per_week=context.sessions_per_week.value,
             minutes_per_session=(
@@ -502,6 +543,8 @@ class ChatService:
                 else None
             ),
             sessions=planned_sessions,
+            hypertrophy_prescription=prescription,
+            prescription_note=prescription_note,
         )
         default_recommendation_ids = {
             exercise.source_id
@@ -525,10 +568,18 @@ class ChatService:
             if constraint.mode == "unrestricted"
             else ""
         )
+        if prescription is not None:
+            prescription_reply = (
+                " 근비대 처방에는 적용 범위와 출처를 표시했고, 개인별 절대 중량은 제시하지 않았어요."
+            )
+        elif context.goal.status == "provided" and context.goal.value == "hypertrophy":
+            prescription_reply = f" 근비대 처방은 생략했어요. {prescription_note}"
+        else:
+            prescription_reply = " 근비대 목적의 근거가 연결되지 않아 세트·반복·휴식 처방은 포함하지 않았어요."
         return ChatReply(
             reply=(
                 "조건에 맞는 운동 후보를 찾았어요. 주간 루틴 초안을 만들었어요."
-                f"{equipment_note} 세트·횟수·중량은 근거가 확인되지 않아 포함하지 않았어요."
+                f"{equipment_note}{prescription_reply}"
                 f"{available_minutes}"
             ),
             state=ConversationState(
@@ -628,12 +679,21 @@ class ChatService:
                 "현재 출처가 연결된 목표는 근비대와 근력 진행이에요. "
                 "둘 중 하나를 선택하거나 목표 분류를 건너뛰어 주세요."
             )
+        if context.adult_eligibility.status in {"not_asked", "unknown"} and (
+            context.goal.status == "provided" and context.goal.value == "hypertrophy"
+        ):
+            return (
+                "근비대 처방 근거는 건강한 성인 대상이에요. 만 18세 이상인가요? "
+                "답하고 싶지 않으면 성인 여부를 건너뛸 수 있어요."
+            )
         if context.experience.status in {"not_asked", "unknown"}:
             return (
                 "저항 운동을 처음 시작했거나 몇 년 쉬었다가 복귀했나요? "
                 "경력은 자기보고로만 반영하며, 모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
             )
-        if context.experience.status == "provided" and context.experience.value == "experienced":
+        if context.experience.status == "provided" and context.experience.value == "experienced" and not (
+            context.goal.status == "provided" and context.goal.value == "hypertrophy"
+        ):
             return (
                 "경험자 적합도 근거는 아직 없어요. 경력 기준을 건너뛰고 "
                 "목표·다른 조건만 반영할까요?"
@@ -658,6 +718,39 @@ class ChatService:
                 "운동에서 고려할 제약이나 불편함을 알고 있나요? 진단명은 추정하지 않으며, "
                 "모르거나 답하고 싶지 않으면 건너뛸 수 있어요."
             )
+        if (
+            context.goal.status == "provided"
+            and context.goal.value == "hypertrophy"
+            and context.adult_eligibility.status == "provided"
+            and context.adult_eligibility.value == "adult"
+            and context.known_constraints.status == "provided"
+            and not context.known_constraints.value
+            and context.experience.status == "provided"
+            and context.experience.value == "experienced"
+        ):
+            focus_muscle_ids = {
+                muscle_id
+                for day_id in (context.workout_day_ids.value or [])
+                for muscle_id in self._focus_muscle_ids_by_day.get(day_id, set())
+            }
+            reported = context.weekly_direct_sets_by_muscle.value or {}
+            missing_muscle_ids = focus_muscle_ids - reported.keys()
+            needs_current_volume = (
+                context.weekly_direct_sets_by_muscle.status in {"not_asked", "unknown"}
+                or (
+                    context.weekly_direct_sets_by_muscle.status == "provided"
+                    and bool(missing_muscle_ids)
+                )
+            )
+            if needs_current_volume:
+                missing_names = ", ".join(
+                    self._muscle_names[muscle_id]
+                    for muscle_id in sorted(missing_muscle_ids or focus_muscle_ids)
+                )
+                return (
+                    "경험자 맞춤 처방을 위해 최근 한 주의 근육별 직접 세트 수가 필요해요. "
+                    f"{missing_names}의 주간 세트 수를 알려주세요. 모르거나 답하고 싶지 않으면 건너뛰어 주세요."
+                )
         return None
 
     def _context_summary(self, context: RoutineContext) -> str:
@@ -681,20 +774,27 @@ class ChatService:
         else:
             equipment_text = self._field_status_label(context.equipment.status)
 
-        return "\n".join(
-            [
-                "제가 이해한 내용이에요. 확인하거나 채팅으로 수정해 주세요.",
-                f"- 운동 부위: {workout_days}",
-                f"- 주당 빈도: {self._value_with_unit(context.sessions_per_week, '회')}",
-                f"- 목표: {self._context_value_label(context.goal, goal_names)}",
-                f"- 운동 경력: {self._context_value_label(context.experience, experience_names)}",
-                f"- 회당 가능 시간: {self._value_with_unit(context.minutes_per_session, '분')}",
-                f"- 장비: {equipment_text}",
-                f"- 선호: {self._list_value_or_status(context.preferences)}",
-                f"- 알고 있는 제약: {self._list_value_or_status(context.known_constraints)}",
-                "이 요약이 맞으면 ‘확인하고 루틴 만들기’를 눌러주세요.",
-            ]
-        )
+        context_lines = [
+            "제가 이해한 내용이에요. 확인하거나 채팅으로 수정해 주세요.",
+            f"- 운동 부위: {workout_days}",
+            f"- 주당 빈도: {self._value_with_unit(context.sessions_per_week, '회')}",
+            f"- 목표: {self._context_value_label(context.goal, goal_names)}",
+            f"- 운동 경력: {self._context_value_label(context.experience, experience_names)}",
+            f"- 회당 가능 시간: {self._value_with_unit(context.minutes_per_session, '분')}",
+            f"- 장비: {equipment_text}",
+            f"- 선호: {self._list_value_or_status(context.preferences)}",
+            f"- 알고 있는 제약: {self._list_value_or_status(context.known_constraints)}",
+        ]
+        if context.goal.status == "provided" and context.goal.value == "hypertrophy":
+            context_lines.append(
+                f"- 성인 여부: {self._context_value_label(context.adult_eligibility, {'adult': '성인', 'minor': '미성년'})}"
+            )
+            if context.experience.status == "provided" and context.experience.value == "experienced":
+                context_lines.append(
+                    f"- 최근 근육별 주간 직접 세트: {self._weekly_sets_label(context.weekly_direct_sets_by_muscle)}"
+                )
+        context_lines.append("이 요약이 맞으면 ‘확인하고 루틴 만들기’를 눌러주세요.")
+        return "\n".join(context_lines)
 
     @staticmethod
     def _field_status_label(status: str) -> str:
@@ -721,6 +821,15 @@ class ChatService:
         if field.status != "provided":
             return cls._field_status_label(field.status)
         return ", ".join(field.value or []) or "없음"
+    def _weekly_sets_label(self, field: ContextField[dict[str, int]]) -> str:
+        if field.status != "provided":
+            return self._field_status_label(field.status)
+        return ", ".join(
+            f"{self._muscle_names.get(muscle_id, muscle_id)} {sets}세트"
+            for muscle_id, sets in sorted((field.value or {}).items())
+        ) or "없음"
+
+
 
     @staticmethod
     def _recommendation_preferences(context: RoutineContext) -> RecommendationPreferences:
@@ -737,6 +846,103 @@ class ChatService:
         else:
             experience = "unknown"
         return RecommendationPreferences(goal=goal, experience=experience)
+
+    def _build_hypertrophy_prescription(
+        self,
+        context: RoutineContext,
+        sessions: Sequence[RoutineSession],
+    ) -> tuple[HypertrophyPrescription | None, str | None]:
+        if context.goal.status != "provided" or context.goal.value != "hypertrophy":
+            return None, None
+        if context.adult_eligibility.status != "provided" or context.adult_eligibility.value != "adult":
+            return None, "성인 여부가 확인되지 않거나 근거 적용 범위 밖이에요."
+        if context.known_constraints.status != "provided" or context.known_constraints.value:
+            return None, "건강상 제약이 없다고 확인되지 않아 일반 처방을 적용하지 않았어요."
+        if context.experience.status != "provided":
+            return None, "운동 경력을 확인하지 않아 사용자 맞춤 처방을 적용하지 않았어요."
+        if (
+            context.experience.value == "experienced"
+            and context.weekly_direct_sets_by_muscle.status != "provided"
+        ):
+            return None, "최근 주간 직접 세트 수를 확인하지 않아 경험자 맞춤 처방을 적용하지 않았어요."
+
+        focus_muscle_ids = {
+            muscle_id
+            for session in sessions
+            for muscle_id in self._focus_muscle_ids_by_day[session.workout_day_id]
+        }
+        muscle_ids = sorted(
+            {
+                self._exercises_by_id[item.exercise.source_id].primary_muscle_id
+                for session in sessions
+                for item in session.exercises
+                if self._exercises_by_id[item.exercise.source_id].primary_muscle_id
+                in focus_muscle_ids
+            }
+        )
+        if not muscle_ids:
+            return None, "선택된 운동에 부위의 주 표적 근육이 없어 직접 세트 처방을 적용하지 않았어요."
+        reported_sets = context.weekly_direct_sets_by_muscle.value or {}
+        weekly_targets: list[WeeklyDirectSetTarget] = []
+        for muscle_id in muscle_ids:
+            if context.experience.value == "novice":
+                set_count = self._hypertrophy_guidelines.initial_direct_sets_per_muscle_per_week
+                basis = "source_starting_point"
+            elif muscle_id in reported_sets and reported_sets[muscle_id] > 0:
+                set_count = reported_sets[muscle_id]
+                basis = "user_reported"
+            else:
+                set_count = self._hypertrophy_guidelines.initial_direct_sets_per_muscle_per_week
+                basis = "source_starting_point"
+            if context.experience.value == "experienced" and muscle_id not in reported_sets:
+                return None, "선택된 표적 근육의 최근 주간 세트 수가 없어 처방을 적용하지 않았어요."
+            weekly_targets.append(
+                WeeklyDirectSetTarget(
+                    muscle_id=muscle_id,
+                    muscle_name_ko=self._muscle_names[muscle_id],
+                    sets_per_week=set_count,
+                    basis=basis,
+                )
+            )
+
+        guidelines = self._hypertrophy_guidelines
+        source_variables = {"higher_volume", "repetitions", "rest", "progression"}
+        if any(target.basis == "source_starting_point" for target in weekly_targets):
+            source_variables.add("initial_sets")
+        source_ids = {
+            source_id
+            for variable in source_variables
+            for source_id in guidelines.sources_by_variable[variable]
+        }
+        sources = [source for source in guidelines.sources if source.id in source_ids]
+        progression = HypertrophyProgressionRule(
+            extra_repetitions_min=guidelines.progression_extra_repetitions_range[0],
+            extra_repetitions_max=guidelines.progression_extra_repetitions_range[1],
+            load_increase_percent_min=guidelines.progression_load_increase_percent_range[0],
+            load_increase_percent_max=guidelines.progression_load_increase_percent_range[1],
+            instruction=(
+                f"목표 반복보다 {guidelines.progression_extra_repetitions_range[0]}–"
+                f"{guidelines.progression_extra_repetitions_range[1]}회 더 수행할 수 있을 때, "
+                f"이미 선택한 부하를 {guidelines.progression_load_increase_percent_range[0]}–"
+                f"{guidelines.progression_load_increase_percent_range[1]}% 높이는 진행 규칙이에요. "
+                "개인별 절대 중량은 계산하거나 추천하지 않습니다."
+            ),
+        )
+        return (
+            HypertrophyPrescription(
+                population_scope="건강상 제약이 없는 만 18세 이상 성인을 위한 일반 근비대 지침",
+                weekly_direct_sets=weekly_targets,
+                higher_volume_reference_sets_per_muscle_per_week=(
+                    guidelines.higher_volume_direct_sets_per_muscle_per_week
+                ),
+                repetition_range_rm=guidelines.repetition_range_rm,
+                rest_seconds_range=guidelines.rest_seconds_range,
+                progression=progression,
+                sources=sources,
+                caveats=guidelines.caveats,
+            ),
+            None,
+        )
 
     def _supported_workout_days_reply(self) -> str:
         options = ", ".join(self._workout_day_names.values())
