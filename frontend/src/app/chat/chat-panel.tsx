@@ -13,6 +13,7 @@ import {
   type ChatMessage,
   type ConversationState,
   createInitialConversationState,
+  type HypertrophyPrescription,
   type RecommendedExercise,
   type RoutineDraft,
   sendChatMessage,
@@ -75,6 +76,68 @@ function ExerciseCard({ exercise }: { exercise: RecommendedExercise }) {
         )}
       </p>
     </div>
+  );
+}
+
+function HypertrophyPrescriptionCard({
+  prescription,
+}: {
+  prescription: HypertrophyPrescription;
+}) {
+  const [minReps, maxReps] = prescription.repetition_range_rm;
+  const [minRest, maxRest] = prescription.rest_seconds_range;
+
+  return (
+    <section className="rounded-2xl border border-[#dce2d9] bg-[#f7faf5] p-4 text-sm text-[#33443b]">
+      <h3 className="font-bold text-[#183d31]">근비대 처방 · 일반 지침</h3>
+      <p className="mt-1 text-xs leading-5">{prescription.population_scope}</p>
+      <h4 className="mt-3 font-semibold">근육별 주간 직접 세트</h4>
+      <ul className="mt-1 list-disc pl-5 text-xs leading-5">
+        {prescription.weekly_direct_sets.map((target) => (
+          <li key={target.muscle_id}>
+            {target.muscle_name_ko}: 주 {target.sets_per_week}세트
+            {target.basis === "user_reported"
+              ? " (사용자가 보고한 현재 볼륨)"
+              : " (출처가 있는 시작 예시)"}
+          </li>
+        ))}
+      </ul>
+      <p className="mt-2 text-xs leading-5">
+        반복: {minReps}–{maxReps} RM · 세트 간 휴식: {minRest}–{maxRest}초. 둘
+        다 근비대에 유일하게 우월한 값은 아닙니다.
+      </p>
+      <p className="mt-2 text-xs leading-5">
+        {prescription.progression.instruction}
+      </p>
+      <p className="mt-2 text-xs leading-5">
+        주 {prescription.higher_volume_reference_sets_per_muscle_per_week}세트
+        이상은 연구에서 더 높은 근비대와 연관됐지만, 보편적인 최소량이나 보장
+        목표는 아닙니다. 주간 직접 세트는 해당 근육을 주 표적으로 하는 루틴 운동
+        전체의 합계입니다. 출처가 운동별 배분을 정하지 않아 개별 운동의 세트
+        수는 산출하지 않습니다.
+      </p>
+      <ul className="mt-2 list-disc pl-5 text-xs leading-5">
+        {prescription.caveats.map((caveat) => (
+          <li key={caveat}>{caveat}</li>
+        ))}
+      </ul>
+      <h4 className="mt-3 font-semibold">근거</h4>
+      <ul className="mt-1 list-disc pl-5 text-xs leading-5">
+        {prescription.sources.map((source) => (
+          <li key={source.id}>
+            <a
+              className="underline underline-offset-2"
+              href={source.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {source.title} ({source.year})
+            </a>
+            <span> — {source.scope}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
@@ -278,8 +341,21 @@ export default function ChatPanel() {
                     <p className="text-xs leading-5 text-[#68756d]">
                       기술 요구도는 출처에서 평가된 운동에만 표시합니다.
                       미평가는 개인 적합성이나 안전성을 뜻하지 않습니다.
-                      루틴에는 근거가 없는 세트·횟수·중량을 넣지 않습니다.
                     </p>
+                    {message.routine.hypertrophy_prescription && (
+                      <HypertrophyPrescriptionCard
+                        prescription={message.routine.hypertrophy_prescription}
+                      />
+                    )}
+                    {!message.routine.hypertrophy_prescription &&
+                      message.routine.prescription_note && (
+                        <p
+                          className="text-xs leading-5 text-[#68756d]"
+                          role="note"
+                        >
+                          근비대 처방 생략: {message.routine.prescription_note}
+                        </p>
+                      )}
                     {message.routine.minutes_per_session !== null && (
                       <p className="text-xs text-[#68756d]">
                         회당 목표 시간: {message.routine.minutes_per_session}분.

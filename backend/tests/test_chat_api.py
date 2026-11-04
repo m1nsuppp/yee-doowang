@@ -115,6 +115,16 @@ class FixtureCoachModel:
         elif any(term in goal_text for term in ("감량", "지구력", "일반 체력")):
             updates["goal"] = cls._field("other")
 
+        adult_text = field_text(("성인", "미성년", "18세"))
+        if any(term in adult_text for term in ("미성년", "18세 미만")):
+            updates["adult_eligibility"] = cls._field("minor")
+        elif "성인" in adult_text or "18세 이상" in adult_text:
+            updates["adult_eligibility"] = cls._field("adult")
+        elif "성인 여부 모르" in adult_text:
+            updates["adult_eligibility"] = cls._field(status="unknown")
+        elif "성인 여부 건너" in adult_text:
+            updates["adult_eligibility"] = cls._field(status="skipped")
+
         experience_text = field_text(
             ("경력 건너", "경험 건너", "초보", "처음 시작", "복귀", "숙련자", "경험자", "경력 모르", "경험 모르", "경력은 모르", "경험은 모르")
         )
@@ -334,8 +344,13 @@ class ChatApiTests(unittest.TestCase):
         messages: list[dict[str, str]],
     ):
         conversation = self._messages_with_routine_context(messages)
+        user_messages = [
+            message["content"] for message in conversation if message["role"] == "user"
+        ]
+        if not any("성인" in content or "18세" in content or "미성년" in content for content in user_messages):
+            conversation.append({"role": "user", "content": "만 18세 이상 성인입니다."})
+            user_messages.append("만 18세 이상 성인입니다.")
         catalog = load_exercise_catalog()
-        user_messages = [message["content"] for message in conversation if message["role"] == "user"]
         transcript = " ".join(user_messages)
         context, _ = FixtureCoachModel._context(
             transcript,
@@ -424,7 +439,7 @@ class ChatApiTests(unittest.TestCase):
         messages = [
             {
                 "role": "user",
-                "content": "PushDay, 근비대 목표, 초보자, 덤벨, 주 2회, 회당 30분, 선호 없음, 제약 없음.",
+                "content": "PushDay, 근비대 목표, 초보자, 만 18세 이상 성인, 덤벨, 주 2회, 회당 30분, 선호 없음, 제약 없음.",
             }
         ]
 
@@ -516,7 +531,7 @@ class ChatApiTests(unittest.TestCase):
         }
         self.assertTrue(planned_ids)
         self.assertTrue(default_ids.isdisjoint(exploration_ids))
-        self.assertNotIn("sets", routine["sessions"][0]["exercises"][0])
+        self.assertIsNotNone(routine["hypertrophy_prescription"])
 
 
     def test_safety_signal_on_confirmation_still_blocks_routine(self) -> None:
@@ -527,7 +542,7 @@ class ChatApiTests(unittest.TestCase):
         messages = [
             {
                 "role": "user",
-                "content": "PushDay, 근비대 목표, 초보자, 덤벨, 주 2회, 회당 시간 건너뛰기, 선호 없음, 제약 없음.",
+                "content": "PushDay, 근비대 목표, 초보자, 만 18세 이상 성인, 덤벨, 주 2회, 회당 시간 건너뛰기, 선호 없음, 제약 없음.",
             }
         ]
 
@@ -806,6 +821,7 @@ class ChatApiTests(unittest.TestCase):
             equipment=ContextField(status="skipped"),
             preferences=ContextField(status="provided", value=[]),
             known_constraints=ContextField(status="skipped"),
+            adult_eligibility=ContextField(status="provided", value="adult"),
         )
         state = ConversationState(phase="confirming_context", context=context)
 
@@ -841,7 +857,7 @@ class ChatApiTests(unittest.TestCase):
                     "messages": [
                         {
                             "role": "user",
-                            "content": "PushDay, 근비대 목표, 운동 경력은 모르겠어요, 덤벨, 주 2회, 선호 없음, 제약 없음.",
+                            "content": "PushDay, 근비대 목표, 만 18세 이상 성인, 운동 경력은 모르겠어요, 덤벨, 주 2회, 선호 없음, 제약 없음.",
                         }
                     ]
                 },
@@ -1546,3 +1562,162 @@ class ChatApiTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 502)
         self.assertEqual(response.json()["detail"], "The LLM provider request failed.")
+
+    def test_hypertrophy_routine_returns_sourced_volume_and_progression_without_kg(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+        with TestClient(app) as client:
+            response = self._post_confirmed_routine(
+                client,
+                [{
+                    "role": "user",
+                    "content": "PushDay, 근비대 목표, 초보자, 만 18세 이상 성인, 덤벨, 주 2회, 회당 30분, 선호 없음, 제약 없음.",
+                }],
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        routine = body["state"]["routine"]
+        prescription = routine["hypertrophy_prescription"]
+        self.assertIsNotNone(prescription)
+        self.assertTrue(prescription["weekly_direct_sets"])
+        self.assertTrue(
+            all(
+                target["sets_per_week"] == 4
+                and target["basis"] == "source_starting_point"
+                for target in prescription["weekly_direct_sets"]
+            )
+        )
+        self.assertEqual(prescription["repetition_range_rm"], [6, 12])
+        self.assertEqual(prescription["rest_seconds_range"], [60, 120])
+        self.assertEqual(
+            (
+                prescription["progression"]["extra_repetitions_min"],
+                prescription["progression"]["extra_repetitions_max"],
+                prescription["progression"]["load_increase_percent_min"],
+                prescription["progression"]["load_increase_percent_max"],
+            ),
+            (1, 2, 2, 10),
+        )
+        self.assertIn("개인별 절대 중량은 계산하거나 추천하지 않습니다", prescription["progression"]["instruction"])
+        source_ids = {source["id"] for source in prescription["sources"]}
+        self.assertEqual(
+            source_ids,
+            {
+                "acsm_2026_overview",
+                "acsm_2009_progression",
+                "iversen_2021_time_efficiency",
+            },
+        )
+        self.assertTrue(
+            all("hypertrophy_prescription" not in exercise for exercise in body["exploration_exercises"])
+        )
+
+    def test_hypertrophy_waits_for_adult_scope_confirmation(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+        with TestClient(app) as client:
+            response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": "PushDay, 근비대 목표, 초보자, 덤벨, 주 2회, 시간 건너뛰기, 선호 없음, 제약 없음.",
+                        }
+                    ]
+                },
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertIsNone(body["state"]["routine"])
+        self.assertEqual(body["state"]["context"]["adult_eligibility"]["status"], "not_asked")
+        self.assertIn("만 18세 이상인가요", body["reply"])
+
+    def test_experienced_hypertrophy_asks_for_recent_muscle_volume(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+        with TestClient(app) as client:
+            response = self._post_confirmed_routine(
+                client,
+                [{
+                    "role": "user",
+                    "content": "PushDay, 근비대 목표, 경험자, 만 18세 이상 성인, 덤벨, 주 2회, 시간 건너뛰기, 선호 없음, 제약 없음.",
+                }],
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertIsNone(body["state"]["routine"])
+        self.assertIn("최근 한 주의 근육별 직접 세트 수", body["reply"])
+        self.assertEqual(body["exploration_exercises"], [])
+
+    def test_experienced_hypertrophy_uses_only_reported_weekly_volume(self) -> None:
+        catalog = load_exercise_catalog()
+        target_muscle_ids = next(
+            day.focus_muscle_ids for day in catalog.workout_days if day.id == "push_day"
+        )
+        context = RoutineContext(
+            workout_day_ids=ContextField(status="provided", value=["push_day"]),
+            goal=ContextField(status="provided", value="hypertrophy"),
+            experience=ContextField(status="provided", value="experienced"),
+            sessions_per_week=ContextField(status="provided", value=1),
+            minutes_per_session=ContextField(status="skipped"),
+            equipment=ContextField(
+                status="provided",
+                value=EquipmentIntent(mode="specified", equipment_ids=["dumbbell"]),
+            ),
+            preferences=ContextField(status="provided", value=[]),
+            known_constraints=ContextField(status="provided", value=[]),
+            adult_eligibility=ContextField(status="provided", value="adult"),
+            weekly_direct_sets_by_muscle=ContextField(
+                status="provided",
+                value={muscle_id: 8 for muscle_id in target_muscle_ids},
+            ),
+        )
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=ContextPreservingCoachModel(),
+        )
+        with TestClient(app) as client:
+            response = self._post_confirmed_with_context(
+                client,
+                [{"role": "user", "content": "근비대 목표 경험자, 각 표적 근육 주 8세트"}],
+                context,
+            )
+
+        self.assertEqual(response.status_code, 200)
+        prescription = response.json()["state"]["routine"]["hypertrophy_prescription"]
+        self.assertTrue(prescription["weekly_direct_sets"])
+        self.assertTrue(
+            all(
+                target["sets_per_week"] == 8 and target["basis"] == "user_reported"
+                for target in prescription["weekly_direct_sets"]
+            )
+        )
+
+    def test_minor_hypertrophy_routine_has_no_general_prescription(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+        with TestClient(app) as client:
+            response = self._post_confirmed_routine(
+                client,
+                [{
+                    "role": "user",
+                    "content": "PushDay, 근비대 목표, 초보자, 미성년자입니다, 덤벨, 주 2회, 시간 건너뛰기, 선호 없음, 제약 없음.",
+                }],
+            )
+
+        self.assertEqual(response.status_code, 200)
+        routine = response.json()["state"]["routine"]
+        self.assertIsNone(routine["hypertrophy_prescription"])
+        self.assertIn("근거 적용 범위 밖", routine["prescription_note"])

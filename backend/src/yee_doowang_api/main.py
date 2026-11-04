@@ -9,6 +9,9 @@ from pydantic import BaseModel
 from yee_doowang_api.api.chat import router as chat_router
 from yee_doowang_api.application.chat import ChatService, CoachModel
 from yee_doowang_api.infrastructure.exercise_catalog_file import load_exercise_catalog
+from yee_doowang_api.infrastructure.hypertrophy_prescription_file import (
+    load_hypertrophy_guidelines,
+)
 from yee_doowang_api.infrastructure.openrouter import OpenRouterCoachModel
 from yee_doowang_api.infrastructure.pyrewire_exercise_reasoner import (
     PyreWireExerciseReasoner,
@@ -28,6 +31,7 @@ def create_app(
     managed_coach: OpenRouterCoachModel | None = None
     catalog = load_exercise_catalog()
     reasoner = PyreWireExerciseReasoner(catalog)
+    hypertrophy_guidelines = load_hypertrophy_guidelines()
 
     if coach_model is None and config.openrouter_api_key and config.openrouter_model:
         managed_coach = OpenRouterCoachModel(
@@ -47,7 +51,9 @@ def create_app(
 
     app = FastAPI(title=config.app_name, lifespan=lifespan)
     app.state.chat_service = (
-        ChatService(coach_model, reasoner, catalog) if coach_model is not None else None
+        ChatService(coach_model, reasoner, catalog, hypertrophy_guidelines)
+        if coach_model is not None
+        else None
     )
     app.add_middleware(
         CORSMiddleware,
