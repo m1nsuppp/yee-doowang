@@ -6,25 +6,62 @@ from threading import Thread
 from pydantic import SecretStr
 
 from yee_doowang_api.application.chat import (
+    ContextField,
     ConversationMessage,
-    EquipmentConstraint,
+    EquipmentIntent,
+    RoutineContext,
 )
 from yee_doowang_api.infrastructure.exercise_catalog_file import load_exercise_catalog
 from yee_doowang_api.infrastructure.openrouter import OpenRouterCoachModel
 
 
 class OpenRouterAdapterTests(unittest.IsolatedAsyncioTestCase):
-    async def test_structured_intent_and_coach_answer_use_tool_responses(self) -> None:
+    async def test_structured_context_and_routine_use_tool_responses(self) -> None:
         requests: list[dict[str, object]] = []
+        catalog = load_exercise_catalog()
+        candidate_without_name_ko = next(
+            exercise for exercise in catalog.exercises if exercise.name_ko is None
+        )
+        candidate_without_pattern = next(
+            exercise
+            for exercise in catalog.exercises
+            if exercise.movement_pattern_id is None
+            and exercise.source_id != candidate_without_name_ko.source_id
+        )
+        prompt_candidates = [candidate_without_name_ko, candidate_without_pattern]
+        context = RoutineContext(
+            workout_day_ids=ContextField(status="provided", value=["push_day"]),
+            goal=ContextField(status="provided", value="hypertrophy"),
+            experience=ContextField(status="provided", value="novice"),
+            sessions_per_week=ContextField(status="provided", value=1),
+            minutes_per_session=ContextField(status="skipped"),
+            equipment=ContextField(
+                status="provided",
+                value=EquipmentIntent(mode="delegate_any", equipment_ids=[]),
+            ),
+            preferences=ContextField(status="skipped"),
+            known_constraints=ContextField(status="skipped"),
+        )
         outputs = [
             {
-                "workout_intent": "push_day",
-                "equipment": {"mode": "delegate_any", "equipment_ids": []},
-                "personalization": {"goal": "hypertrophy", "experience": "novice"},
+                "context": context.model_dump(mode="json"),
                 "safety_status": "none",
                 "message": "",
             },
-            {"reply": "장비 제한 없이 후보를 골랐어요."},
+            {
+                "sessions": [
+                    {
+                        "workout_day_id": "push_day",
+                        "exercises": [
+                            {
+                                "source_id": candidate_without_name_ko.source_id,
+                                "rationale": "검증된 카탈로그 후보입니다.",
+                                "alternative_source_ids": [candidate_without_pattern.source_id],
+                            }
+                        ],
+                    }
+                ]
+            },
         ]
 
         class Handler(BaseHTTPRequestHandler):
@@ -78,42 +115,28 @@ class OpenRouterAdapterTests(unittest.IsolatedAsyncioTestCase):
             model="fixture/model",
             base_url=f"http://127.0.0.1:{server.server_port}/v1",
         )
-        catalog = load_exercise_catalog()
-        candidate_without_name_ko = next(
-            exercise for exercise in catalog.exercises if exercise.name_ko is None
-        )
-        candidate_without_pattern = next(
-            exercise
-            for exercise in catalog.exercises
-            if exercise.movement_pattern_id is None
-            and exercise.source_id != candidate_without_name_ko.source_id
-        )
-        prompt_candidates = [candidate_without_name_ko, candidate_without_pattern]
-        messages = [
-            ConversationMessage(
-                role="user",
-                content="모르겠어. 알아서 골라줘.",
-            )
-        ]
+        messages = [ConversationMessage(role="user", content="Push day, 1회/주")]
 
         try:
             intent = await model.interpret(
                 messages,
+                RoutineContext(),
                 catalog.equipment,
                 catalog.workout_days,
                 catalog.muscles,
             )
-            answer = await model.answer(
+            proposal = await model.plan_routine(
                 messages,
-                prompt_candidates,
-                EquipmentConstraint(mode="unrestricted", equipment_ids=[]),
-                intent.personalization,
+                context,
+                {"push_day": prompt_candidates},
+                catalog.workout_days,
                 [
                     profile
                     for profile in catalog.recommendations.profiles
                     if profile.source_id
                     in {candidate.source_id for candidate in prompt_candidates}
                 ],
+                None,
             )
         finally:
             await model.aclose()
@@ -121,20 +144,20 @@ class OpenRouterAdapterTests(unittest.IsolatedAsyncioTestCase):
             server.server_close()
             worker.join(timeout=5)
 
-        self.assertEqual(intent.workout_intent, "push_day")
-        self.assertEqual(intent.personalization.goal, "hypertrophy")
-        self.assertEqual(intent.personalization.experience, "novice")
+        self.assertEqual(intent.context, context)
         self.assertEqual(intent.safety_status, "none")
-        self.assertEqual(intent.equipment.mode, "delegate_any")
-        self.assertEqual(intent.equipment.equipment_ids, [])
-        self.assertEqual(answer.reply, "장비 제한 없이 후보를 골랐어요.")
+        self.assertEqual(proposal.sessions[0].workout_day_id, "push_day")
+        self.assertEqual(
+            proposal.sessions[0].exercises[0].source_id,
+            candidate_without_name_ko.source_id,
+        )
         self.assertEqual(len(requests), 2)
         prompt = requests[1]["messages"][0]["content"]
-        prompt_facts = json.loads(prompt.split("검증된 후보(JSON): ", 1)[1])
+        prompt_facts = json.loads(prompt.split("날짜별 후보(JSON): ", 1)[1])
         self.assertEqual(
             [
                 (fact["name"], fact["name_ko"], fact["movement_pattern_id"])
-                for fact in prompt_facts
+                for fact in prompt_facts["push_day"]
             ],
             [
                 (item.name, item.name_ko, item.movement_pattern_id)

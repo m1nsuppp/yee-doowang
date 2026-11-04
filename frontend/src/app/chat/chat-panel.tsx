@@ -9,14 +9,20 @@ import {
 } from "react";
 
 import {
+  type ChatAction,
   type ChatMessage,
+  type ConversationState,
+  createInitialConversationState,
   type RecommendedExercise,
+  type RoutineDraft,
   sendChatMessage,
 } from "../../lib/chat-api";
 
 type DisplayMessage = ChatMessage & {
   id: string;
   exercises?: RecommendedExercise[];
+  routine?: RoutineDraft | null;
+  state?: ConversationState;
 };
 const technicalComplexityLabels = {
   low: "낮음",
@@ -26,15 +32,68 @@ const technicalComplexityLabels = {
 const technicalComplexitySourceUrl =
   "https://pmc.ncbi.nlm.nih.gov/articles/PMC11873903/";
 
+function ExerciseCard({ exercise }: { exercise: RecommendedExercise }) {
+  return (
+    <div className="rounded-2xl border border-[#e2e6de] bg-white p-4 text-[#162720]">
+      <p className="font-bold text-[#183d31]">
+        {exercise.name_ko ? (
+          exercise.name_ko
+        ) : (
+          <>
+            원문 운동명: <span lang="en">{exercise.name}</span>
+          </>
+        )}
+      </p>
+      <p className="mt-2 text-xs leading-5 text-[#68756d]">
+        {exercise.primary_muscle_ko} · {exercise.equipment_ko}
+        {exercise.secondary_muscles_ko.length > 0 && (
+          <>
+            <br />
+            보조 근육: {exercise.secondary_muscles_ko.join(" · ")}
+          </>
+        )}
+        {exercise.movement_pattern_ko && (
+          <>
+            <br />
+            {exercise.movement_pattern_ko}
+          </>
+        )}
+        {exercise.technical_complexity && (
+          <>
+            <br />
+            전문가 평가 기술 요구도:{" "}
+            {technicalComplexityLabels[exercise.technical_complexity]}{" "}
+            <a
+              className="underline underline-offset-2"
+              href={technicalComplexitySourceUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              연구 출처
+            </a>
+          </>
+        )}
+      </p>
+    </div>
+  );
+}
+
 export default function ChatPanel() {
   const [messages, setMessages] = useState<DisplayMessage[]>([]);
+  const [conversationState, setConversationState] = useState(
+    createInitialConversationState,
+  );
   const [draft, setDraft] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const transcriptRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const activeRequestRef = useRef<AbortController | null>(null);
+  const lastActionRef = useRef<ChatAction>("message");
 
+  const latestAssistantMessageId = [...messages]
+    .reverse()
+    .find((message) => message.role === "assistant")?.id;
   useEffect(() => {
     const transcript = transcriptRef.current;
     if (!transcript) return;
@@ -44,21 +103,29 @@ export default function ChatPanel() {
         : transcript.scrollHeight;
   }, [messages.length, isSending, error]);
 
-  async function requestReply(conversation: DisplayMessage[]) {
+  async function requestReply(
+    conversation: DisplayMessage[],
+    state: ConversationState,
+    action: ChatAction,
+  ) {
     const controller = new AbortController();
     activeRequestRef.current?.abort();
     activeRequestRef.current = controller;
+    lastActionRef.current = action;
     setError(null);
     setIsSending(true);
 
     try {
       const response = await sendChatMessage(
         conversation.slice(-30).map(({ role, content }) => ({ role, content })),
+        state,
+        action,
         controller.signal,
       );
       if (activeRequestRef.current !== controller) return;
 
       const lastMessage = conversation[conversation.length - 1];
+      setConversationState(response.state);
       setMessages([
         ...conversation,
         {
@@ -66,6 +133,8 @@ export default function ChatPanel() {
           role: "assistant",
           content: response.reply,
           exercises: response.exercises,
+          routine: response.state.routine,
+          state: response.state,
         },
       ]);
     } catch (caughtError) {
@@ -98,11 +167,24 @@ export default function ChatPanel() {
       role: "user",
       content,
     };
+
     const conversation = [...messages, userMessage];
     setMessages(conversation);
     setDraft("");
     if (textareaRef.current) textareaRef.current.style.height = "auto";
-    void requestReply(conversation);
+    void requestReply(conversation, conversationState, "message");
+  }
+
+  function confirmContext() {
+    if (isSending || conversationState.phase !== "confirming_context") return;
+    const userMessage: DisplayMessage = {
+      id: crypto.randomUUID(),
+      role: "user",
+      content: "확인하고 루틴 만들기",
+    };
+    const conversation = [...messages, userMessage];
+    setMessages(conversation);
+    void requestReply(conversation, conversationState, "confirm_context");
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
@@ -128,6 +210,9 @@ export default function ChatPanel() {
       textareaRef.current.style.height = "auto";
       textareaRef.current.focus();
     }
+
+    setConversationState(createInitialConversationState());
+    lastActionRef.current = "message";
   }
 
   return (
@@ -184,74 +269,97 @@ export default function ChatPanel() {
                 >
                   {message.content}
                 </p>
-                {message.exercises && message.exercises.length > 0 && (
-                  <p className="mt-3 text-xs text-[#68756d]">
-                    기술 요구도는 출처에서 평가된 운동에만 표시합니다. 미평가는
-                    낮은 난이도나 개인의 적합성·안전성을 뜻하지 않습니다.
-                  </p>
-                )}
-                {message.exercises && message.exercises.length > 0 && (
-                  <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-                    {message.exercises.map((exercise) => (
-                      <li
-                        key={exercise.source_id}
-                        className="rounded-2xl border border-[#e2e6de] bg-white p-4 text-[#162720]"
-                      >
-                        <p className="font-bold text-[#183d31]">
-                          {exercise.name_ko ? (
-                            exercise.name_ko
-                          ) : (
-                            <>
-                              원문 운동명:{" "}
-                              <span lang="en">{exercise.name}</span>
-                            </>
-                          )}
-                        </p>
-                        <p className="mt-2 text-xs leading-5 text-[#68756d]">
-                          {exercise.primary_muscle_ko} · {exercise.equipment_ko}
-                          {exercise.secondary_muscles_ko.length > 0 && (
-                            <>
-                              <br />
-                              보조 근육:{" "}
-                              {exercise.secondary_muscles_ko.join(" · ")}
-                            </>
-                          )}
-                          {exercise.movement_pattern_ko && (
-                            <>
-                              <br />
-                              {exercise.movement_pattern_ko}
-                            </>
-                          )}
-                          {exercise.technical_complexity && (
-                            <>
-                              <br />
-                              전문가 평가 기술 요구도:{" "}
-                              {
-                                technicalComplexityLabels[
-                                  exercise.technical_complexity
-                                ]
-                              }{" "}
-                              <a
-                                className="underline underline-offset-2"
-                                href={technicalComplexitySourceUrl}
-                                target="_blank"
-                                rel="noreferrer"
+                {message.routine && (
+                  <section className="mt-4 space-y-4">
+                    <p className="text-xs leading-5 text-[#68756d]">
+                      기술 요구도는 출처에서 평가된 운동에만 표시합니다.
+                      미평가는 개인 적합성이나 안전성을 뜻하지 않습니다.
+                      루틴에는 근거가 없는 세트·횟수·중량을 넣지 않습니다.
+                    </p>
+                    {message.routine.minutes_per_session !== null && (
+                      <p className="text-xs text-[#68756d]">
+                        회당 목표 시간: {message.routine.minutes_per_session}분.
+                        운동별 소요 시간 자료가 없어 완료 시간은 보장하지
+                        않습니다.
+                      </p>
+                    )}
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {message.routine.sessions.map((session) => (
+                        <section
+                          className="rounded-2xl border border-[#e2e6de] bg-[#fbfcf9] p-4"
+                          key={session.index}
+                        >
+                          <h3 className="font-bold text-[#183d31]">
+                            운동 {session.index} · {session.workout_day_name_ko}
+                          </h3>
+                          <ol className="mt-3 grid gap-3">
+                            {session.exercises.map((planned) => (
+                              <li
+                                key={`${session.index}-${planned.exercise.source_id}`}
                               >
-                                연구 출처
-                              </a>
-                            </>
-                          )}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
+                                <ExerciseCard exercise={planned.exercise} />
+                                <p className="mt-2 text-xs leading-5 text-[#68756d]">
+                                  선택 이유: {planned.rationale}
+                                </p>
+                                {planned.alternatives.length > 0 && (
+                                  <details className="mt-2 text-xs text-[#52645a]">
+                                    <summary className="cursor-pointer font-semibold">
+                                      대안 운동 보기
+                                    </summary>
+                                    <ul className="mt-2 grid gap-2">
+                                      {planned.alternatives.map((exercise) => (
+                                        <li key={exercise.source_id}>
+                                          <ExerciseCard exercise={exercise} />
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </details>
+                                )}
+                              </li>
+                            ))}
+                          </ol>
+                        </section>
+                      ))}
+                    </div>
+                  </section>
                 )}
+                {message.exercises && message.exercises.length > 0 && (
+                  <details className="mt-4 text-sm text-[#52645a]">
+                    <summary className="cursor-pointer font-semibold">
+                      전체 조건 일치 후보 보기 ({message.exercises.length})
+                    </summary>
+                    <p className="mt-2 text-xs leading-5 text-[#68756d]">
+                      카탈로그 후보 전체입니다. 미평가는 낮은 난이도나 개인의
+                      적합성·안전성을 뜻하지 않습니다.
+                    </p>
+                    <ul className="mt-3 grid gap-3 sm:grid-cols-2">
+                      {message.exercises.map((exercise) => (
+                        <li key={exercise.source_id}>
+                          <ExerciseCard exercise={exercise} />
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
+                {message.id === latestAssistantMessageId &&
+                  conversationState.phase === "confirming_context" && (
+                    <button
+                      className="mt-4 rounded-xl bg-[#183d31] px-4 py-2 text-sm font-bold text-white disabled:opacity-40"
+                      type="button"
+                      onClick={confirmContext}
+                      disabled={isSending}
+                    >
+                      확인하고 루틴 만들기
+                    </button>
+                  )}
               </div>
             </article>
           ))}
           {isSending && (
             <p className="text-sm text-[#68756d]" role="status">
-              운동 후보를 찾고 있어요…
+              {conversationState.phase === "confirming_context"
+                ? "주간 루틴 초안을 만들고 있어요…"
+                : "대화 맥락을 확인하고 있어요…"}
             </p>
           )}
           {error && (
@@ -264,7 +372,13 @@ export default function ChatPanel() {
                 <button
                   className="font-bold underline underline-offset-2"
                   type="button"
-                  onClick={() => void requestReply(messages)}
+                  onClick={() =>
+                    void requestReply(
+                      messages,
+                      conversationState,
+                      lastActionRef.current,
+                    )
+                  }
                 >
                   다시 시도
                 </button>
@@ -286,7 +400,7 @@ export default function ChatPanel() {
             ref={textareaRef}
             id="chat-message"
             className="max-h-40 min-h-11 flex-1 resize-none overflow-y-auto bg-transparent px-3 py-3 text-sm leading-6 outline-none placeholder:text-[#929c94]"
-            placeholder="메시지를 입력하세요"
+            placeholder="운동 부위·빈도를 말하거나 '모름', '건너뛰기'라고 답해주세요"
             rows={1}
             maxLength={2000}
             value={draft}
