@@ -49,28 +49,28 @@ class FixtureCoachModel:
         def field_text(terms: tuple[str, ...]) -> str:
             return latest if any(term in latest for term in terms) else text
 
-        workout_text = field_text(
-            ("push", "가슴", "삼두", "어깨", "위팔세갈래근", "복근", "하복근", "복사근", "옆구리", "하체", "등 운동", "이두")
+        area_terms = {
+            "push_day": ("push", "가슴", "삼두", "어깨", "위팔세갈래근"),
+            "back_day": ("등", "광배근", "상부 등", "승모근"),
+            "biceps_day": ("이두", "위팔두갈래근"),
+            "legs_day": ("하체", "대퇴사두근", "햄스트링", "둔근", "종아리", "내전근", "외전근"),
+            "abs_day": ("복근", "하복근"),
+            "obliques_day": ("복사근", "옆구리"),
+        }
+        workout_terms = tuple(
+            term for terms in area_terms.values() for term in terms
         )
-        selected_days: list[str] = []
-        for day in workout_days:
-            if (
-                day.id == "push_day"
-                and any(
-                    term in workout_text
-                    for term in ("push", "가슴", "삼두", "어깨", "위팔세갈래근")
-                )
-                or day.id == "abs_day"
-                and any(term in workout_text for term in ("복근", "하복근"))
-                or day.id == "obliques_day"
-                and any(term in workout_text for term in ("복사근", "옆구리"))
-            ):
-                selected_days.append(day.id)
+        workout_text = field_text((*workout_terms, "전완"))
+        selected_days = [
+            day.id
+            for day in workout_days
+            if any(term in workout_text for term in area_terms.get(day.id, ()))
+        ]
         if selected_days:
             updates["workout_day_ids"] = cls._field(list(dict.fromkeys(selected_days)))
-        elif any(term in workout_text for term in ("하체", "등 운동", "이두")):
+        elif "전완" in workout_text:
             updates["workout_day_ids"] = cls._field(status="unknown")
-            message = "현재는 푸시 데이, 복근, 복사근 운동을 지원합니다."
+            message = "요청한 운동 부위는 아직 지원하지 않습니다."
 
         goal_text = field_text(
             ("근비대", "근육 증가", "근력", "목표 건너", "목표는 상관없", "감량", "지구력", "일반 체력", "목표 모르")
@@ -904,6 +904,53 @@ class ChatApiTests(unittest.TestCase):
             expected_ids,
         )
 
+    def test_added_workout_areas_match_primary_targets_and_equipment(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+        catalog = load_exercise_catalog()
+        cases = (("등", "back_day"), ("이두", "biceps_day"), ("하체", "legs_day"))
+
+        with TestClient(app) as client:
+            for area_name, day_id in cases:
+                with self.subTest(area=area_name):
+                    response = self._post_confirmed_routine(
+                        client,
+                        [
+                            {
+                                "role": "user",
+                                "content": (
+                                    f"덤벨 {area_name} 운동 추천해줘. "
+                                    "목표 건너뛰고 경력 건너뛰고."
+                                ),
+                            }
+                        ],
+                    )
+
+                    self.assertEqual(response.status_code, 200)
+                    day = next(
+                        day for day in catalog.workout_days if day.id == day_id
+                    )
+                    focus_muscles = set(day.focus_muscle_ids)
+                    expected_ids = {
+                        exercise.source_id
+                        for exercise in catalog.exercises
+                        if exercise.primary_muscle_id in focus_muscles
+                        and exercise.equipment_id == "dumbbell"
+                    }
+                    body = response.json()
+                    self.assertEqual(
+                        {exercise["source_id"] for exercise in body["exercises"]},
+                        expected_ids,
+                    )
+                    self.assertTrue(
+                        all(
+                            exercise["equipment_ko"] == "덤벨"
+                            for exercise in body["exercises"]
+                        )
+                    )
+
     def test_untranslated_catalog_labels_are_explicit(self) -> None:
         app = create_app(
             settings=Settings(_env_file=None),
@@ -1091,11 +1138,14 @@ class ChatApiTests(unittest.TestCase):
         with TestClient(app) as client:
             response = client.post(
                 "/api/chat",
-                json={"messages": [{"role": "user", "content": "하체 운동 추천해줘."}]},
+                json={"messages": [{"role": "user", "content": "전완 운동 추천해줘."}]},
             )
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["exercises"], [])
+        self.assertIn("등 운동", response.json()["reply"])
+        self.assertIn("이두 운동", response.json()["reply"])
+        self.assertIn("하체 운동", response.json()["reply"])
         self.assertIn("복근", response.json()["reply"])
         self.assertIn("복사근", response.json()["reply"])
 

@@ -224,7 +224,9 @@ export default function ChatPanel() {
           </span>
           <div className="flex items-baseline gap-2">
             <span className="font-extrabold tracking-tight">이두왕</span>
-            <span className="text-xs text-[#718077]">푸시 · 복근 · 복사근</span>
+            <span className="text-xs text-[#718077]">
+              푸시 · 등 · 이두 · 하체 · 복근 · 복사근
+            </span>
           </div>
         </div>
         <button

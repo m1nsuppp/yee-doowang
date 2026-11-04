@@ -480,6 +480,37 @@
       "include_secondary_muscles": false
     },
     {
+      "id": "back_day",
+      "name_ko": "등 운동",
+      "focus_muscle_ids": [
+        "lats",
+        "upper_back",
+        "trapezius"
+      ],
+      "include_secondary_muscles": false
+    },
+    {
+      "id": "biceps_day",
+      "name_ko": "이두 운동",
+      "focus_muscle_ids": [
+        "biceps"
+      ],
+      "include_secondary_muscles": false
+    },
+    {
+      "id": "legs_day",
+      "name_ko": "하체 운동",
+      "focus_muscle_ids": [
+        "quads",
+        "hamstrings",
+        "glutes",
+        "calves",
+        "adductors",
+        "abductors"
+      ],
+      "include_secondary_muscles": false
+    },
+    {
       "id": "abs_day",
       "name_ko": "복근 운동",
       "focus_muscle_ids": [
