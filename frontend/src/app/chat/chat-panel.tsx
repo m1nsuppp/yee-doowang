@@ -529,7 +529,7 @@ export default function ChatPanel() {
             ref={textareaRef}
             id="chat-message"
             className="max-h-40 min-h-11 flex-1 resize-none overflow-y-auto bg-transparent px-3 py-3 text-sm leading-6 outline-none placeholder:text-[#929c94]"
-            placeholder="운동 부위·빈도를 말하거나 '모름', '건너뛰기'라고 답해주세요"
+            placeholder="운동에 관해 궁금한 점을 묻거나, 원하는 루틴을 말해주세요"
             rows={1}
             maxLength={2000}
             value={draft}

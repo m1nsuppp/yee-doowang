@@ -27,8 +27,10 @@ class ChatRequest(BaseModel):
     def require_user_message_last(self) -> ChatRequest:
         if self.messages[-1].role != "user":
             raise ValueError("The last conversation message must be from the user")
-        if self.action == "confirm_context" and self.state.phase != "confirming_context":
-            raise ValueError("Only a reviewed context can be confirmed")
+        if self.action == "confirm_context" and (
+            self.state.mode != "routine" or self.state.phase != "confirming_context"
+        ):
+            raise ValueError("Only a reviewed routine context can be confirmed")
         return self
 
 
