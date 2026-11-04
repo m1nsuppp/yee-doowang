@@ -4,9 +4,8 @@ from collections.abc import Sequence
 
 from fastapi.testclient import TestClient
 
-from yee_doowang_api.application.chat import (
+from yee_doowang_api.application.chat_models import (
     ChatCompletionError,
-    ChatService,
     CoachTurn,
     ContextField,
     ConversationMessage,
@@ -27,6 +26,7 @@ from yee_doowang_api.application.exercise_catalog import (
     Muscle,
     WorkoutDay,
 )
+from yee_doowang_api.application.routine_context import RoutineContextManager
 from yee_doowang_api.infrastructure.exercise_catalog_file import load_exercise_catalog
 from yee_doowang_api.main import create_app
 from yee_doowang_api.settings import Settings
@@ -550,6 +550,7 @@ class ChatApiTests(unittest.TestCase):
             conversation.append({"role": "user", "content": "만 18세 이상 성인입니다."})
             user_messages.append("만 18세 이상 성인입니다.")
         catalog = load_exercise_catalog()
+        context_manager = RoutineContextManager(catalog)
         context = RoutineContext()
         for user_message in user_messages:
             parsed, _ = FixtureCoachModel._context(
@@ -559,7 +560,7 @@ class ChatApiTests(unittest.TestCase):
                 user_message,
                 catalog.muscles,
             )
-            context = ChatService._merge_context(context, parsed)
+            context = context_manager.merge(context, parsed)
         state = ConversationState(phase="confirming_context", context=context)
         return client.post(
             "/api/chat",

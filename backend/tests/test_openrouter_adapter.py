@@ -5,7 +5,7 @@ from threading import Thread
 
 from pydantic import SecretStr
 
-from yee_doowang_api.application.chat import (
+from yee_doowang_api.application.chat_models import (
     ContextField,
     ConversationMessage,
     EquipmentIntent,

@@ -7,7 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from yee_doowang_api.api.chat import router as chat_router
-from yee_doowang_api.application.chat import ChatService, CoachModel
+from yee_doowang_api.application.chat import ChatService
+from yee_doowang_api.application.chat_models import CoachModel
 from yee_doowang_api.infrastructure.exercise_catalog_file import load_exercise_catalog
 from yee_doowang_api.infrastructure.hypertrophy_prescription_file import (
     load_hypertrophy_guidelines,

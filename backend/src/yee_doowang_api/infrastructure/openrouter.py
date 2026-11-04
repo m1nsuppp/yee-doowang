@@ -8,7 +8,7 @@ from instructor.v2.providers.openrouter import from_openrouter
 from openai import APIError, AsyncOpenAI
 from pydantic import BaseModel, SecretStr
 
-from yee_doowang_api.application.chat import (
+from yee_doowang_api.application.chat_models import (
     ChatCompletionError,
     CoachModel,
     CoachTurn,

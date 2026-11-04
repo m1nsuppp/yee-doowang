@@ -3,11 +3,11 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-from yee_doowang_api.application.chat import (
+from yee_doowang_api.application.chat import ChatService
+from yee_doowang_api.application.chat_models import (
     ChatAction,
     ChatCompletionError,
     ChatReply,
-    ChatService,
     ConversationMessage,
     ConversationState,
 )

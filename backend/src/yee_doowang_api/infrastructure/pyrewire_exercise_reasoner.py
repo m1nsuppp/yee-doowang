@@ -2,7 +2,10 @@ import asyncio
 
 from pyrewire import EasySession
 
-from yee_doowang_api.application.chat import EquipmentConstraint, ExerciseReasoner
+from yee_doowang_api.application.chat_models import (
+    EquipmentConstraint,
+    ExerciseReasoner,
+)
 from yee_doowang_api.application.exercise_catalog import Exercise, ExerciseCatalog
 
 _PROGRAM = """

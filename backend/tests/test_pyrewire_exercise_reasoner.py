@@ -1,6 +1,6 @@
 import unittest
 
-from yee_doowang_api.application.chat import EquipmentConstraint
+from yee_doowang_api.application.chat_models import EquipmentConstraint
 from yee_doowang_api.application.exercise_catalog import ExerciseCatalog
 from yee_doowang_api.infrastructure.exercise_catalog_file import load_exercise_catalog
 from yee_doowang_api.infrastructure.pyrewire_exercise_reasoner import (
