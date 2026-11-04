@@ -471,7 +471,8 @@
   "workout_days": [
     {
       "id": "push_day",
-      "name_ko": "푸시 데이",
+      "name_ko": "가슴·어깨·삼두 운동",
+      "aliases": ["푸시", "푸시 데이", "푸시데이", "push", "push day", "PushDay"],
       "focus_muscle_ids": [
         "chest",
         "deltoids",

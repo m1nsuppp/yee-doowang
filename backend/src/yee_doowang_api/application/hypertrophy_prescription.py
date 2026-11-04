@@ -69,7 +69,7 @@ class HypertrophyGuidelines(_PrescriptionModel):
 class WeeklyDirectSetTarget(_PrescriptionModel):
     muscle_id: str
     muscle_name_ko: str
-    sets_per_week: int = Field(ge=1)
+    sets_per_week: int = Field(ge=0)
     basis: Literal["source_starting_point", "user_reported"]
 
 

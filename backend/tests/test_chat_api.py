@@ -6,6 +6,7 @@ from fastapi.testclient import TestClient
 
 from yee_doowang_api.application.chat import (
     ChatCompletionError,
+    ChatService,
     ContextField,
     ConversationMessage,
     ConversationState,
@@ -15,6 +16,8 @@ from yee_doowang_api.application.chat import (
     PlannedSession,
     RoutineContext,
     RoutineProposal,
+    SessionTimeRange,
+    WorkoutSplitTemplate,
 )
 from yee_doowang_api.application.exercise_catalog import (
     Equipment,
@@ -40,17 +43,18 @@ class FixtureCoachModel:
         current: RoutineContext,
         workout_days: Sequence[WorkoutDay],
         latest_user_message: str | None = None,
+        muscles: Sequence[Muscle] = (),
     ) -> tuple[RoutineContext, str]:
         updates: dict[str, ContextField] = {}
         message = ""
         text = transcript.lower()
         latest = (latest_user_message or transcript).lower()
 
-        def field_text(terms: tuple[str, ...]) -> str:
-            return latest if any(term in latest for term in terms) else text
+        def field_text(_terms: tuple[str, ...]) -> str:
+            return latest
 
         area_terms = {
-            "push_day": ("push", "가슴", "삼두", "어깨", "위팔세갈래근"),
+            "push_day": ("push", "푸시", "푸시 데이", "푸시데이", "가슴", "삼두", "어깨", "위팔세갈래근"),
             "back_day": (
                 "등",
                 "허리",
@@ -84,6 +88,11 @@ class FixtureCoachModel:
             "obliques_day": ("복사근", "옆구리"),
         }
         unsupported_terms = ("심혈관계", "회전근개")
+        concept_question = any(
+            marker in latest
+            for marker in ("차이", "무슨 뜻", "뭐예요", "뭐에요", "무엇인가요", "뜻이 뭐", "설명해")
+        ) and "추천" not in latest
+        set_report_turn = re.search(r"[0-9]+\s*세트", latest) is not None
         workout_terms = tuple(
             term for terms in area_terms.values() for term in terms
         )
@@ -91,15 +100,49 @@ class FixtureCoachModel:
         selected_days = [
             day.id
             for day in workout_days
-            if any(term in workout_text for term in area_terms.get(day.id, ()))
+            if not concept_question
+            and not set_report_turn
+            and any(term in workout_text for term in area_terms.get(day.id, ()))
         ]
         if selected_days:
             updates["workout_day_ids"] = cls._field(list(dict.fromkeys(selected_days)))
-        elif any(term in workout_text for term in unsupported_terms):
+        elif not concept_question and not set_report_turn and any(term in workout_text for term in unsupported_terms):
             updates["workout_day_ids"] = cls._field(status="unknown")
             message = "요청한 운동 부위는 아직 지원하지 않습니다."
+        if "분할 없이" in latest or ("취소" in latest and "분할" in latest):
+            updates["workout_split_type"] = cls._field(status="skipped")
+            updates["workout_split_assignment"] = cls._field(status="skipped")
+        elif not concept_question and "2분할" in latest:
+            updates["workout_split_type"] = cls._field("ab")
 
-        goal_text = field_text(
+        split_type = updates.get("workout_split_type", current.workout_split_type)
+        if (
+            split_type.status == "provided"
+            and current.workout_split_assignment.status != "provided"
+            and any(term in latest for term in ("알아서", "맡길게", "제안해", "선택해줘"))
+        ):
+            updates["workout_split_assignment"] = cls._field(status="delegated")
+        elif split_type.status == "provided" and "a는" in latest and "b는" in latest:
+            a_text, b_text = re.split(
+                r"\bb\s*(?:는|:)", latest, maxsplit=1, flags=re.IGNORECASE
+            )
+            a_text = re.sub(r"^.*?\ba\s*(?:는|:)", "", a_text, flags=re.IGNORECASE)
+            day_a_ids = [
+                day.id
+                for day in workout_days
+                if any(term in a_text for term in area_terms.get(day.id, ()))
+            ]
+            day_b_ids = [
+                day.id
+                for day in workout_days
+                if any(term in b_text for term in area_terms.get(day.id, ()))
+            ]
+            if day_a_ids and day_b_ids:
+                updates["workout_split_assignment"] = cls._field(
+                    WorkoutSplitTemplate(day_a_ids=day_a_ids, day_b_ids=day_b_ids)
+                )
+
+        goal_text = "" if concept_question else field_text(
             ("근비대", "근육 증가", "근력", "목표 건너", "목표는 상관없", "감량", "지구력", "일반 체력", "목표 모르")
         )
         has_hypertrophy = any(term in goal_text for term in ("근비대", "근육 증가"))
@@ -138,7 +181,9 @@ class FixtureCoachModel:
             updates["experience"] = cls._field("experienced")
 
         schedule_text = field_text(("주", "회", "횟수", "빈도"))
-        if any(term in latest for term in ("횟수 건너", "빈도 건너")):
+        if any(term in latest for term in ("횟수를 모르", "빈도를 모르", "주당 횟수는 모르")):
+            updates["sessions_per_week"] = cls._field(status="unknown")
+        elif any(term in latest for term in ("횟수 건너", "빈도 건너")):
             updates["sessions_per_week"] = cls._field(status="skipped")
         else:
             session_matches = list(re.finditer(r"주\s*([1-7])\s*회", text))
@@ -150,22 +195,42 @@ class FixtureCoachModel:
             elif any(term in schedule_text for term in ("횟수 건너", "빈도 건너")):
                 updates["sessions_per_week"] = cls._field(status="skipped")
 
-        time_text = field_text(("분", "시간", "시간 건너", "시간은 상관", "시간을 모르"))
-        if any(term in latest for term in ("시간 건너", "시간 조건 건너", "회당 시간 건너", "시간은 상관없")):
+        time_range = None
+        range_separator = r"(?:~|～|〜|-|부터|에서)"
+        minute_hour_range = re.search(
+            rf"([1-9][0-9]*)\s*분\s*{range_separator}\s*([1-9][0-9]*)\s*시간",
+            latest,
+        )
+        minute_range = re.search(
+            rf"([1-9][0-9]*)\s*분?\s*{range_separator}\s*([1-9][0-9]*)\s*분",
+            latest,
+        )
+        hour_range = re.search(
+            rf"([1-9][0-9]*)\s*시간\s*{range_separator}\s*([1-9][0-9]*)\s*시간",
+            latest,
+        )
+        if minute_hour_range:
+            time_range = (int(minute_hour_range.group(1)), int(minute_hour_range.group(2)) * 60)
+        elif minute_range:
+            time_range = (int(minute_range.group(1)), int(minute_range.group(2)))
+        elif hour_range:
+            time_range = (int(hour_range.group(1)) * 60, int(hour_range.group(2)) * 60)
+        if time_range:
+            updates["minutes_per_session_range"] = cls._field(
+                SessionTimeRange(minimum_minutes=time_range[0], maximum_minutes=time_range[1])
+            )
+            updates["minutes_per_session"] = cls._field(status="unknown")
+        elif any(term in latest for term in ("시간 건너", "시간 조건 건너", "회당 시간 건너", "시간은 상관없")):
             updates["minutes_per_session"] = cls._field(status="skipped")
         elif any(term in latest for term in ("시간을 모르", "시간은 모르")):
             updates["minutes_per_session"] = cls._field(status="unknown")
         else:
-            minute_matches = list(re.finditer(r"([1-9][0-9]*)\s*분", text))
             minutes = re.search(r"([1-9][0-9]*)\s*분", latest)
-            if minutes is None and minute_matches:
-                minutes = minute_matches[-1]
+            hours = re.search(r"([1-9][0-9]*)\s*시간", latest)
             if minutes:
                 updates["minutes_per_session"] = cls._field(int(minutes.group(1)))
-            elif any(term in time_text for term in ("시간 건너", "시간 조건 건너", "회당 시간 건너", "시간은 상관없")):
-                updates["minutes_per_session"] = cls._field(status="skipped")
-            elif "시간을 모르" in time_text:
-                updates["minutes_per_session"] = cls._field(status="unknown")
+            elif hours:
+                updates["minutes_per_session"] = cls._field(int(hours.group(1)) * 60)
         equipment_text = field_text(
             ("장비", "알아서", "아무거나", "맨몸", "덤벨", "no equipment")
         )
@@ -217,9 +282,40 @@ class FixtureCoachModel:
             updates["known_constraints"] = cls._field([])
         elif any(term in constraints_text for term in ("제약 건너", "제약은 상관없")):
             updates["known_constraints"] = cls._field(status="skipped")
+        set_reports: dict[str, int] = {}
+        for muscle in muscles:
+            terms = [muscle.name_ko, *muscle.aliases_ko, *muscle.source_terms]
+            for term in sorted((term for term in terms if term), key=len, reverse=True):
+                report = re.search(
+                    rf"{re.escape(term.lower())}\s*(?:주간\s*)?(?:주\s*)?([0-9]+)\s*세트",
+                    latest,
+                )
+                if report:
+                    set_reports[muscle.id] = int(report.group(1))
+                    break
+        if set_reports:
+            updates["weekly_direct_sets_by_muscle"] = cls._field(set_reports)
+        if any(term in latest for term in ("세트 건너", "세트 보고 건너")):
+            updates["weekly_direct_sets_follow_up"] = cls._field(status="skipped")
+            if not set_reports:
+                updates["weekly_direct_sets_by_muscle"] = cls._field(status="skipped")
+        elif any(term in latest for term in ("세트 모르", "세트는 몰")):
+            updates["weekly_direct_sets_follow_up"] = cls._field(status="unknown")
+            if not set_reports:
+                updates["weekly_direct_sets_by_muscle"] = cls._field(status="unknown")
+        elif any(term in latest for term in ("세트 알아서", "세트 맡겨")):
+            updates["weekly_direct_sets_follow_up"] = cls._field(status="delegated")
+            if not set_reports:
+                updates["weekly_direct_sets_by_muscle"] = cls._field(status="delegated")
 
         context_data = current.model_dump()
-        context_data.update({key: value.model_dump() for key, value in updates.items()})
+        for key, value in updates.items():
+            if key == "weekly_direct_sets_by_muscle" and value.status == "provided" and current.weekly_direct_sets_by_muscle.status == "provided":
+                reports = dict(current.weekly_direct_sets_by_muscle.value or {})
+                reports.update(value.value or {})
+                context_data[key] = {"status": "provided", "value": reports}
+            else:
+                context_data[key] = value.model_dump()
         return RoutineContext.model_validate(context_data), message
 
     @staticmethod
@@ -234,13 +330,31 @@ class FixtureCoachModel:
             return "clarify", "통증 위치와 어떤 동작에서 심해지는지 알려주세요. 통증을 악화시키는 운동은 중단해 주세요."
         return "none", ""
 
+    @staticmethod
+    def _assistant_response(latest: str, context: RoutineContext) -> str:
+        if any(term in latest for term in ("푸시 데이", "푸시데이", "push day")) and any(
+            term in latest for term in ("뭐", "무슨 뜻", "무엇", "설명")
+        ):
+            return "푸시 데이는 가슴·어깨·삼두근을 함께 묶는 운동 분할 이름이에요."
+        if "차이" in latest and "근비대" in latest and "근력" in latest:
+            return "근비대는 근육 크기 증가를, 근력은 힘을 내는 능력 향상을 우선하는 목표예요. 목표는 함께 추구할 수 있지만 상담에서 우선순위를 정하면 돼요."
+        if context.experience.status == "provided" and context.experience.value == "experienced" and any(
+            term in latest for term in ("왜", "부담", "필요해")
+        ):
+            return "최근 직접 세트는 목표값이 아니라 현재 보고하신 양을 기록해 처방이 현황과 맞는지 확인하려는 정보예요. 한 번에 일부 근육만 알려주셔도 되고, 추정하지 않도록 모르는 값은 비워 두거나 전체 보고를 건너뛸 수 있어요."
+        if context.equipment.status in {"not_asked", "unknown"} and any(
+            term in latest for term in ("헬스장", "휘트니스", "피트니스", "gym")
+        ):
+            return "장소 이름으로 이해했어요. 장소만으로 보유 장비를 추측하지 않겠습니다. 사용할 수 있는 장비를 직접 알려주시거나, 선택을 맡기거나 장비 조건을 건너뛰어 주세요."
+        return ""
+
     async def interpret(
         self,
         messages: Sequence[ConversationMessage],
         current_context: RoutineContext,
         _equipment_options: Sequence[Equipment],
         workout_days: Sequence[WorkoutDay],
-        _muscle_options: Sequence[Muscle],
+        muscle_options: Sequence[Muscle],
     ) -> IntentDecision:
         user_messages = [message.content.lower() for message in messages if message.role == "user"]
         transcript = " ".join(user_messages)
@@ -251,12 +365,38 @@ class FixtureCoachModel:
             current_context,
             workout_days,
             latest_user_message,
+            muscle_options,
+        )
+        assistant_response = self._assistant_response(
+            latest_user_message, current_context
+        )
+        split_confirmation = "none"
+        if current_context.split_template is not None and current_context.split_template.confirmation_status == "proposed":
+            if any(term in latest_user_message for term in ("확인합니다", "확인할게요", "맞아요", "동의")) and "바꾸" not in latest_user_message:
+                split_confirmation = "confirm"
+            elif any(term in latest_user_message for term in ("바꾸", "안 맞", "거부")):
+                split_confirmation = "reject"
+        elif current_context.split_proposal_rejected and "다시 제안" in latest_user_message:
+            split_confirmation = "repropose"
+        time_range_separator = r"(?:~|～|〜|-|부터|에서)"
+        mentions_time_range = re.search(
+            rf"[0-9]+\s*(?:분|시간)?\s*{time_range_separator}\s*[0-9]+\s*(?:분|시간)",
+            latest_user_message,
+        )
+        explicit_minutes_target = (
+            re.search(r"[1-9][0-9]*\s*(?:분|시간)", latest_user_message) is not None
+            and mentions_time_range is None
         )
         return IntentDecision(
             context=context,
             safety_status=safety_status,
             message=safety_message or context_message,
+            assistant_response=assistant_response,
+            preserve_context=bool(assistant_response),
+            split_confirmation=split_confirmation,
+            explicit_minutes_target=explicit_minutes_target,
         )
+
 
     async def plan_routine(
         self,
@@ -271,9 +411,21 @@ class FixtureCoachModel:
         assert session_count is not None
         day_ids = context.workout_day_ids.value
         assert day_ids
+        split_template = (
+            context.split_template
+            if context.split_template is not None
+            and context.split_template.confirmation_status == "confirmed"
+            else context.workout_split_assignment.value
+            if context.workout_split_assignment.status == "provided"
+            else None
+        )
         sessions = []
         for index in range(session_count):
-            day_id = day_ids[index % len(day_ids)]
+            if split_template is None:
+                day_id = day_ids[index % len(day_ids)]
+            else:
+                group = split_template.day_a_ids if index % 2 == 0 else split_template.day_b_ids
+                day_id = group[(index // 2) % len(group)]
             candidates = candidates_by_day[day_id]
             selected = candidates[0]
             sessions.append(
@@ -351,13 +503,16 @@ class ChatApiTests(unittest.TestCase):
             conversation.append({"role": "user", "content": "만 18세 이상 성인입니다."})
             user_messages.append("만 18세 이상 성인입니다.")
         catalog = load_exercise_catalog()
-        transcript = " ".join(user_messages)
-        context, _ = FixtureCoachModel._context(
-            transcript,
-            RoutineContext(),
-            catalog.workout_days,
-            user_messages[-1] if user_messages else "",
-        )
+        context = RoutineContext()
+        for user_message in user_messages:
+            parsed, _ = FixtureCoachModel._context(
+                user_message,
+                context,
+                catalog.workout_days,
+                user_message,
+                catalog.muscles,
+            )
+            context = ChatService._merge_context(context, parsed)
         state = ConversationState(phase="confirming_context", context=context)
         return client.post(
             "/api/chat",
@@ -867,7 +1022,7 @@ class ChatApiTests(unittest.TestCase):
         self.assertEqual(response.json()["state"]["context"]["experience"]["status"], "unknown")
         self.assertEqual(response.json()["state"]["phase"], "collecting_context")
         self.assertIsNone(response.json()["state"]["routine"])
-        self.assertIn("모르거나 답하고 싶지 않으면", response.json()["reply"])
+        self.assertIn("모르시는 걸로 기록했어요", response.json()["reply"])
 
     def test_context_confirmation_action_requires_review_phase(self) -> None:
         app = create_app(
@@ -1501,7 +1656,7 @@ class ChatApiTests(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response.json()["exploration_exercises"], [])
             for supported_area in (
-                "푸시 데이",
+                "가슴·어깨·삼두 운동",
                 "등·허리 운동",
                 "이두 운동",
                 "하체 운동",
@@ -1659,7 +1814,7 @@ class ChatApiTests(unittest.TestCase):
         self.assertIn("최근 한 주의 근육별 직접 세트 수", body["reply"])
         self.assertEqual(body["exploration_exercises"], [])
 
-    def test_experienced_hypertrophy_uses_only_reported_weekly_volume(self) -> None:
+    def _post_experienced_push_volume(self, sets_per_week: int):
         catalog = load_exercise_catalog()
         target_muscle_ids = next(
             day.focus_muscle_ids for day in catalog.workout_days if day.id == "push_day"
@@ -1679,7 +1834,7 @@ class ChatApiTests(unittest.TestCase):
             adult_eligibility=ContextField(status="provided", value="adult"),
             weekly_direct_sets_by_muscle=ContextField(
                 status="provided",
-                value={muscle_id: 8 for muscle_id in target_muscle_ids},
+                value={muscle_id: sets_per_week for muscle_id in target_muscle_ids},
             ),
         )
         app = create_app(
@@ -1687,11 +1842,19 @@ class ChatApiTests(unittest.TestCase):
             coach_model=ContextPreservingCoachModel(),
         )
         with TestClient(app) as client:
-            response = self._post_confirmed_with_context(
+            return self._post_confirmed_with_context(
                 client,
-                [{"role": "user", "content": "근비대 목표 경험자, 각 표적 근육 주 8세트"}],
+                [
+                    {
+                        "role": "user",
+                        "content": f"근비대 목표 경험자, 각 표적 근육 주 {sets_per_week}세트",
+                    }
+                ],
                 context,
             )
+
+    def test_experienced_hypertrophy_uses_only_reported_weekly_volume(self) -> None:
+        response = self._post_experienced_push_volume(8)
 
         self.assertEqual(response.status_code, 200)
         prescription = response.json()["state"]["routine"]["hypertrophy_prescription"]
@@ -1699,6 +1862,19 @@ class ChatApiTests(unittest.TestCase):
         self.assertTrue(
             all(
                 target["sets_per_week"] == 8 and target["basis"] == "user_reported"
+                for target in prescription["weekly_direct_sets"]
+            )
+        )
+
+    def test_experienced_hypertrophy_preserves_reported_zero_sets(self) -> None:
+        response = self._post_experienced_push_volume(0)
+
+        self.assertEqual(response.status_code, 200)
+        prescription = response.json()["state"]["routine"]["hypertrophy_prescription"]
+        self.assertTrue(prescription["weekly_direct_sets"])
+        self.assertTrue(
+            all(
+                target["sets_per_week"] == 0 and target["basis"] == "user_reported"
                 for target in prescription["weekly_direct_sets"]
             )
         )
@@ -1721,3 +1897,503 @@ class ChatApiTests(unittest.TestCase):
         routine = response.json()["state"]["routine"]
         self.assertIsNone(routine["hypertrophy_prescription"])
         self.assertIn("근거 적용 범위 밖", routine["prescription_note"])
+
+    def test_explanations_preserve_context_and_resume_the_pending_prompt(self) -> None:
+        context = RoutineContext(
+            workout_day_ids=ContextField(status="provided", value=["push_day"]),
+            sessions_per_week=ContextField(status="provided", value=4),
+        )
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "근비대랑 근력의 차이가 뭐야?"}
+                    ],
+                    "state": ConversationState(context=context).model_dump(mode="json"),
+                    "action": "message",
+                },
+            )
+            push_context = RoutineContext()
+            push_response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "푸시 데이가 뭐예요?"}
+                    ],
+                    "state": ConversationState(context=push_context).model_dump(mode="json"),
+                    "action": "message",
+                },
+            )
+
+        body = response.json()
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("근육 크기 증가", body["reply"])
+        self.assertIn("힘을 내는 능력", body["reply"])
+        self.assertIn("우선할 목표", body["reply"])
+        self.assertEqual(body["state"]["context"], context.model_dump(mode="json"))
+        self.assertEqual(body["quick_replies"], [])
+        push_body = push_response.json()
+        self.assertEqual(push_response.status_code, 200)
+        self.assertIn("가슴·어깨·삼두근", push_body["reply"])
+        self.assertIn("현재 지원 범위", push_body["reply"])
+        self.assertEqual(push_body["state"]["context"], push_context.model_dump(mode="json"))
+        self.assertEqual(push_body["quick_replies"], [])
+
+    def test_assistant_split_must_be_confirmed_before_drafting(self) -> None:
+        context = RoutineContext(
+            workout_day_ids=ContextField(
+                status="provided", value=["push_day", "legs_day"]
+            ),
+            workout_split_type=ContextField(status="provided", value="ab"),
+            workout_split_assignment=ContextField(status="delegated"),
+            goal=ContextField(status="skipped"),
+            experience=ContextField(status="skipped"),
+            sessions_per_week=ContextField(status="provided", value=4),
+            minutes_per_session=ContextField(status="skipped"),
+            equipment=ContextField(status="skipped"),
+            preferences=ContextField(status="provided", value=[]),
+            known_constraints=ContextField(status="provided", value=[]),
+        )
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            proposal_response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": "주 4회 2분할, 가슴·어깨·삼두와 하체 부위로, 분할 구성을 맡길게요.",
+                        }
+                    ],
+                    "state": ConversationState(context=context).model_dump(mode="json"),
+                    "action": "message",
+                },
+            )
+            proposal = proposal_response.json()
+            self.assertEqual(proposal_response.status_code, 200)
+            self.assertEqual(proposal["state"]["phase"], "confirming_split")
+            self.assertIsNone(proposal["state"]["routine"])
+            self.assertIn("A: 가슴·어깨·삼두 운동", proposal["reply"])
+            self.assertIn("B: 하체 운동", proposal["reply"])
+            self.assertEqual(
+                set(proposal["quick_replies"][0]), {"label", "message"}
+            )
+            self.assertEqual(
+                proposal["state"]["context"]["sessions_per_week"]["value"], 4
+            )
+            self.assertEqual(
+                proposal["state"]["context"]["workout_split_assignment"]["status"],
+                "delegated",
+            )
+
+            confirmed_split_response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "이 A/B 분할을 확인합니다."}
+                    ],
+                    "state": proposal["state"],
+                    "action": "message",
+                },
+            )
+            confirmed_split = confirmed_split_response.json()
+            self.assertEqual(confirmed_split["state"]["phase"], "confirming_context")
+            self.assertIsNone(confirmed_split["state"]["routine"])
+            self.assertIn("A: 가슴·어깨·삼두 운동", confirmed_split["reply"])
+            self.assertIn("B: 하체 운동", confirmed_split["reply"])
+
+            routine_response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "확인하고 루틴 만들기"}
+                    ],
+                    "state": confirmed_split["state"],
+                    "action": "confirm_context",
+                },
+            )
+
+        self.assertEqual(routine_response.status_code, 200)
+        routine = routine_response.json()["state"]["routine"]
+        self.assertEqual(routine["sessions_per_week"], 4)
+        self.assertEqual(
+            [session["workout_day_id"] for session in routine["sessions"]],
+            ["push_day", "legs_day", "push_day", "legs_day"],
+        )
+
+    def test_experienced_set_reports_are_staged_and_never_filled_in(self) -> None:
+        context = RoutineContext(
+            workout_day_ids=ContextField(
+                status="provided", value=["push_day", "legs_day"]
+            ),
+            goal=ContextField(status="provided", value="hypertrophy"),
+            experience=ContextField(status="provided", value="experienced"),
+            sessions_per_week=ContextField(status="provided", value=4),
+            minutes_per_session=ContextField(status="skipped"),
+            equipment=ContextField(status="skipped"),
+            preferences=ContextField(status="provided", value=[]),
+            known_constraints=ContextField(status="provided", value=[]),
+            adult_eligibility=ContextField(status="provided", value="adult"),
+        )
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            first_stage_response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "경험자 맞춤 정보를 알려드릴게요."}
+                    ],
+                    "state": ConversationState(context=context).model_dump(mode="json"),
+                    "action": "message",
+                },
+            )
+            first_stage = first_stage_response.json()
+            self.assertIn("이번 단계: 가슴, 삼각근, 삼두근", first_stage["reply"])
+            why_response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "왜 이 정보가 필요해요? 부담스러워요."}
+                    ],
+                    "state": first_stage["state"],
+                    "action": "message",
+                },
+            )
+            why_body = why_response.json()
+            self.assertIn("현재 보고", why_body["reply"])
+            self.assertIn("건너뛸 수", why_body["reply"])
+            self.assertIn("이번 단계: 가슴, 삼각근, 삼두근", why_body["reply"])
+            self.assertEqual(
+                why_body["state"]["context"]["weekly_direct_sets_by_muscle"]["status"],
+                "not_asked",
+            )
+
+
+            second_stage_response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": "가슴 8세트, 삼각근 6세트, 삼두근 4세트.",
+                        }
+                    ],
+                    "state": why_body["state"],
+                    "action": "message",
+                },
+            )
+            second_stage = second_stage_response.json()
+            reported = second_stage["state"]["context"]["weekly_direct_sets_by_muscle"]["value"]
+            self.assertEqual(
+                reported,
+                {"chest": 8, "deltoids": 6, "triceps": 4},
+            )
+            self.assertEqual(
+                second_stage["state"]["context"]["workout_day_ids"]["value"],
+                ["push_day", "legs_day"],
+            )
+            self.assertIn("이번 단계: 외전근, 내전근, 발목 안정근", second_stage["reply"])
+
+            stopped_response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "세트 보고 건너뛰기"}
+                    ],
+                    "state": second_stage["state"],
+                    "action": "message",
+                },
+            )
+            stopped = stopped_response.json()
+
+        self.assertEqual(stopped_response.status_code, 200)
+        self.assertEqual(
+            stopped["state"]["context"]["weekly_direct_sets_by_muscle"]["value"],
+            {"chest": 8, "deltoids": 6, "triceps": 4},
+        )
+        self.assertEqual(
+            stopped["state"]["context"]["weekly_direct_sets_follow_up"]["status"],
+            "skipped",
+        )
+
+    def test_time_ranges_require_a_user_selected_target_and_venues_do_not_set_equipment(
+        self,
+    ) -> None:
+        base_context = RoutineContext(
+            workout_day_ids=ContextField(status="provided", value=["push_day"]),
+            goal=ContextField(status="skipped"),
+            experience=ContextField(status="skipped"),
+            sessions_per_week=ContextField(status="provided", value=3),
+            equipment=ContextField(status="skipped"),
+            preferences=ContextField(status="provided", value=[]),
+            known_constraints=ContextField(status="provided", value=[]),
+        )
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            range_response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "회당 30분~1시간 가능해요."}
+                    ],
+                    "state": ConversationState(context=base_context).model_dump(mode="json"),
+                    "action": "message",
+                },
+            )
+            range_body = range_response.json()
+            self.assertEqual(range_response.status_code, 200)
+            self.assertIn("목표 시간 하나", range_body["reply"])
+            self.assertIn("중간값을 대신 선택하지 않습니다", range_body["reply"])
+            self.assertEqual(
+                range_body["state"]["context"]["minutes_per_session"]["status"],
+                "unknown",
+            )
+            self.assertEqual(
+                range_body["state"]["context"]["minutes_per_session"]["value"], None
+            )
+            self.assertEqual(
+                range_body["state"]["context"]["minutes_per_session_range"]["value"],
+                {"minimum_minutes": 30, "maximum_minutes": 60},
+            )
+
+            target_response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [{"role": "user", "content": "45분으로 정할게요."}],
+                    "state": range_body["state"],
+                    "action": "message",
+                },
+            )
+            self.assertEqual(
+                target_response.json()["state"]["context"]["minutes_per_session"]["value"],
+                45,
+            )
+
+            venue_context = base_context.model_copy(
+                update={
+                    "minutes_per_session": ContextField(status="skipped"),
+                    "equipment": ContextField(status="unknown"),
+                }
+            )
+            venue_response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "자양동 휘트니스 캐리스타"}
+                    ],
+                    "state": ConversationState(context=venue_context).model_dump(mode="json"),
+                    "action": "message",
+                },
+            )
+            venue = venue_response.json()
+
+        self.assertEqual(venue_response.status_code, 200)
+        self.assertIn("장소 이름", venue["reply"])
+        self.assertIn("장비를 추측하지 않겠습니다", venue["reply"])
+        self.assertEqual(venue["state"]["context"]["equipment"]["status"], "unknown")
+        self.assertIsNone(venue["state"]["context"]["equipment"]["value"])
+
+    def test_legacy_push_day_alias_keeps_id_and_uses_korean_display_label(self) -> None:
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+        with TestClient(app) as client:
+            response = self._post_confirmed_routine(
+                client,
+                [
+                    {
+                        "role": "user",
+                        "content": "푸시데이 운동을 덤벨로 추천해줘. 목표 건너, 경력 건너.",
+                    }
+                ],
+            )
+
+        body = response.json()
+        self.assertEqual(response.status_code, 200)
+        session = body["state"]["routine"]["sessions"][0]
+        self.assertEqual(session["workout_day_id"], "push_day")
+        self.assertEqual(session["workout_day_name_ko"], "가슴·어깨·삼두 운동")
+        self.assertEqual(body["quick_replies"], [])
+
+    def test_sessions_per_week_quick_replies_select_normal_answers_and_keep_opt_outs(
+        self,
+    ) -> None:
+        context = RoutineContext(
+            workout_day_ids=ContextField(status="provided", value=["push_day"])
+        )
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            prompt_response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "운동 계획을 세우고 싶어요."}
+                    ],
+                    "state": ConversationState(context=context).model_dump(mode="json"),
+                    "action": "message",
+                },
+            )
+            prompt = prompt_response.json()
+            expected_choices = [
+                {"label": f"주 {frequency}회", "message": f"주 {frequency}회"}
+                for frequency in range(1, 8)
+            ]
+            self.assertEqual(prompt_response.status_code, 200)
+            self.assertIn("주당 운동 횟수", prompt["reply"])
+            self.assertEqual(prompt["quick_replies"], expected_choices)
+
+            chosen = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": prompt["quick_replies"][3]["message"]}
+                    ],
+                    "state": prompt["state"],
+                    "action": "message",
+                },
+            )
+            chosen_body = chosen.json()
+            self.assertEqual(chosen.status_code, 200)
+            self.assertEqual(
+                chosen_body["state"]["context"]["sessions_per_week"],
+                {"status": "provided", "value": 4},
+            )
+            self.assertIn("우선할 목표", chosen_body["reply"])
+            self.assertIsNone(chosen_body["state"]["routine"])
+
+            unknown = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "주당 횟수를 모르겠어요."}
+                    ],
+                    "state": prompt["state"],
+                    "action": "message",
+                },
+            ).json()
+            self.assertEqual(
+                unknown["state"]["context"]["sessions_per_week"]["status"],
+                "unknown",
+            )
+            self.assertEqual(unknown["quick_replies"], expected_choices)
+
+            skipped = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "주당 횟수 건너뛰기"}
+                    ],
+                    "state": prompt["state"],
+                    "action": "message",
+                },
+            ).json()
+            self.assertEqual(
+                skipped["state"]["context"]["sessions_per_week"]["status"],
+                "skipped",
+            )
+            self.assertEqual(skipped["quick_replies"], [])
+
+    def test_explanation_resumes_frequency_question_with_choices(self) -> None:
+        context = RoutineContext(
+            workout_day_ids=ContextField(status="provided", value=["abs_day"])
+        )
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=FixtureCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": "근비대와 근력의 차이가 뭐예요?",
+                        }
+                    ],
+                    "state": ConversationState(context=context).model_dump(mode="json"),
+                    "action": "message",
+                },
+            )
+
+        body = response.json()
+        expected_choices = [
+            {"label": f"주 {frequency}회", "message": f"주 {frequency}회"}
+            for frequency in range(1, 8)
+        ]
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("근육 크기 증가", body["reply"])
+        self.assertIn("주당 운동 횟수", body["reply"])
+        self.assertEqual(body["state"]["context"], context.model_dump(mode="json"))
+        self.assertEqual(body["quick_replies"], expected_choices)
+
+    def test_unknown_client_split_id_returns_safe_clarification(self) -> None:
+        context = RoutineContext(
+            workout_day_ids=ContextField(
+                status="provided", value=["push_day", "legs_day"]
+            ),
+            workout_split_type=ContextField(status="provided", value="ab"),
+            workout_split_assignment=ContextField(status="delegated"),
+            split_template=WorkoutSplitTemplate(
+                day_a_ids=["unknown_day"],
+                day_b_ids=["legs_day"],
+                confirmation_status="confirmed",
+            ),
+            goal=ContextField(status="skipped"),
+            experience=ContextField(status="skipped"),
+            sessions_per_week=ContextField(status="provided", value=4),
+            minutes_per_session=ContextField(status="skipped"),
+            equipment=ContextField(status="skipped"),
+            preferences=ContextField(status="provided", value=[]),
+            known_constraints=ContextField(status="provided", value=[]),
+        )
+        app = create_app(
+            settings=Settings(_env_file=None),
+            coach_model=ContextPreservingCoachModel(),
+        )
+
+        with TestClient(app) as client:
+            response = client.post(
+                "/api/chat",
+                json={
+                    "messages": [
+                        {"role": "user", "content": "확인하고 루틴 만들기"}
+                    ],
+                    "state": ConversationState(
+                        phase="confirming_context", context=context
+                    ).model_dump(mode="json"),
+                    "action": "confirm_context",
+                },
+            )
+
+        body = response.json()
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNone(body["state"]["routine"])
+        self.assertIn("지원되지 않거나 선택 부위와 맞지 않는", body["reply"])
+        self.assertIn("가슴·어깨·삼두 운동", body["reply"])
+        self.assertIsNone(body["state"]["context"]["split_template"])
+        self.assertEqual(body["quick_replies"][0]["label"], "다시 제안받기")

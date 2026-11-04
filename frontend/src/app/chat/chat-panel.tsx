@@ -16,6 +16,7 @@ import {
   type ConversationState,
   createInitialConversationState,
   type HypertrophyPrescription,
+  type QuickReply,
   type RecommendedExercise,
   type RoutineDraft,
   sendChatMessage,
@@ -24,6 +25,7 @@ import {
 type DisplayMessage = ChatMessage & {
   id: string;
   explorationExercises?: RecommendedExercise[];
+  quickReplies?: QuickReply[];
   routine?: RoutineDraft | null;
   state?: ConversationState;
 };
@@ -198,6 +200,7 @@ export default function ChatPanel() {
           role: "assistant",
           content: response.reply,
           explorationExercises: response.exploration_exercises,
+          quickReplies: response.quick_replies,
           routine: response.state.routine,
           state: response.state,
         },
@@ -222,15 +225,14 @@ export default function ChatPanel() {
     }
   }
 
-  function submitMessage(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const content = draft.trim();
-    if (!content || isSending) return;
+  function submitContent(content: string) {
+    const normalizedContent = content.trim();
+    if (!normalizedContent || isSending) return;
 
     const userMessage: DisplayMessage = {
       id: crypto.randomUUID(),
       role: "user",
-      content,
+      content: normalizedContent,
     };
 
     const conversation = [...messages, userMessage];
@@ -238,6 +240,11 @@ export default function ChatPanel() {
     setDraft("");
     if (textareaRef.current) textareaRef.current.style.height = "auto";
     void requestReply(conversation, conversationState, "message");
+  }
+
+  function submitMessage(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    submitContent(draft);
   }
 
   function confirmContext() {
@@ -344,6 +351,24 @@ export default function ChatPanel() {
                 >
                   {message.content}
                 </p>
+                {message.id === latestAssistantMessageId &&
+                  message.quickReplies &&
+                  message.quickReplies.length > 0 && (
+                    <fieldset className="mt-3 flex flex-wrap gap-2">
+                      <legend className="sr-only">빠른 답변</legend>
+                      {message.quickReplies.map((option) => (
+                        <button
+                          key={option.message}
+                          className="rounded-full border border-[#d9ddd4] bg-white px-4 py-2 text-sm font-semibold text-[#183d31] transition hover:border-[#183d31] disabled:cursor-not-allowed disabled:opacity-40"
+                          type="button"
+                          onClick={() => submitContent(option.message)}
+                          disabled={isSending}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </fieldset>
+                  )}
                 {message.routine && (
                   <section className="mt-4 space-y-4">
                     <p className="text-xs leading-5 text-[#68756d]">
