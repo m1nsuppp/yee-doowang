@@ -22,6 +22,9 @@ class RecommendationDataSource(_CatalogModel):
     attribution: str | None = None
 
 
+TechnicalComplexity = Literal["low", "moderate", "high"]
+
+
 class ExerciseAPIProfile(_CatalogModel):
     id: str
     name: str
@@ -38,10 +41,15 @@ class ExerciseRecommendationProfile(_CatalogModel):
     source_id: str = Field(pattern=r"^[0-9]{4}$")
     exercise_api: ExerciseAPIProfile | None = None
     novice_consensus_exercise_name: str | None = None
+    technical_complexity: TechnicalComplexity | None = None
 
     @model_validator(mode="after")
     def require_evidence(self) -> Self:
-        if self.exercise_api is None and self.novice_consensus_exercise_name is None:
+        if (
+            self.exercise_api is None
+            and self.novice_consensus_exercise_name is None
+            and self.technical_complexity is None
+        ):
             raise ValueError("recommendation profile requires external evidence")
         return self
 
@@ -126,7 +134,10 @@ class ExerciseCatalog(_CatalogModel):
             ):
                 raise ValueError("ExerciseAPI profile requires its source declaration")
             if (
-                profile.novice_consensus_exercise_name is not None
+                (
+                    profile.novice_consensus_exercise_name is not None
+                    or profile.technical_complexity is not None
+                )
                 and "novice_consensus" not in recommendation_source_ids
             ):
                 raise ValueError("novice profile requires its source declaration")

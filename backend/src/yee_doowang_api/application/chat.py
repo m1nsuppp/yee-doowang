@@ -11,6 +11,7 @@ from yee_doowang_api.application.exercise_catalog import (
     ExerciseCatalog,
     ExerciseRecommendationProfile,
     Muscle,
+    TechnicalComplexity,
     WorkoutDay,
 )
 
@@ -56,6 +57,7 @@ class IntentDecision(_ChatModel):
     ]
     equipment: EquipmentIntent
     personalization: RecommendationPreferences
+    safety_status: Literal["none", "clarify", "urgent"]
     message: str = Field(max_length=1200)
 
     @field_validator("message")
@@ -97,6 +99,7 @@ class RecommendedExercise(_ChatModel):
     secondary_muscles_ko: list[str]
     equipment_ko: str
     movement_pattern_ko: str | None
+    technical_complexity: TechnicalComplexity | None
 
 
 class ChatReply(_ChatModel):
@@ -169,6 +172,21 @@ class ChatService:
             self._catalog.workout_days,
             self._catalog.muscles,
         )
+        if intent.safety_status == "urgent":
+            return ChatReply(
+                reply=(
+                    "말씀하신 증상은 즉시 평가가 필요할 수 있어요. "
+                    "운동을 멈추고 지금 응급 진료를 받으세요."
+                ),
+                exercises=[],
+            )
+        if intent.safety_status == "clarify":
+            fallback = (
+                "운동 추천 전에 통증 위치와 어떤 동작에서 심해지는지 확인할게요. "
+                "통증을 악화시키는 운동은 중단해 주세요."
+            )
+            return ChatReply(reply=intent.message or fallback, exercises=[])
+
         if intent.workout_intent in {"clarify", "unsupported"}:
             reply = intent.message or (
                 "현재는 푸시 데이, 복근, 복사근 운동을 추천해요. 어떤 부위를 원하시나요?"
@@ -400,6 +418,8 @@ class ChatService:
         return sorted(candidates, key=rank_key)
 
     def _present_exercise(self, exercise: Exercise) -> RecommendedExercise:
+        profile = self._recommendation_profiles.get(exercise.source_id)
+
         return RecommendedExercise(
             source_id=exercise.source_id,
             name=exercise.name,
@@ -414,5 +434,8 @@ class ChatService:
                 self._pattern_names.get(exercise.movement_pattern_id)
                 if exercise.movement_pattern_id is not None
                 else None
+            ),
+            technical_complexity=(
+                profile.technical_complexity if profile is not None else None
             ),
         )

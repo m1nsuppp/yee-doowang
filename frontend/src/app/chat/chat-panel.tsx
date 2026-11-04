@@ -18,6 +18,13 @@ type DisplayMessage = ChatMessage & {
   id: string;
   exercises?: RecommendedExercise[];
 };
+const technicalComplexityLabels = {
+  low: "낮음",
+  moderate: "보통",
+  high: "높음",
+} as const;
+const technicalComplexitySourceUrl =
+  "https://pmc.ncbi.nlm.nih.gov/articles/PMC11873903/";
 
 export default function ChatPanel() {
   const [messages, setMessages] = useState<DisplayMessage[]>([]);
@@ -178,6 +185,12 @@ export default function ChatPanel() {
                   {message.content}
                 </p>
                 {message.exercises && message.exercises.length > 0 && (
+                  <p className="mt-3 text-xs text-[#68756d]">
+                    기술 요구도는 출처에서 평가된 운동에만 표시합니다. 미평가는
+                    낮은 난이도나 개인의 적합성·안전성을 뜻하지 않습니다.
+                  </p>
+                )}
+                {message.exercises && message.exercises.length > 0 && (
                   <ul className="mt-4 grid gap-3 sm:grid-cols-2">
                     {message.exercises.map((exercise) => (
                       <li
@@ -207,6 +220,25 @@ export default function ChatPanel() {
                             <>
                               <br />
                               {exercise.movement_pattern_ko}
+                            </>
+                          )}
+                          {exercise.technical_complexity && (
+                            <>
+                              <br />
+                              전문가 평가 기술 요구도:{" "}
+                              {
+                                technicalComplexityLabels[
+                                  exercise.technical_complexity
+                                ]
+                              }{" "}
+                              <a
+                                className="underline underline-offset-2"
+                                href={technicalComplexitySourceUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                연구 출처
+                              </a>
                             </>
                           )}
                         </p>

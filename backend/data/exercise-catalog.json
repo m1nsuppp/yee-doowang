@@ -572,7 +572,8 @@
           "e1rm_substitution_group": "side_delt_raise",
           "loadable": true
         },
-        "novice_consensus_exercise_name": "Dumbbell lateral raise"
+        "novice_consensus_exercise_name": "Dumbbell lateral raise",
+        "technical_complexity": "low"
       },
       {
         "source_id": "0175",
@@ -604,11 +605,13 @@
       },
       {
         "source_id": "0310",
-        "novice_consensus_exercise_name": "Dumbbell front raise"
+        "novice_consensus_exercise_name": "Dumbbell front raise",
+        "technical_complexity": "low"
       },
       {
         "source_id": "0333",
-        "novice_consensus_exercise_name": "Dumbbell kick back"
+        "novice_consensus_exercise_name": "Dumbbell kick back",
+        "technical_complexity": "low"
       }
     ]
   },
