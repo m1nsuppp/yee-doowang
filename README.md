@@ -1,108 +1,38 @@
 # 이두왕(Yee DooWang)
 
-헬스트레이너 AI 에이전트(Personal Trainer AI Agent)의 이름이자, 프로젝트의 이름이다.
-
-운동하는 사람, 근성장/다이어트가 목표인 사용자를 대상으로 피트니스, 운동 루틴, 자세 교정, 근성장/다이어트 코칭을 제공합니다.
+헬스트레이너 AI 에이전트의 이름이자 프로젝트 이름이다. 피트니스, 운동 루틴, 자세 교정, 근성장·다이어트 코칭을 제공한다.
 
 ## 기술 구성
 
 - `frontend/`: Next.js App Router, React, TypeScript, Tailwind CSS, Biome
-- `backend/`: Python 3.12, FastAPI, Pydantic
-- `compose.yaml`: 로컬 PostgreSQL 개발용 컨테이너
-- LLM: OpenRouter를 FastAPI 외부 provider 어댑터 경계로 연결합니다. 모델과 API 키는 `backend/.env`에서 설정합니다.
-- 규칙 추론: PyreWire (wirelog Datalog 엔진; 프로젝트 규칙은 아직 정의하지 않았습니다)
-- Python 의존성·환경: `uv`
+- `backend/`: Python 3.12, FastAPI, Pydantic, `uv`
+- `compose.yaml`: 로컬 PostgreSQL 개발용 컨테이너 (현재 API는 DB에 연결하지 않는다)
+- LLM: OpenRouter를 provider 어댑터 경계로 연결하며 모델·API 키는 환경 변수로 설정한다(`backend/.env.example` 참고)
+- 규칙 추론: PyreWire (wirelog Datalog 엔진)
 
-서비스는 로컬 개발 단계이며 배포 설정은 포함하지 않습니다. API는 PostgreSQL에 연결하지 않으며, LLM 요청은 설정된 OpenRouter 모델로 전달합니다.
+배포 설정은 포함하지 않는다.
 
-## 운동 데이터 카탈로그
+## 동작 개요
 
-- `backend/data/exercise-catalog.json`은 공통 분류와 샤드 목록을 담고, `backend/data/exercises/`에는 주 표적 근육별 JSON 파일로 운동 1,324개를 나눠 보관합니다. API 시작 시 로더가 샤드를 합쳐 사용하며 DB에는 저장하지 않습니다.
-- 원본: [hasaneyldrm/exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset), revision `7455efae41b330c265e7cd4b78dfa848e7ce5ebd`. 운동 데이터는 MIT 라이선스이며 고지문은 `backend/data/EXERCISES-DATA-LICENSE`에 있습니다. 별도 라이선스가 필요한 이미지/GIF 미디어는 포함하지 않습니다.
-- 근육 taxonomy는 `abdominals`/`abs`를 `abs`로, `lower abs`를 `lower_abs`로, `obliques`와 `core`를 각각 별도 ID로 보존합니다.
-- 운동 부위는 카탈로그의 `focus_muscle_ids`로 분류합니다. 푸시(가슴·삼각근·삼두근), 복근(복근·하복근), 견갑(전거근·견갑거근)은 주 표적 일치만 후보로 사용합니다. 등·허리(광배근·상부 등·승모근·척추, 허리·능형근 보조), 이두(이두근, 상완근 보조), 전완·손목(전완근, 손목 굽힘·폄 보조), 하체(대퇴사두근·햄스트링·둔근·종아리·내전근·외전근과 고관절·발목·발 주변 보조), 복사근은 카탈로그가 허용한 보조 표적 일치도 후보로 포함합니다. 코어는 주 표적 자료가 없어 보조 근육으로 분류된 후보만 지원합니다.
-- 원본에는 동작 패턴 관계가 없습니다. 현재 일부 운동에만 한국어 이름이 있으며, 동작 패턴은 이전 카탈로그에서 수동 분류한 17개 운동에만 연결되어 있습니다. 나머지 운동의 동작 패턴은 추정하지 않고, 한국어 이름이 없는 운동은 원문 fallback으로 표시합니다.
+웹 앱은 일반 운동 대화로 시작하고, 루틴을 요청하면 상담으로 전환한다. 상담은 목표·경력·장비·시간·운동 부위·제약 조건을 확인해 루틴 초안을 만든다. 개인 맥락은 브라우저 메모리에만 유지하며 DB나 영구 저장소에 기록하지 않는다. 통증·부상 등 제약이 있으면 확인 전 루틴을 반환하지 않고, 응급 징후에는 진료를 안내한다.
 
-웹 앱은 일반 운동 대화로 시작하며, 사용자가 루틴을 요청하면 루틴 상담으로 전환합니다. 루틴 상담 중 운동 지식 질문에는 답하면서 명시적으로 함께 말한 조건만 갱신하고, 대기 중인 질문과 나머지 맥락을 유지합니다. 상담 절차 질문에는 현재 미완료 조건의 이유와 선택지를 안내하며, 질문·항의·짧은 동의만으로 조건을 수락하거나 건너뛰지 않습니다. 기억한 상담 조건은 화면에서 확인·수정할 수 있습니다. 사용자는 여러 조건을 한 메시지에서 말하거나 기존 답을 정정할 수 있습니다. 명시적으로 위임한 운동 부위는 지원 범위 안에서 제안하며, 확인 전에는 선택값으로 저장하지 않습니다. 모름·건너뜀·위임은 구분합니다. 경험자 근비대 처방의 최근 주간 직접 세트는 한 번에 최대 세 근육씩 요청하고 사용자가 말한 수치만 기록합니다. 초안 전에 맥락 요약을 확인받습니다. 개인 맥락은 현재 브라우저 대화 상태에서만 유지하며 DB나 브라우저 영구 저장소에 기록하지 않습니다.
+## 운동 데이터
 
-현재 지원 운동일은 가슴·어깨·삼두 운동, 등·허리, 이두, 전완·손목, 하체, 견갑·전거근, 코어 보조, 복근, 복사근입니다. 카탈로그의 운동일 ID와 후보 매핑은 유지하며, ‘푸시 데이’ 등 이전 별칭은 같은 내부 ID에 연결합니다. 주당 운동 횟수와 2분할 A/B 구성은 별도 값입니다. 운동 부위 선택을 명시적으로 위임하면 지원 부위 안에서 최대 세 가지를 제안하고, 사용자가 확인한 뒤에만 반영합니다. 위임된 A/B 구성을 제안하면 그룹을 표시하고 명시적으로 확인받기 전에는 초안을 만들지 않습니다. 카탈로그에 운동 근육 관계가 없는 회전근개와 심혈관계 등 분류되지 않은 부위는 계속 지원하지 않습니다. 주간 초안을 전신 루틴이라고 표현하지 않습니다.
+- `backend/data/exercise-catalog.json`에 분류·샤드 목록·순위 프로필을, `backend/data/exercises/`에 주 표적 근육별 샤드로 운동 1,324개를 둔다. 시작 시 로더가 합치며 DB에 저장하지 않는다.
+- 근비대 처방 근거: `backend/data/hypertrophy-prescription.json`.
+- 원본: [hasaneyldrm/exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset) @ `7455efae41b330c265e7cd4b78dfa848e7ce5ebd`, MIT (고지: `backend/data/EXERCISES-DATA-LICENSE`). 이미지/GIF 미디어는 포함하지 않는다.
+- 순위 메타데이터: ExerciseAPI v1.1.0 (CC BY 4.0, 표시: “Exercise data by ExerciseAPI (https://exercise-api.com), licensed under CC BY 4.0.”). 초보 적합성: [Kompf et al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC11873903/), doi:10.1177/15598276221115662. 안전 안내: [NHS 허리 통증](https://www.nhs.uk/conditions/back-pain/), [NHS 꼬리뼈 통증](https://www.nhs.uk/conditions/tailbone-coccyx-pain/).
 
-장비를 모른다고 하면 그 사실을 보존하고, 선택을 명시적으로 위임하거나 장비 조건을 건너뛸 때는 보유 장비를 추정하지 않고 제한 없이 후보를 찾습니다. 헬스장·운동 장소 이름으로 장비를 추측하지 않습니다. 회당 시간 범위를 말하면 범위 자체를 가용 시간으로 기록하고, 단일 목표 시간을 고르지 않아도 상담과 루틴 생성을 진행합니다. 운동별 소요 시간 자료가 없어 실제 루틴이 그 범위 안에 끝난다고 보장하지 않습니다. 사용자가 별도 목표 시간을 직접 고르면 목표와 가용 범위를 각각 보존하며, 새 목표 시간이 가용 범위를 벗어나면 그 새 시간을 우선하고 기존 범위는 기록에서 지웁니다. 운동 카드에는 카탈로그·출처에 연결된 정보만 표시합니다. 근비대 처방은 건강상 제약이 없는 성인에게만 일반 근거를 표시합니다. 개인별 절대 중량은 산출하지 않으며, 운동별 소요 시간도 만들거나 보장하지 않습니다. 현재 통증·부상·운동 제한이 나오면 #7의 범위에 따라 확인하거나 긴급 진료를 안내하고, 확인 전 루틴을 반환하지 않습니다.
-
-목표·경력은 사용자가 직접 밝힌 정보만 반영합니다. 현재 근거가 연결된 목표는 근비대와 근력 진행이며 두 목표를 함께 선택할 수도 있습니다. 함께 선택하면 근비대와 근력 진행 양쪽의 카탈로그 메타데이터가 있는 운동을 우선합니다. 초보·복귀 적합도 근거도 해당 운동에만 연결됩니다. 근거가 부족한 목표·경력 기준은 임의 판단하지 않고 확인하거나 건너뛰게 합니다. 성별·나이·운동 기간만으로 능력이나 초보 여부를 추정하지 않습니다.
-
-후보 순위는 `backend/data/exercise-catalog.json`의 출처 연결 프로필을 사용합니다. ExerciseAPI v1.1.0의 CC BY 4.0 메타데이터는 근비대의 `is_gold_standard`, `sfr_class`, 같은 대체 그룹 내 `preferred_rank`와 근력 진행 호환성의 `loadable`·`e1rm_substitution_group`에 사용합니다. 근력 호환성은 외부 중량 진행 기록이 가능하다는 뜻이지, 해당 운동이 모두에게 최선이라는 판정이 아닙니다. ExerciseAPI는 `is_gold_standard`를 연구·기전·훈련 관행을 종합한 편집상 지표로, SFR 등 일부 분류도 큐레이터 평가로 설명하므로 확정적 효과를 보장하지 않습니다. 초보자 표기는 Kompf, Rhodes, Lee의 전문가 합의 연구에서 특정 운동이 초보자에게 적절하다고 판단된 경우에만 연결합니다. 원문 프로필이 없는 운동은 해당 항목에서 미평가된 것이며 부적합하다는 뜻이 아닙니다. 각 운동일에서 순위 상위 5개만 루틴 초안 모델에 전달합니다. 사용자가 말한 운동명·동작 분류가 카탈로그와 일치하면 그 후보를 우선하고, 카탈로그에 연결되지 않는 선호는 확인을 요청합니다. `known_constraints`가 남아 있으면 후보를 만들지 않고 성격을 확인합니다. 기본 루틴 이유는 서버가 검증된 맥락·카탈로그 정보로 생성하며, 모델에게서 안전성·적합성 주장을 받지 않습니다. 나머지 조건 일치 후보는 `exploration_exercises`로 분리해 탐색 목록에 제공합니다. `movement_pattern_id`는 분류값이며 운동 품질 점수가 아닙니다.
-
-근비대 처방 근거는 `backend/data/hypertrophy-prescription.json`에 분리해 관리합니다. 주간 직접 세트는 카탈로그의 주 표적 근육만 집계하며, 초보·복귀 시작 예시는 근육별 주 4세트입니다. 경험자는 최근 주간 직접 세트 수를 보고해야 하며, 이를 현재 볼륨으로 표시할 뿐 최적이라고 판정하지 않습니다. 사용자가 보고한 0세트도 그대로 보존하며 시작 예시나 목표값으로 대체하지 않습니다. 주 10세트 이상은 집단 수준에서 근비대 향상과 연관된 참고값이지 보편적 목표가 아닙니다. 6–12 RM, 세트 간 1–2분은 이전 ACSM 지침의 실용 범위로 표시하며, 최신 ACSM 개관이 근비대에 유일한 최적값으로 입증한 것은 아닙니다. 주간 세트는 주 표적 운동 전체의 합계이며, 근거가 운동별 세트 배분을 정하지 않아 개별 운동별 세트 수는 생성하지 않습니다. 점진적 진행은 사용자가 이미 선택한 부하에만 적용하고 kg 단위의 개인별 적정 중량은 생성하지 않습니다. 보조 근육의 세트 기여량은 자료가 없어 계산하지 않습니다. 근거 범위는 건강상 제약이 없는 성인이며 미성년자, 질환·재활, 개인별 안전 보장을 다루지 않습니다.
-
-근거: [ACSM 2026 overview of reviews](https://pmc.ncbi.nlm.nih.gov/articles/PMC12965823/) (137개 문헌고찰; 검색 기준 2024-10), [ACSM 2009 progression models](https://pubmed.ncbi.nlm.nih.gov/19204579/), [Iversen et al. 2021 time-efficiency narrative review](https://link.springer.com/article/10.1007/s40279-021-01490-1).
-
-
-출처: [ExerciseAPI 데이터 v1.1.0](https://github.com/aschenoni/exercise-api/tree/main/data), CC BY 4.0 (변환된 메타데이터 사용; 표시 문구: “Exercise data by ExerciseAPI (https://exercise-api.com), licensed under CC BY 4.0.”); [Kompf et al., *Selecting Resistance Training Exercises for Novices: A Delphi Study with Expert Consensus*](https://pmc.ncbi.nlm.nih.gov/articles/PMC11873903/), doi:10.1177/15598276221115662. 연구의 초보 정의는 저항 운동 경험이 없거나 여러 해 운동하지 않은 경우이며, 태그가 있는 운동에만 적용합니다.
-
-연구의 Survey 1에서 전문가가 평가한 `technical_complexity`는 정확히 출처와 연결된 운동에만 저장합니다. 낮음·보통·높음은 명목상 기술 복잡도이며 개인 능력, 초보자 적합성이나 안전 판정이 아닙니다. 값이 없는 운동은 미평가입니다. 안전 안내는 [NHS 허리 통증 안내](https://www.nhs.uk/conditions/back-pain/)와 [NHS 꼬리뼈 통증 안내](https://www.nhs.uk/conditions/tailbone-coccyx-pain/)를 바탕으로 합니다. 허리 통증 안내의 핵심은 활동을 유지하되 통증을 악화시키는 운동은 멈추는 것입니다. 꼬리뼈 통증 안내는 사용자가 꼬리뼈를 분명히 말한 경우에만 적용하며, ‘엉치뼈’를 같은 부위라고 추정하지 않습니다. 양쪽 다리의 저림·약화, 회음부 감각 저하, 배뇨·배변 변화 등 응급 징후가 언급되면 운동 추천 대신 즉시 진료를 안내합니다. 이 일반 안내는 진단이나 개인별 안전 보장이 아닙니다.
-
-## 로컬 실행
-
-필요한 도구: Node.js 20.9 이상, `uv`. Python 3.12는 `uv`가 프로젝트 설정에 맞춰 관리합니다. Docker Compose는 로컬 PostgreSQL을 사용할 때만 필요합니다.
-
-OpenRouter를 사용하려면 `backend/.env.example`을 `backend/.env`로 복사하고 `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`을 설정합니다. 실제 키는 커밋하지 않습니다. OMP 확장은 시작 시 로드되므로 `.omp/extensions/guard-env-files.ts`를 적용하려면 새 OMP 세션을 시작해야 합니다. 이 확장은 `.env*` 직접 경로를 읽거나 수정하는 도구 호출을 차단합니다 (`*.example` 제외). OMP 확장은 샌드박스가 아니므로 임의 코드 실행까지 막는 운영체제 수준의 보안 경계는 아닙니다.
-
-API와 웹 앱을 각각 터미널에서 실행합니다.
-
-선택 사항: 이후 데이터 저장 기능을 개발할 때 사용할 로컬 PostgreSQL입니다. 현재 API는 DB에 연결하지 않습니다.
-
-```bash
-docker compose up -d postgres
-```
-
-종료할 때는 `docker compose down`을 실행합니다. 데이터 볼륨은 유지됩니다.
-
-```bash
-cd backend
-uv sync
-uv run uvicorn yee_doowang_api.main:app --reload
-```
-
-```bash
-cd frontend
-npm ci
-npm run dev
-```
-
-웹 앱은 `NEXT_PUBLIC_API_BASE_URL`로 API를 호출하며 기본값은 `http://localhost:8000`입니다. 다른 출처를 사용할 때는 backend의 `FRONTEND_ORIGIN`도 웹 앱 출처와 일치시킵니다.
-
-정적 검사는 다음 명령으로 실행합니다.
-
-```bash
-cd frontend
-npm run lint
-npm run build
-```
-
-```bash
-cd backend
-uv run ruff check src tests
-uv run python -m unittest discover -s tests
-```
+## 접속
 
 - 웹 앱: <http://localhost:3000>
-- 운동 추천 채팅: <http://localhost:3000/>
-- API 상태 확인: <http://localhost:8000/health>
+- API 상태: <http://localhost:8000/health>
 - API 문서: <http://localhost:8000/docs>
-- Chat API: `POST http://localhost:8000/api/chat`
 
 
-Chat API는 `state.mode`에 `general` 또는 `routine`을 받으며, 생략한 API 요청은 호환성을 위해 `routine`으로 처리합니다. 웹 앱은 `general`로 시작하고, 루틴 요청 시 `routine`으로 전환합니다. `general`에서는 루틴 intake 질문 없이 운동 질문에 답합니다. 루틴 상담 질문은 운동 지식 답변(`answer_only`)과 절차 설명(`explain_intake`)을 구분합니다. 절차 설명은 저장된 맥락의 첫 미완료 조건·질문·선택지로 만들어지며, 모델의 자유 응답이 완료·수락 약속을 대신할 수 없습니다. 조건 질문은 필요한 이유와 선택·건너뛰기 선택지를 함께 제공합니다. 질문 중 명시적으로 바꾼 다른 조건은 보존하며, 묻기만 한 현재 조건은 유지합니다. `messages`는 시간순, 마지막 메시지는 `user`, 최대 30개입니다. 매 응답의 구조화된 `state`를 다음 요청에 그대로 보내야 대화 상태를 이어갑니다.
 
 ```bash
 curl -sS http://localhost:8000/api/chat \
   -H 'Content-Type: application/json' \
   -d '{"messages":[{"role":"user","content":"복근, 근비대 목표, 만 18세 이상 성인, 초보자, 맨몸, 주 3회, 회당 30분, 선호 없음, 제약 없음."}]}'
 ```
-
-맥락 요약 응답의 `state.phase`가 `confirming_context`이면 다음 요청에 그 `state`와 `action: "confirm_context"`를 보내 초안을 만듭니다. `confirming_split`이면 assistant가 제안한 A/B 구성을 먼저 명시적으로 확인하거나 수정하는 일반 메시지를 보냅니다. split 확인 응답 뒤 `confirming_context` 요약을 다시 확인해야 초안이 생성됩니다. 그 밖의 메시지에는 `action: "message"`를 사용합니다. 요청의 `messages`는 시간순이며 마지막 메시지는 `user`, 최대 30개입니다. 구조화된 대화 상태가 최근 메시지에 없는 맥락을 보존합니다.
-
-성공한 `ChatReply`는 `reply`, 다음 요청에 보낼 `state`, 후보 `exploration_exercises`, `quick_replies`를 포함합니다. `quick_replies`는 항상 `{label: string, message: string}[]`이며 선택지가 없으면 `[]`입니다. 시간 범위는 별도 목표 시간 없이도 가용 시간으로 저장되고 루틴 상담을 진행합니다. `state.routine.minutes_per_session`은 단일 목표를 직접 고른 경우에만 채워집니다. 범위만 기록한 경우 루틴 응답에 가용 범위와 시간 내 완료를 보장할 수 없다는 점을 표시합니다. `reply`는 상담사의 일반 프롬프트이고, 구조화된 맥락과 절차 답변은 서버가 결정합니다. 기본 운동 카드와 선택 이유·대안은 `state.routine`에 포함되며, 이유와 근비대 처방은 서버가 출처가 연결된 맥락으로 생성합니다. 근비대 처방은 적용 범위, 근육별 주간 직접 세트, 반복 범위, 휴식, 진행 규칙, 출처와 한계를 표시합니다. 개인별 절대 중량과 보조 근육의 직접 세트는 계산하지 않습니다. `state.context`의 각 ContextField는 `not_asked`, `provided`, `unknown`, `skipped`, `delegated` 상태를 구분합니다. A/B 템플릿 확인 단계는 `state.phase: "confirming_split"`이며, 이후 맥락 요약을 확인해야 초안이 생성됩니다. `새 대화`는 브라우저 메모리의 메시지와 맥락을 함께 지웁니다. 설정이 없으면 `503`, 공급자 또는 구조화 응답 처리 실패는 `502`로 반환합니다.
-
-주당 횟수 질문은 주 1~7회 버튼을 제공하며, 각 `message`는 일반 사용자 답변(예: `주 4회`)으로 보냅니다. 모름·건너뜀 경로와 자유 텍스트 입력도 그대로 지원합니다.
