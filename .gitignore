@@ -31,11 +31,15 @@ __pycache__/
 .env.*
 !.env.example
 
-# Next.js
-node_modules/
-.next/
-out/
+# Local training data
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+data/exports/
+
+# Coverage
 coverage/
-*.tsbuildinfo
 
 _tmp/

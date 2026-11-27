@@ -1,0 +1,191 @@
+[
+  {
+    "source_id": "1018",
+    "labels": {
+      "en": "band shrug"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0095",
+    "labels": {
+      "en": "barbell shrug"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0220",
+    "labels": {
+      "en": "cable shrug"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0305",
+    "labels": {
+      "en": "dumbbell decline shrug"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0304",
+    "labels": {
+      "en": "dumbbell decline shrug v. 2"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0329",
+    "labels": {
+      "en": "dumbbell incline shrug"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0406",
+    "labels": {
+      "en": "dumbbell shrug"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0548",
+    "labels": {
+      "en": "kettlebell sumo high pull"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0580",
+    "labels": {
+      "en": "lever gripless shrug"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1439",
+    "labels": {
+      "en": "lever gripless shrug v. 2"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0604",
+    "labels": {
+      "en": "lever shrug"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "3012",
+    "labels": {
+      "en": "scapula dips"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0688",
+    "labels": {
+      "en": "scapular pull-up"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0746",
+    "labels": {
+      "en": "smith back shrug"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0767",
+    "labels": {
+      "en": "smith shrug"
+    },
+    "primary_muscle_id": "trapezius",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  }
+]

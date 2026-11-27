@@ -1,0 +1,480 @@
+[
+  {
+    "source_id": "0994",
+    "labels": {
+      "en": "band reverse wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1016",
+    "labels": {
+      "en": "band wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1411",
+    "labels": {
+      "en": "barbell palms down wrist curl over a bench"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1412",
+    "labels": {
+      "en": "barbell palms up wrist curl over a bench"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0079",
+    "labels": {
+      "en": "barbell revers wrist curl v. 2"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0082",
+    "labels": {
+      "en": "barbell reverse wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0104",
+    "labels": {
+      "en": "barbell standing back wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0126",
+    "labels": {
+      "en": "barbell wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0125",
+    "labels": {
+      "en": "barbell wrist curl v. 2"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0210",
+    "labels": {
+      "en": "cable reverse wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "wrists"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0224",
+    "labels": {
+      "en": "cable standing back wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0247",
+    "labels": {
+      "en": "cable wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1437",
+    "labels": {
+      "en": "dumbbell finger curls"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "wrist_flexors",
+      "wrist_extensors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0347",
+    "labels": {
+      "en": "dumbbell lying pronation"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2705",
+    "labels": {
+      "en": "dumbbell lying pronation on floor"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0349",
+    "labels": {
+      "en": "dumbbell lying supination"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2706",
+    "labels": {
+      "en": "dumbbell lying supination on floor"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0358",
+    "labels": {
+      "en": "dumbbell one arm reverse wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "wrist_extensors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1415",
+    "labels": {
+      "en": "dumbbell one arm seated neutral wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0364",
+    "labels": {
+      "en": "dumbbell one arm wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1441",
+    "labels": {
+      "en": "dumbbell over bench one arm reverse wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0367",
+    "labels": {
+      "en": "dumbbell over bench one arm wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0368",
+    "labels": {
+      "en": "dumbbell over bench revers wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0369",
+    "labels": {
+      "en": "dumbbell over bench wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0385",
+    "labels": {
+      "en": "dumbbell reverse wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0399",
+    "labels": {
+      "en": "dumbbell seated one arm rotate"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0401",
+    "labels": {
+      "en": "dumbbell seated palms up wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0455",
+    "labels": {
+      "en": "finger curls"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "wrist_flexors",
+      "grip_muscles"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0518",
+    "labels": {
+      "en": "kettlebell alternating hang clean"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "trapezius",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "2288",
+    "labels": {
+      "en": "lever gripper hands"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1421",
+    "labels": {
+      "en": "modified push up to lower arms"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0721",
+    "labels": {
+      "en": "side wrist pull stretch"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "wrists",
+      "hands"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1426",
+    "labels": {
+      "en": "smith seated wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "brachialis"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0771",
+    "labels": {
+      "en": "smith standing back wrist curl"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0854",
+    "labels": {
+      "en": "weighted standing hand squeeze"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "1428",
+    "labels": {
+      "en": "wrist circles"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "hands",
+      "wrists"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0859",
+    "labels": {
+      "en": "wrist rollerer"
+    },
+    "primary_muscle_id": "forearms",
+    "secondary_muscle_ids": [
+      "biceps",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  }
+]

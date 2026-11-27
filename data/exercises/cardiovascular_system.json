@@ -1,0 +1,422 @@
+[
+  {
+    "source_id": "3220",
+    "labels": {
+      "en": "astride jumps (male)"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3672",
+    "labels": {
+      "en": "back and forth step"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "glutes",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3360",
+    "labels": {
+      "en": "bear crawl"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "core",
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1160",
+    "labels": {
+      "en": "burpee"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2331",
+    "labels": {
+      "en": "cycle cross trainer"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1201",
+    "labels": {
+      "en": "dumbbell burpee"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "deltoids",
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3221",
+    "labels": {
+      "en": "half knee bends (male)"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3636",
+    "labels": {
+      "en": "high knee against wall"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "glutes",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0501",
+    "labels": {
+      "en": "jack burpee"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves",
+      "deltoids",
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3224",
+    "labels": {
+      "en": "jack jump (male)"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2612",
+    "labels": {
+      "en": "jump rope"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "calves",
+      "quads",
+      "hamstrings",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "rope"
+  },
+  {
+    "source_id": "0630",
+    "labels": {
+      "en": "mountain climber"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "core",
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3638",
+    "labels": {
+      "en": "push to run"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0685",
+    "labels": {
+      "en": "run"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0684",
+    "labels": {
+      "en": "run (equipment)"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3219",
+    "labels": {
+      "en": "scissor jumps (male)"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3222",
+    "labels": {
+      "en": "semi squat jump (male)"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3656",
+    "labels": {
+      "en": "short stride run"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3361",
+    "labels": {
+      "en": "skater hops"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "glutes",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3671",
+    "labels": {
+      "en": "ski step"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "glutes",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3223",
+    "labels": {
+      "en": "star jump (male)"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2138",
+    "labels": {
+      "en": "stationary bike run v. 3"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stationary_bike"
+  },
+  {
+    "source_id": "0798",
+    "labels": {
+      "en": "stationary bike walk"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "3318",
+    "labels": {
+      "en": "swing 360"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2141",
+    "labels": {
+      "en": "walk elliptical cross trainer"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "glutes",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "elliptical_machine"
+  },
+  {
+    "source_id": "3655",
+    "labels": {
+      "en": "walking high knees lunge"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "glutes",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3666",
+    "labels": {
+      "en": "walking on incline treadmill"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "2311",
+    "labels": {
+      "en": "walking on stepmill"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "glutes",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stepmill_machine"
+  },
+  {
+    "source_id": "3637",
+    "labels": {
+      "en": "wheel run"
+    },
+    "primary_muscle_id": "cardiovascular_system",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  }
+]

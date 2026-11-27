@@ -1,0 +1,1874 @@
+[
+  {
+    "source_id": "0977",
+    "labels": {
+      "en": "band front lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0978",
+    "labels": {
+      "en": "band front raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0993",
+    "labels": {
+      "en": "band reverse fly"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "upper_back",
+      "trapezius"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0997",
+    "labels": {
+      "en": "band shoulder press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1022",
+    "labels": {
+      "en": "band standing rear delt row"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1012",
+    "labels": {
+      "en": "band twisting overhead press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1017",
+    "labels": {
+      "en": "band y-raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0041",
+    "labels": {
+      "en": "barbell front raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "biceps",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0067",
+    "labels": {
+      "en": "barbell one arm snatch"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "forearms",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0075",
+    "labels": {
+      "en": "barbell rear delt raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0076",
+    "labels": {
+      "en": "barbell rear delt row"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0086",
+    "labels": {
+      "en": "barbell seated behind head military press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0087",
+    "labels": {
+      "en": "barbell seated bradford rocky press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0091",
+    "labels": {
+      "en": "barbell seated overhead press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": "vertical_press",
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0100",
+    "labels": {
+      "en": "barbell skier"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0105",
+    "labels": {
+      "en": "barbell standing bradford press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1456",
+    "labels": {
+      "en": "barbell standing close grip military press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0107",
+    "labels": {
+      "en": "barbell standing front raise over head"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1457",
+    "labels": {
+      "en": "barbell standing wide military press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "3305",
+    "labels": {
+      "en": "barbell thruster"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "quads",
+      "glutes",
+      "hamstrings",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0120",
+    "labels": {
+      "en": "barbell upright row"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0119",
+    "labels": {
+      "en": "barbell upright row v. 2"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0121",
+    "labels": {
+      "en": "barbell upright row v. 3"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0123",
+    "labels": {
+      "en": "barbell wide-grip upright row"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0128",
+    "labels": {
+      "en": "battling ropes"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "forearms",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "rope"
+  },
+  {
+    "source_id": "0148",
+    "labels": {
+      "en": "cable alternate shoulder press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0154",
+    "labels": {
+      "en": "cable cross-over revers fly"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "rhomboids",
+      "trapezius"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0161",
+    "labels": {
+      "en": "cable forward raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0162",
+    "labels": {
+      "en": "cable front raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0164",
+    "labels": {
+      "en": "cable front shoulder raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "3697",
+    "labels": {
+      "en": "cable kneeling rear delt row (with rope) (male)"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0178",
+    "labels": {
+      "en": "cable lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "triceps"
+    ],
+    "movement_pattern_id": "shoulder_abduction",
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0192",
+    "labels": {
+      "en": "cable one arm lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0202",
+    "labels": {
+      "en": "cable rear delt row (stirrups)"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0203",
+    "labels": {
+      "en": "cable rear delt row (with rope)"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0215",
+    "labels": {
+      "en": "cable seated rear lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0216",
+    "labels": {
+      "en": "cable seated shoulder internal rotation"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "rotator_cuff",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0219",
+    "labels": {
+      "en": "cable shoulder press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0225",
+    "labels": {
+      "en": "cable standing cross-over high reverse fly"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0233",
+    "labels": {
+      "en": "cable standing rear delt row (with rope)"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0235",
+    "labels": {
+      "en": "cable standing shoulder external rotation"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "rotator_cuff",
+      "trapezius"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0240",
+    "labels": {
+      "en": "cable supine reverse fly"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0246",
+    "labels": {
+      "en": "cable upright row"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0286",
+    "labels": {
+      "en": "dumbbell alternate side press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2137",
+    "labels": {
+      "en": "dumbbell arnold press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0287",
+    "labels": {
+      "en": "dumbbell arnold press v. 2"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0290",
+    "labels": {
+      "en": "dumbbell bench seated press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0299",
+    "labels": {
+      "en": "dumbbell cuban press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2136",
+    "labels": {
+      "en": "dumbbell cuban press v. 2"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0310",
+    "labels": {
+      "en": "dumbbell front raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "biceps",
+      "trapezius"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0309",
+    "labels": {
+      "en": "dumbbell front raise v. 2"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0311",
+    "labels": {
+      "en": "dumbbell full can lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rotator_cuff"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0323",
+    "labels": {
+      "en": "dumbbell incline one arm lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0325",
+    "labels": {
+      "en": "dumbbell incline raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0326",
+    "labels": {
+      "en": "dumbbell incline rear lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3542",
+    "labels": {
+      "en": "dumbbell incline t-raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0332",
+    "labels": {
+      "en": "dumbbell iron cross"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0334",
+    "labels": {
+      "en": "dumbbell lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius"
+    ],
+    "movement_pattern_id": "shoulder_abduction",
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0335",
+    "labels": {
+      "en": "dumbbell lateral to front raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0863",
+    "labels": {
+      "en": "dumbbell lying external shoulder rotation"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "rotator_cuff",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2470",
+    "labels": {
+      "en": "dumbbell lying on floor rear delt raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0341",
+    "labels": {
+      "en": "dumbbell lying one arm deltoid rear"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0345",
+    "labels": {
+      "en": "dumbbell lying one arm rear lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0348",
+    "labels": {
+      "en": "dumbbell lying rear lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0355",
+    "labels": {
+      "en": "dumbbell one arm lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0356",
+    "labels": {
+      "en": "dumbbell one arm lateral raise with support"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rotator_cuff"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0359",
+    "labels": {
+      "en": "dumbbell one arm reverse fly (with support)"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0361",
+    "labels": {
+      "en": "dumbbell one arm shoulder press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0360",
+    "labels": {
+      "en": "dumbbell one arm shoulder press v. 2"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0363",
+    "labels": {
+      "en": "dumbbell one arm upright row"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1700",
+    "labels": {
+      "en": "dumbbell push press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0376",
+    "labels": {
+      "en": "dumbbell raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2292",
+    "labels": {
+      "en": "dumbbell rear delt raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0377",
+    "labels": {
+      "en": "dumbbell rear delt row_shoulder"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0378",
+    "labels": {
+      "en": "dumbbell rear fly"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0380",
+    "labels": {
+      "en": "dumbbell rear lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0379",
+    "labels": {
+      "en": "dumbbell rear lateral raise (support head)"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0383",
+    "labels": {
+      "en": "dumbbell reverse fly"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0386",
+    "labels": {
+      "en": "dumbbell rotation reverse fly"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2397",
+    "labels": {
+      "en": "dumbbell scott press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0387",
+    "labels": {
+      "en": "dumbbell seated alternate front raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0388",
+    "labels": {
+      "en": "dumbbell seated alternate press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3546",
+    "labels": {
+      "en": "dumbbell seated alternate shoulder"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2317",
+    "labels": {
+      "en": "dumbbell seated bent arm lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0392",
+    "labels": {
+      "en": "dumbbell seated front raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0396",
+    "labels": {
+      "en": "dumbbell seated lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0395",
+    "labels": {
+      "en": "dumbbell seated lateral raise v. 2"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0405",
+    "labels": {
+      "en": "dumbbell seated shoulder press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0404",
+    "labels": {
+      "en": "dumbbell seated shoulder press (parallel grip)"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0408",
+    "labels": {
+      "en": "dumbbell side lying one hand raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3548",
+    "labels": {
+      "en": "dumbbell single arm overhead carry"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0414",
+    "labels": {
+      "en": "dumbbell standing alternate overhead press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0415",
+    "labels": {
+      "en": "dumbbell standing alternate raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2143",
+    "labels": {
+      "en": "dumbbell standing around world"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0419",
+    "labels": {
+      "en": "dumbbell standing front raise above head"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0424",
+    "labels": {
+      "en": "dumbbell standing one arm palm in press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0426",
+    "labels": {
+      "en": "dumbbell standing overhead press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": "vertical_press",
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0427",
+    "labels": {
+      "en": "dumbbell standing palms in press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0437",
+    "labels": {
+      "en": "dumbbell upright row"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1765",
+    "labels": {
+      "en": "dumbbell upright row (back pov)"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0864",
+    "labels": {
+      "en": "dumbbell upright shoulder external rotation"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "rotator_cuff",
+      "trapezius"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0438",
+    "labels": {
+      "en": "dumbbell w-press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0445",
+    "labels": {
+      "en": "ez barbell anti gravity press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "0520",
+    "labels": {
+      "en": "kettlebell alternating press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0523",
+    "labels": {
+      "en": "kettlebell arnold press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0527",
+    "labels": {
+      "en": "kettlebell double jerk"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0528",
+    "labels": {
+      "en": "kettlebell double push press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0529",
+    "labels": {
+      "en": "kettlebell double snatch"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "forearms",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0537",
+    "labels": {
+      "en": "kettlebell one arm clean and jerk"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0538",
+    "labels": {
+      "en": "kettlebell one arm jerk"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0539",
+    "labels": {
+      "en": "kettlebell one arm military press to the side"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0540",
+    "labels": {
+      "en": "kettlebell one arm push press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0542",
+    "labels": {
+      "en": "kettlebell one arm snatch"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "forearms",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0543",
+    "labels": {
+      "en": "kettlebell pirate supper legs"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0546",
+    "labels": {
+      "en": "kettlebell seated press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "1438",
+    "labels": {
+      "en": "kettlebell seated two arm military press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0547",
+    "labels": {
+      "en": "kettlebell seesaw press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0550",
+    "labels": {
+      "en": "kettlebell thruster"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "quads",
+      "glutes",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0552",
+    "labels": {
+      "en": "kettlebell two arm clean"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0553",
+    "labels": {
+      "en": "kettlebell two arm military press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "3237",
+    "labels": {
+      "en": "landmine lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "2271",
+    "labels": {
+      "en": "left hook. boxing"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "biceps",
+      "triceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0584",
+    "labels": {
+      "en": "lever lateral raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0587",
+    "labels": {
+      "en": "lever military press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0590",
+    "labels": {
+      "en": "lever one arm shoulder press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0602",
+    "labels": {
+      "en": "lever seated reverse fly"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0601",
+    "labels": {
+      "en": "lever seated reverse fly (parallel grip)"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0603",
+    "labels": {
+      "en": "lever shoulder press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": "vertical_press",
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0869",
+    "labels": {
+      "en": "lever shoulder press v. 2"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "2318",
+    "labels": {
+      "en": "lever shoulder press v. 3"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0669",
+    "labels": {
+      "en": "rear deltoid stretch"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3122",
+    "labels": {
+      "en": "resistance band seated shoulder press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "resistance_band"
+  },
+  {
+    "source_id": "0747",
+    "labels": {
+      "en": "smith behind neck press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0762",
+    "labels": {
+      "en": "smith rear delt row"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "rhomboids",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0765",
+    "labels": {
+      "en": "smith seated shoulder press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0766",
+    "labels": {
+      "en": "smith shoulder press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0772",
+    "labels": {
+      "en": "smith standing behind head military press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0774",
+    "labels": {
+      "en": "smith standing military press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0775",
+    "labels": {
+      "en": "smith upright row"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "trapezius",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0788",
+    "labels": {
+      "en": "standing behind neck press"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0834",
+    "labels": {
+      "en": "weighted front raise"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "3641",
+    "labels": {
+      "en": "weighted kneeling step with swing"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "0844",
+    "labels": {
+      "en": "weighted round arm"
+    },
+    "primary_muscle_id": "deltoids",
+    "secondary_muscle_ids": [
+      "triceps",
+      "upper_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  }
+]

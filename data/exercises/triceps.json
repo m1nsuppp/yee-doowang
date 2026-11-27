@@ -1,0 +1,1764 @@
+[
+  {
+    "source_id": "0018",
+    "labels": {
+      "en": "assisted standing triceps extension (with towel)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "0019",
+    "labels": {
+      "en": "assisted triceps dip (kneeling)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0975",
+    "labels": {
+      "en": "band close-grip push-up"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0998",
+    "labels": {
+      "en": "band side triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0030",
+    "labels": {
+      "en": "barbell close-grip bench press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0035",
+    "labels": {
+      "en": "barbell decline close grip to skull press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1719",
+    "labels": {
+      "en": "barbell incline close grip bench press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0048",
+    "labels": {
+      "en": "barbell incline reverse-grip press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0052",
+    "labels": {
+      "en": "barbell jm bench press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1720",
+    "labels": {
+      "en": "barbell lying back of the head tricep extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0055",
+    "labels": {
+      "en": "barbell lying close-grip press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0056",
+    "labels": {
+      "en": "barbell lying close-grip triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0057",
+    "labels": {
+      "en": "barbell lying extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0061",
+    "labels": {
+      "en": "barbell lying triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0060",
+    "labels": {
+      "en": "barbell lying triceps extension skull crusher"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": "elbow_extension",
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0065",
+    "labels": {
+      "en": "barbell one arm floor press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1751",
+    "labels": {
+      "en": "barbell pin presses"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "2187",
+    "labels": {
+      "en": "barbell reverse close-grip bench press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1721",
+    "labels": {
+      "en": "barbell reverse grip skullcrusher"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1718",
+    "labels": {
+      "en": "barbell seated close grip behind neck triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0092",
+    "labels": {
+      "en": "barbell seated overhead triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0109",
+    "labels": {
+      "en": "barbell standing overhead triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0129",
+    "labels": {
+      "en": "bench dip (knees bent)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1399",
+    "labels": {
+      "en": "bench dip on floor"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0137",
+    "labels": {
+      "en": "body-up"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1771",
+    "labels": {
+      "en": "bodyweight kneeling triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0149",
+    "labels": {
+      "en": "cable alternate triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0152",
+    "labels": {
+      "en": "cable concentration extension (on knee)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1722",
+    "labels": {
+      "en": "cable high pulley overhead tricep extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0173",
+    "labels": {
+      "en": "cable incline triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0860",
+    "labels": {
+      "en": "cable kickback"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0176",
+    "labels": {
+      "en": "cable kneeling triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0186",
+    "labels": {
+      "en": "cable lying triceps extension v. 2"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1723",
+    "labels": {
+      "en": "cable one arm tricep pushdown"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0194",
+    "labels": {
+      "en": "cable overhead triceps extension (rope attachment)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0201",
+    "labels": {
+      "en": "cable pushdown"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0200",
+    "labels": {
+      "en": "cable pushdown (with rope attachment)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0204",
+    "labels": {
+      "en": "cable rear drive"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "2406",
+    "labels": {
+      "en": "cable reverse grip triceps pushdown (sz-bar) (with arm blaster)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0207",
+    "labels": {
+      "en": "cable reverse-grip pushdown"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1724",
+    "labels": {
+      "en": "cable rope high pulley overhead tricep extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1725",
+    "labels": {
+      "en": "cable rope incline tricep extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1726",
+    "labels": {
+      "en": "cable rope lying on floor tricep extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0231",
+    "labels": {
+      "en": "cable standing one arm triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1727",
+    "labels": {
+      "en": "cable standing reverse grip one arm overhead tricep extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0241",
+    "labels": {
+      "en": "cable triceps pushdown (v-bar)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": "elbow_extension",
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "2405",
+    "labels": {
+      "en": "cable triceps pushdown (v-bar) (with arm blaster)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1728",
+    "labels": {
+      "en": "cable two arm tricep kickback"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0259",
+    "labels": {
+      "en": "close-grip push-up"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": "horizontal_press",
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2398",
+    "labels": {
+      "en": "close-grip push-up (on knees)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0283",
+    "labels": {
+      "en": "diamond push-up"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1731",
+    "labels": {
+      "en": "dumbbell close grip press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0296",
+    "labels": {
+      "en": "dumbbell close-grip press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1617",
+    "labels": {
+      "en": "dumbbell decline one arm hammer press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0306",
+    "labels": {
+      "en": "dumbbell decline triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1732",
+    "labels": {
+      "en": "dumbbell forward lunge triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1618",
+    "labels": {
+      "en": "dumbbell incline hammer press on exercise ball"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1619",
+    "labels": {
+      "en": "dumbbell incline one arm hammer press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1620",
+    "labels": {
+      "en": "dumbbell incline one arm hammer press on exercise ball"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0330",
+    "labels": {
+      "en": "dumbbell incline triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1733",
+    "labels": {
+      "en": "dumbbell incline two arm extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0333",
+    "labels": {
+      "en": "dumbbell kickback"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1734",
+    "labels": {
+      "en": "dumbbell kickbacks on exercise ball"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0337",
+    "labels": {
+      "en": "dumbbell lying extension (across face)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1729",
+    "labels": {
+      "en": "dumbbell lying alternate extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0338",
+    "labels": {
+      "en": "dumbbell lying elbow press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0344",
+    "labels": {
+      "en": "dumbbell lying one arm pronated triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0346",
+    "labels": {
+      "en": "dumbbell lying one arm supinated triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1735",
+    "labels": {
+      "en": "dumbbell lying single extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0351",
+    "labels": {
+      "en": "dumbbell lying triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": "elbow_extension",
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0352",
+    "labels": {
+      "en": "dumbbell neutral grip bench press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1736",
+    "labels": {
+      "en": "dumbbell one arm french press on exercise ball"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1621",
+    "labels": {
+      "en": "dumbbell one arm hammer press on exercise ball"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0354",
+    "labels": {
+      "en": "dumbbell one arm kickback"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0362",
+    "labels": {
+      "en": "dumbbell one arm triceps extension (on bench)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1623",
+    "labels": {
+      "en": "dumbbell palms in incline bench press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0373",
+    "labels": {
+      "en": "dumbbell pronate-grip triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0389",
+    "labels": {
+      "en": "dumbbell seated bench extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1730",
+    "labels": {
+      "en": "dumbbell seated bent over alternate kickback"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1737",
+    "labels": {
+      "en": "dumbbell seated bent over triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0394",
+    "labels": {
+      "en": "dumbbell seated kickback"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0398",
+    "labels": {
+      "en": "dumbbell seated one arm kickback"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1738",
+    "labels": {
+      "en": "dumbbell seated reverse grip one arm overhead tricep extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2188",
+    "labels": {
+      "en": "dumbbell seated triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1739",
+    "labels": {
+      "en": "dumbbell standing alternating tricep kickback"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1740",
+    "labels": {
+      "en": "dumbbell standing bent over one arm triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1741",
+    "labels": {
+      "en": "dumbbell standing bent over two arm triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0420",
+    "labels": {
+      "en": "dumbbell standing kickback"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0423",
+    "labels": {
+      "en": "dumbbell standing one arm extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0430",
+    "labels": {
+      "en": "dumbbell standing triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": "elbow_extension",
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0436",
+    "labels": {
+      "en": "dumbbell tate press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1742",
+    "labels": {
+      "en": "dumbbell tricep kickback with stork stance"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1743",
+    "labels": {
+      "en": "dumbbell twisting bench press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2189",
+    "labels": {
+      "en": "dumbbells seated triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "3287",
+    "labels": {
+      "en": "elbow dips"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1744",
+    "labels": {
+      "en": "exercise ball dip"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1745",
+    "labels": {
+      "en": "exercise ball seated triceps stretch"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1746",
+    "labels": {
+      "en": "exercise ball supine triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1747",
+    "labels": {
+      "en": "ez bar french press on exercise ball"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "1748",
+    "labels": {
+      "en": "ez bar lying close grip triceps extension behind head"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "1749",
+    "labels": {
+      "en": "ez bar standing french press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "0448",
+    "labels": {
+      "en": "ez barbell decline close grip face press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "2186",
+    "labels": {
+      "en": "ez barbell decline triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "0449",
+    "labels": {
+      "en": "ez barbell incline triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "0450",
+    "labels": {
+      "en": "ez barbell jm bench press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "0453",
+    "labels": {
+      "en": "ez barbell seated triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "2432",
+    "labels": {
+      "en": "ez-bar close-grip bench press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "3302",
+    "labels": {
+      "en": "handstand"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0471",
+    "labels": {
+      "en": "handstand push-up"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3289",
+    "labels": {
+      "en": "impossible dips"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0490",
+    "labels": {
+      "en": "incline close-grip push-up"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0591",
+    "labels": {
+      "en": "lever overhand triceps dip"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1451",
+    "labels": {
+      "en": "lever seated dip"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0607",
+    "labels": {
+      "en": "lever triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1701",
+    "labels": {
+      "en": "medicine ball close grip push up"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "medicine_ball"
+  },
+  {
+    "source_id": "1750",
+    "labels": {
+      "en": "medicine ball supine chest throw"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "medicine_ball"
+  },
+  {
+    "source_id": "2328",
+    "labels": {
+      "en": "narrow push-up on exercise ball"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "0637",
+    "labels": {
+      "en": "olympic barbell triceps extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "olympic_barbell"
+  },
+  {
+    "source_id": "0639",
+    "labels": {
+      "en": "one arm dip"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0643",
+    "labels": {
+      "en": "overhead triceps stretch"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0660",
+    "labels": {
+      "en": "push-up close-grip off dumbbell"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1467",
+    "labels": {
+      "en": "push-up on lower arms"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0672",
+    "labels": {
+      "en": "reverse dip"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0677",
+    "labels": {
+      "en": "ring dips"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0717",
+    "labels": {
+      "en": "side push-up"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2142",
+    "labels": {
+      "en": "ski ergometer"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "skierg_machine"
+  },
+  {
+    "source_id": "0751",
+    "labels": {
+      "en": "smith close-grip bench press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "1625",
+    "labels": {
+      "en": "smith machine decline close grip bench press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "1752",
+    "labels": {
+      "en": "smith machine incline tricep extension"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "3291",
+    "labels": {
+      "en": "stalder press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1753",
+    "labels": {
+      "en": "three bench dip"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0814",
+    "labels": {
+      "en": "triceps dip"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0812",
+    "labels": {
+      "en": "triceps dip (bench leg)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0813",
+    "labels": {
+      "en": "triceps dip (between benches)"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0815",
+    "labels": {
+      "en": "triceps dips floor"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0816",
+    "labels": {
+      "en": "triceps press"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0817",
+    "labels": {
+      "en": "triceps stretch"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0830",
+    "labels": {
+      "en": "weighted bench dip"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "1754",
+    "labels": {
+      "en": "weighted three bench dips"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "1755",
+    "labels": {
+      "en": "weighted tricep dips"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "1767",
+    "labels": {
+      "en": "weighted triceps dip on high parallel bars"
+    },
+    "primary_muscle_id": "triceps",
+    "secondary_muscle_ids": [
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  }
+]

@@ -1,0 +1,1209 @@
+{
+  "source": {
+    "repository": "https://github.com/hasaneyldrm/exercises-dataset",
+    "revision": "7455efae41b330c265e7cd4b78dfa848e7ce5ebd",
+    "license": "MIT"
+  },
+  "muscles": [
+    {
+      "id": "chest",
+      "labels": {
+        "ko": "가슴",
+        "en": "Chest"
+      },
+      "input_aliases": {
+        "ko": [
+          "갑빠",
+          "대흉근",
+          "흉근",
+          "펙"
+        ],
+        "en": [
+          "chest",
+          "pectorals",
+          "upper chest"
+        ]
+      }
+    },
+    {
+      "id": "deltoids",
+      "labels": {
+        "ko": "삼각근",
+        "en": "Deltoids"
+      },
+      "input_aliases": {
+        "ko": [
+          "어깨세모근",
+          "어깨"
+        ],
+        "en": [
+          "deltoids",
+          "delts",
+          "rear deltoids",
+          "shoulders"
+        ]
+      }
+    },
+    {
+      "id": "triceps",
+      "labels": {
+        "ko": "삼두근",
+        "en": "Triceps"
+      },
+      "input_aliases": {
+        "ko": [
+          "위팔세갈래근"
+        ],
+        "en": [
+          "triceps"
+        ]
+      }
+    },
+    {
+      "id": "trapezius",
+      "labels": {
+        "ko": "승모근",
+        "en": "Trapezius"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "trapezius",
+          "traps"
+        ]
+      }
+    },
+    {
+      "id": "upper_back",
+      "labels": {
+        "ko": "상부 등",
+        "en": "Upper back"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "upper back"
+        ]
+      }
+    },
+    {
+      "id": "forearms",
+      "labels": {
+        "ko": "전완근",
+        "en": "Forearms"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "forearms"
+        ]
+      }
+    },
+    {
+      "id": "abs",
+      "labels": {
+        "ko": "복근",
+        "en": "Abs"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "abdominals",
+          "abs"
+        ]
+      }
+    },
+    {
+      "id": "lower_abs",
+      "labels": {
+        "ko": "하복근",
+        "en": "Lower abs"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "lower abs"
+        ]
+      }
+    },
+    {
+      "id": "obliques",
+      "labels": {
+        "ko": "복사근",
+        "en": "Obliques"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "obliques"
+        ]
+      }
+    },
+    {
+      "id": "core",
+      "labels": {
+        "ko": "코어",
+        "en": "Core"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "core"
+        ]
+      }
+    },
+    {
+      "id": "abductors",
+      "labels": {
+        "ko": "외전근",
+        "en": "Abductors"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "abductors"
+        ]
+      }
+    },
+    {
+      "id": "adductors",
+      "labels": {
+        "ko": "내전근",
+        "en": "Adductors"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "adductors"
+        ]
+      }
+    },
+    {
+      "id": "ankle_stabilizers",
+      "labels": {
+        "ko": "발목 안정근",
+        "en": "Ankle stabilizers"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "ankle stabilizers"
+        ]
+      }
+    },
+    {
+      "id": "ankles",
+      "labels": {
+        "ko": "발목",
+        "en": "Ankles"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "ankles"
+        ]
+      }
+    },
+    {
+      "id": "back",
+      "labels": {
+        "ko": "등",
+        "en": "Back"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "back"
+        ]
+      }
+    },
+    {
+      "id": "biceps",
+      "labels": {
+        "ko": "이두근",
+        "en": "Biceps"
+      },
+      "input_aliases": {
+        "ko": [
+          "위팔두갈래근"
+        ],
+        "en": [
+          "biceps"
+        ]
+      }
+    },
+    {
+      "id": "brachialis",
+      "labels": {
+        "ko": "상완근",
+        "en": "Brachialis"
+      },
+      "input_aliases": {
+        "ko": [
+          "위팔근"
+        ],
+        "en": [
+          "brachialis"
+        ]
+      }
+    },
+    {
+      "id": "calves",
+      "labels": {
+        "ko": "종아리",
+        "en": "Calves"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "calves"
+        ]
+      }
+    },
+    {
+      "id": "cardiovascular_system",
+      "labels": {
+        "ko": "심혈관계",
+        "en": "Cardiovascular system"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "cardiovascular system"
+        ]
+      }
+    },
+    {
+      "id": "feet",
+      "labels": {
+        "ko": "발",
+        "en": "Feet"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "feet"
+        ]
+      }
+    },
+    {
+      "id": "glutes",
+      "labels": {
+        "ko": "둔근",
+        "en": "Glutes"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "glutes"
+        ]
+      }
+    },
+    {
+      "id": "grip_muscles",
+      "labels": {
+        "ko": "악력 근육",
+        "en": "Grip muscles"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "grip muscles"
+        ]
+      }
+    },
+    {
+      "id": "groin",
+      "labels": {
+        "ko": "사타구니",
+        "en": "Groin"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "groin"
+        ]
+      }
+    },
+    {
+      "id": "hamstrings",
+      "labels": {
+        "ko": "햄스트링",
+        "en": "Hamstrings"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "hamstrings"
+        ]
+      }
+    },
+    {
+      "id": "hands",
+      "labels": {
+        "ko": "손",
+        "en": "Hands"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "hands"
+        ]
+      }
+    },
+    {
+      "id": "hip_flexors",
+      "labels": {
+        "ko": "고관절 굴곡근",
+        "en": "Hip flexors"
+      },
+      "input_aliases": {
+        "ko": [
+          "고관절 굽힘근"
+        ],
+        "en": [
+          "hip flexors"
+        ]
+      }
+    },
+    {
+      "id": "inner_thighs",
+      "labels": {
+        "ko": "허벅지 안쪽",
+        "en": "Inner thighs"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "inner thighs"
+        ]
+      }
+    },
+    {
+      "id": "lats",
+      "labels": {
+        "ko": "광배근",
+        "en": "Lats"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "latissimus dorsi",
+          "lats"
+        ]
+      }
+    },
+    {
+      "id": "levator_scapulae",
+      "labels": {
+        "ko": "견갑거근",
+        "en": "Levator scapulae"
+      },
+      "input_aliases": {
+        "ko": [
+          "어깨올림근"
+        ],
+        "en": [
+          "levator scapulae"
+        ]
+      }
+    },
+    {
+      "id": "lower_back",
+      "labels": {
+        "ko": "허리",
+        "en": "Lower back"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "lower back"
+        ]
+      }
+    },
+    {
+      "id": "quads",
+      "labels": {
+        "ko": "대퇴사두근",
+        "en": "Quads"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "quadriceps",
+          "quads"
+        ]
+      }
+    },
+    {
+      "id": "rhomboids",
+      "labels": {
+        "ko": "능형근",
+        "en": "Rhomboids"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "rhomboids"
+        ]
+      }
+    },
+    {
+      "id": "rotator_cuff",
+      "labels": {
+        "ko": "회전근개",
+        "en": "Rotator cuff"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "rotator cuff"
+        ]
+      }
+    },
+    {
+      "id": "serratus_anterior",
+      "labels": {
+        "ko": "전거근",
+        "en": "Serratus anterior"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "serratus anterior"
+        ]
+      }
+    },
+    {
+      "id": "shins",
+      "labels": {
+        "ko": "정강이",
+        "en": "Shins"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "shins"
+        ]
+      }
+    },
+    {
+      "id": "soleus",
+      "labels": {
+        "ko": "가자미근",
+        "en": "Soleus"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "soleus"
+        ]
+      }
+    },
+    {
+      "id": "spine",
+      "labels": {
+        "ko": "척추",
+        "en": "Spine"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "spine"
+        ]
+      }
+    },
+    {
+      "id": "sternocleidomastoid",
+      "labels": {
+        "ko": "흉쇄유돌근",
+        "en": "Sternocleidomastoid"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "sternocleidomastoid"
+        ]
+      }
+    },
+    {
+      "id": "wrist_extensors",
+      "labels": {
+        "ko": "손목 폄근",
+        "en": "Wrist extensors"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "wrist extensors"
+        ]
+      }
+    },
+    {
+      "id": "wrist_flexors",
+      "labels": {
+        "ko": "손목 굽힘근",
+        "en": "Wrist flexors"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "wrist flexors"
+        ]
+      }
+    },
+    {
+      "id": "wrists",
+      "labels": {
+        "ko": "손목",
+        "en": "Wrists"
+      },
+      "input_aliases": {
+        "ko": [],
+        "en": [
+          "wrists"
+        ]
+      }
+    }
+  ],
+  "equipment": [
+    {
+      "id": "assisted",
+      "labels": {
+        "ko": "보조",
+        "en": "Assisted"
+      },
+      "input_aliases": {
+        "en": [
+          "assisted"
+        ]
+      }
+    },
+    {
+      "id": "band",
+      "labels": {
+        "ko": "밴드",
+        "en": "Band"
+      },
+      "input_aliases": {
+        "en": [
+          "band"
+        ]
+      }
+    },
+    {
+      "id": "barbell",
+      "labels": {
+        "ko": "바벨",
+        "en": "Barbell"
+      },
+      "input_aliases": {
+        "en": [
+          "barbell"
+        ]
+      }
+    },
+    {
+      "id": "body_weight",
+      "labels": {
+        "ko": "맨몸",
+        "en": "Body weight"
+      },
+      "input_aliases": {
+        "en": [
+          "body weight"
+        ]
+      }
+    },
+    {
+      "id": "bosu_ball",
+      "labels": {
+        "ko": "보수볼",
+        "en": "BOSU ball"
+      },
+      "input_aliases": {
+        "en": [
+          "bosu ball"
+        ]
+      }
+    },
+    {
+      "id": "cable",
+      "labels": {
+        "ko": "케이블",
+        "en": "Cable"
+      },
+      "input_aliases": {
+        "en": [
+          "cable"
+        ]
+      }
+    },
+    {
+      "id": "dumbbell",
+      "labels": {
+        "ko": "덤벨",
+        "en": "Dumbbell"
+      },
+      "input_aliases": {
+        "en": [
+          "dumbbell"
+        ]
+      }
+    },
+    {
+      "id": "elliptical_machine",
+      "labels": {
+        "ko": "일립티컬 머신",
+        "en": "Elliptical machine"
+      },
+      "input_aliases": {
+        "en": [
+          "elliptical machine"
+        ]
+      }
+    },
+    {
+      "id": "ez_barbell",
+      "labels": {
+        "ko": "EZ바",
+        "en": "EZ barbell"
+      },
+      "input_aliases": {
+        "en": [
+          "ez barbell"
+        ]
+      }
+    },
+    {
+      "id": "hammer",
+      "labels": {
+        "ko": "슬레지 해머",
+        "en": "Sledgehammer"
+      },
+      "input_aliases": {
+        "en": [
+          "hammer"
+        ]
+      }
+    },
+    {
+      "id": "kettlebell",
+      "labels": {
+        "ko": "케틀벨",
+        "en": "Kettlebell"
+      },
+      "input_aliases": {
+        "en": [
+          "kettlebell"
+        ]
+      }
+    },
+    {
+      "id": "leverage_machine",
+      "labels": {
+        "ko": "레버 머신",
+        "en": "Leverage machine"
+      },
+      "input_aliases": {
+        "en": [
+          "leverage machine"
+        ]
+      }
+    },
+    {
+      "id": "medicine_ball",
+      "labels": {
+        "ko": "메디신볼",
+        "en": "Medicine ball"
+      },
+      "input_aliases": {
+        "en": [
+          "medicine ball"
+        ]
+      }
+    },
+    {
+      "id": "olympic_barbell",
+      "labels": {
+        "ko": "올림픽 바벨",
+        "en": "Olympic barbell"
+      },
+      "input_aliases": {
+        "en": [
+          "olympic barbell"
+        ]
+      }
+    },
+    {
+      "id": "resistance_band",
+      "labels": {
+        "ko": "저항 밴드",
+        "en": "Resistance band"
+      },
+      "input_aliases": {
+        "en": [
+          "resistance band"
+        ]
+      }
+    },
+    {
+      "id": "roller",
+      "labels": {
+        "ko": "롤러",
+        "en": "Roller"
+      },
+      "input_aliases": {
+        "en": [
+          "roller"
+        ]
+      }
+    },
+    {
+      "id": "rope",
+      "labels": {
+        "ko": "로프",
+        "en": "Rope"
+      },
+      "input_aliases": {
+        "en": [
+          "rope"
+        ]
+      }
+    },
+    {
+      "id": "skierg_machine",
+      "labels": {
+        "ko": "SkiErg 머신",
+        "en": "SkiErg machine"
+      },
+      "input_aliases": {
+        "en": [
+          "skierg machine"
+        ]
+      }
+    },
+    {
+      "id": "sled_machine",
+      "labels": {
+        "ko": "슬레드 머신",
+        "en": "Sled machine"
+      },
+      "input_aliases": {
+        "en": [
+          "sled machine"
+        ]
+      }
+    },
+    {
+      "id": "smith_machine",
+      "labels": {
+        "ko": "스미스 머신",
+        "en": "Smith machine"
+      },
+      "input_aliases": {
+        "en": [
+          "smith machine"
+        ]
+      }
+    },
+    {
+      "id": "stability_ball",
+      "labels": {
+        "ko": "짐볼",
+        "en": "Stability ball"
+      },
+      "input_aliases": {
+        "en": [
+          "stability ball"
+        ]
+      }
+    },
+    {
+      "id": "stationary_bike",
+      "labels": {
+        "ko": "실내 자전거",
+        "en": "Stationary bike"
+      },
+      "input_aliases": {
+        "en": [
+          "stationary bike"
+        ]
+      }
+    },
+    {
+      "id": "stepmill_machine",
+      "labels": {
+        "ko": "스텝밀",
+        "en": "Stepmill"
+      },
+      "input_aliases": {
+        "en": [
+          "stepmill machine"
+        ]
+      }
+    },
+    {
+      "id": "tire",
+      "labels": {
+        "ko": "타이어",
+        "en": "Tire"
+      },
+      "input_aliases": {
+        "en": [
+          "tire"
+        ]
+      }
+    },
+    {
+      "id": "trap_bar",
+      "labels": {
+        "ko": "트랩바",
+        "en": "Trap bar"
+      },
+      "input_aliases": {
+        "en": [
+          "trap bar"
+        ]
+      }
+    },
+    {
+      "id": "upper_body_ergometer",
+      "labels": {
+        "ko": "상체 에르고미터",
+        "en": "Upper-body ergometer"
+      },
+      "input_aliases": {
+        "en": [
+          "upper body ergometer"
+        ]
+      }
+    },
+    {
+      "id": "weighted",
+      "labels": {
+        "ko": "중량 추가",
+        "en": "Weighted"
+      },
+      "input_aliases": {
+        "en": [
+          "weighted"
+        ]
+      }
+    },
+    {
+      "id": "wheel_roller",
+      "labels": {
+        "ko": "AB 휠",
+        "en": "Ab wheel"
+      },
+      "input_aliases": {
+        "en": [
+          "wheel roller"
+        ]
+      }
+    }
+  ],
+  "movement_patterns": [
+    {
+      "id": "horizontal_press",
+      "labels": {
+        "ko": "수평 밀기",
+        "en": "Horizontal press"
+      }
+    },
+    {
+      "id": "vertical_press",
+      "labels": {
+        "ko": "수직 밀기",
+        "en": "Vertical press"
+      }
+    },
+    {
+      "id": "shoulder_abduction",
+      "labels": {
+        "ko": "어깨 벌림",
+        "en": "Shoulder abduction"
+      }
+    },
+    {
+      "id": "elbow_extension",
+      "labels": {
+        "ko": "팔꿈치 폄",
+        "en": "Elbow extension"
+      }
+    }
+  ],
+  "workout_days": [
+    {
+      "id": "push_day",
+      "labels": {
+        "ko": "가슴·어깨·삼두 운동",
+        "en": "Push day"
+      },
+      "focus_muscle_ids": [
+        "chest",
+        "deltoids",
+        "triceps"
+      ],
+      "include_secondary_muscles": false,
+      "input_aliases": {
+        "ko": [
+          "푸시",
+          "푸시 데이",
+          "푸시데이"
+        ],
+        "en": [
+          "push",
+          "push day",
+          "PushDay"
+        ]
+      }
+    },
+    {
+      "id": "back_day",
+      "labels": {
+        "ko": "등·허리 운동",
+        "en": "Back day"
+      },
+      "focus_muscle_ids": [
+        "lats",
+        "upper_back",
+        "trapezius",
+        "spine",
+        "lower_back",
+        "rhomboids",
+        "back"
+      ],
+      "include_secondary_muscles": true
+    },
+    {
+      "id": "biceps_day",
+      "labels": {
+        "ko": "이두 운동",
+        "en": "Biceps day"
+      },
+      "focus_muscle_ids": [
+        "biceps",
+        "brachialis"
+      ],
+      "include_secondary_muscles": true
+    },
+    {
+      "id": "legs_day",
+      "labels": {
+        "ko": "하체 운동",
+        "en": "Legs day"
+      },
+      "focus_muscle_ids": [
+        "quads",
+        "hamstrings",
+        "glutes",
+        "calves",
+        "adductors",
+        "abductors",
+        "hip_flexors",
+        "soleus",
+        "shins",
+        "ankles",
+        "ankle_stabilizers",
+        "feet",
+        "inner_thighs",
+        "groin"
+      ],
+      "include_secondary_muscles": true
+    },
+    {
+      "id": "forearms_day",
+      "labels": {
+        "ko": "전완·손목 운동",
+        "en": "Forearms day"
+      },
+      "focus_muscle_ids": [
+        "forearms",
+        "wrist_flexors",
+        "wrist_extensors"
+      ],
+      "include_secondary_muscles": true
+    },
+    {
+      "id": "scapula_day",
+      "labels": {
+        "ko": "견갑·전거근 운동",
+        "en": "Scapula day"
+      },
+      "focus_muscle_ids": [
+        "serratus_anterior",
+        "levator_scapulae"
+      ],
+      "include_secondary_muscles": false
+    },
+    {
+      "id": "core_day",
+      "labels": {
+        "ko": "코어 보조 운동",
+        "en": "Core day"
+      },
+      "focus_muscle_ids": [
+        "core"
+      ],
+      "include_secondary_muscles": true
+    },
+    {
+      "id": "abs_day",
+      "labels": {
+        "ko": "복근 운동",
+        "en": "Abs day"
+      },
+      "focus_muscle_ids": [
+        "abs",
+        "lower_abs"
+      ],
+      "include_secondary_muscles": false
+    },
+    {
+      "id": "obliques_day",
+      "labels": {
+        "ko": "복사근 운동",
+        "en": "Obliques day"
+      },
+      "focus_muscle_ids": [
+        "obliques"
+      ],
+      "include_secondary_muscles": true
+    }
+  ],
+  "exercise_shards": [
+    "exercises/abductors.json",
+    "exercises/abs.json",
+    "exercises/adductors.json",
+    "exercises/biceps.json",
+    "exercises/calves.json",
+    "exercises/cardiovascular_system.json",
+    "exercises/chest.json",
+    "exercises/deltoids.json",
+    "exercises/forearms.json",
+    "exercises/glutes.json",
+    "exercises/hamstrings.json",
+    "exercises/lats.json",
+    "exercises/levator_scapulae.json",
+    "exercises/quads.json",
+    "exercises/serratus_anterior.json",
+    "exercises/spine.json",
+    "exercises/trapezius.json",
+    "exercises/triceps.json",
+    "exercises/upper_back.json"
+  ],
+  "recommendations": {
+    "sources": [
+      {
+        "id": "exercise_api",
+        "name": "ExerciseAPI curated exercise dataset",
+        "url": "https://github.com/aschenoni/exercise-api/tree/main/data",
+        "version": "1.1.0",
+        "license": "CC BY 4.0",
+        "attribution": "Exercise data by ExerciseAPI (https://exercise-api.com), licensed under CC BY 4.0. Adapted metadata only."
+      },
+      {
+        "id": "novice_consensus",
+        "name": "Selecting Resistance Training Exercises for Novices: A Delphi Study with Expert Consensus",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11873903/",
+        "version": null,
+        "license": null,
+        "attribution": "Kompf JM, Rhodes RE, Lee S. Am J Lifestyle Med. 2025;19(3):437–449. doi:10.1177/15598276221115662."
+      }
+    ],
+    "profiles": [
+      {
+        "source_id": "0025",
+        "exercise_api": {
+          "id": "barbell_bench_press",
+          "name": "Barbell Bench Press",
+          "modality": "hypertrophy",
+          "sfr_class": "moderate",
+          "is_gold_standard": true,
+          "preferred_rank": 1,
+          "e1rm_substitution_group": "chest_horizontal_press",
+          "loadable": true
+        }
+      },
+      {
+        "source_id": "0289",
+        "exercise_api": {
+          "id": "dumbbell_bench_press",
+          "name": "Dumbbell Bench Press",
+          "modality": "hypertrophy",
+          "sfr_class": "moderate",
+          "is_gold_standard": false,
+          "preferred_rank": 2,
+          "e1rm_substitution_group": "chest_horizontal_press",
+          "loadable": true
+        }
+      },
+      {
+        "source_id": "0178",
+        "exercise_api": {
+          "id": "cable_lateral_raise",
+          "name": "Cable Lateral Raise",
+          "modality": "hypertrophy",
+          "sfr_class": "high",
+          "is_gold_standard": true,
+          "preferred_rank": 1,
+          "e1rm_substitution_group": "side_delt_raise",
+          "loadable": true
+        }
+      },
+      {
+        "source_id": "0334",
+        "exercise_api": {
+          "id": "dumbbell_lateral_raise",
+          "name": "Dumbbell Lateral Raise",
+          "modality": "hypertrophy",
+          "sfr_class": "high",
+          "is_gold_standard": true,
+          "preferred_rank": 2,
+          "e1rm_substitution_group": "side_delt_raise",
+          "loadable": true
+        },
+        "novice_consensus_exercise_name": "Dumbbell lateral raise",
+        "technical_complexity": "low"
+      },
+      {
+        "source_id": "0175",
+        "exercise_api": {
+          "id": "cable_crunch",
+          "name": "Cable Crunch",
+          "modality": "hypertrophy",
+          "sfr_class": "high",
+          "is_gold_standard": true,
+          "preferred_rank": 2,
+          "e1rm_substitution_group": "abs_flexion",
+          "loadable": true
+        }
+      },
+      {
+        "source_id": "0283",
+        "exercise_api": {
+          "id": "diamond_pushup",
+          "name": "Diamond Push-up",
+          "modality": "hypertrophy",
+          "sfr_class": "moderate",
+          "is_gold_standard": false,
+          "preferred_rank": 5,
+          "e1rm_substitution_group": "triceps_extension",
+          "loadable": false
+        }
+      },
+      {
+        "source_id": "0310",
+        "novice_consensus_exercise_name": "Dumbbell front raise",
+        "technical_complexity": "low"
+      },
+      {
+        "source_id": "0333",
+        "novice_consensus_exercise_name": "Dumbbell kick back",
+        "technical_complexity": "low"
+      }
+    ]
+  }
+}

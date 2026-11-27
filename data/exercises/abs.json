@@ -1,0 +1,2140 @@
+[
+  {
+    "source_id": "0001",
+    "labels": {
+      "en": "3/4 sit-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0002",
+    "labels": {
+      "en": "45° side bend"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0003",
+    "labels": {
+      "en": "air bike"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0006",
+    "labels": {
+      "en": "alternate heel touchers"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2355",
+    "labels": {
+      "en": "arm slingers hanging bent knee legs"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2333",
+    "labels": {
+      "en": "arm slingers hanging straight legs"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3204",
+    "labels": {
+      "en": "arms overhead full sit-up (male)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0011",
+    "labels": {
+      "en": "assisted hanging knee raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "0010",
+    "labels": {
+      "en": "assisted hanging knee raise with throw down"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "0012",
+    "labels": {
+      "en": "assisted lying leg raise with lateral throw down"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "0013",
+    "labels": {
+      "en": "assisted lying leg raise with throw down"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "0014",
+    "labels": {
+      "en": "assisted motion russian twist"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "medicine_ball"
+  },
+  {
+    "source_id": "1714",
+    "labels": {
+      "en": "assisted prone rectus femoris stretch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "1758",
+    "labels": {
+      "en": "assisted sit-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "0969",
+    "labels": {
+      "en": "band alternating v-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0971",
+    "labels": {
+      "en": "band assisted wheel rollerout"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0972",
+    "labels": {
+      "en": "band bicycle crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0979",
+    "labels": {
+      "en": "band horizontal pallof press"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0981",
+    "labels": {
+      "en": "band jack knife sit-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0985",
+    "labels": {
+      "en": "band kneeling twisting crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1002",
+    "labels": {
+      "en": "band lying straight leg raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0992",
+    "labels": {
+      "en": "band push sit-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1011",
+    "labels": {
+      "en": "band seated twist"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1005",
+    "labels": {
+      "en": "band standing crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1007",
+    "labels": {
+      "en": "band standing twisting crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1014",
+    "labels": {
+      "en": "band v-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1015",
+    "labels": {
+      "en": "band vertical pallof press"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0071",
+    "labels": {
+      "en": "barbell press sit-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0084",
+    "labels": {
+      "en": "barbell rollerout"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0083",
+    "labels": {
+      "en": "barbell rollerout from bench"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0094",
+    "labels": {
+      "en": "barbell seated twist"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0096",
+    "labels": {
+      "en": "barbell side bent v. 2"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "2799",
+    "labels": {
+      "en": "barbell sitted alternate leg raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "2800",
+    "labels": {
+      "en": "barbell sitted alternate leg raise (female)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0103",
+    "labels": {
+      "en": "barbell standing ab rollerout"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0112",
+    "labels": {
+      "en": "barbell standing twist"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "3544",
+    "labels": {
+      "en": "bodyweight incline side plank"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0138",
+    "labels": {
+      "en": "bottoms-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2466",
+    "labels": {
+      "en": "bridge - mountain climber (cross body)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "glutes",
+      "quads",
+      "hamstrings",
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0870",
+    "labels": {
+      "en": "butt-ups"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0174",
+    "labels": {
+      "en": "cable judo flip"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0175",
+    "labels": {
+      "en": "cable kneeling crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0873",
+    "labels": {
+      "en": "cable reverse crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0211",
+    "labels": {
+      "en": "cable russian twists (on stability ball)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0212",
+    "labels": {
+      "en": "cable seated crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "2399",
+    "labels": {
+      "en": "cable seated twist"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0222",
+    "labels": {
+      "en": "cable side bend"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0221",
+    "labels": {
+      "en": "cable side bend crunch (bosu ball)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0223",
+    "labels": {
+      "en": "cable side crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0226",
+    "labels": {
+      "en": "cable standing crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0874",
+    "labels": {
+      "en": "cable standing crunch (with rope attachment)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0230",
+    "labels": {
+      "en": "cable standing lift"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0242",
+    "labels": {
+      "en": "cable tuck reverse crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0243",
+    "labels": {
+      "en": "cable twist"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0862",
+    "labels": {
+      "en": "cable twist (up-down)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "2963",
+    "labels": {
+      "en": "captains chair straight leg raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0260",
+    "labels": {
+      "en": "cocoons"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1468",
+    "labels": {
+      "en": "crab twist toe touch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0262",
+    "labels": {
+      "en": "cross body crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0267",
+    "labels": {
+      "en": "crunch (hands overhead)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0271",
+    "labels": {
+      "en": "crunch (on stability ball)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "0272",
+    "labels": {
+      "en": "crunch (on stability ball, arms straight)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "0274",
+    "labels": {
+      "en": "crunch floor"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3016",
+    "labels": {
+      "en": "curl-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0276",
+    "labels": {
+      "en": "dead bug"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0277",
+    "labels": {
+      "en": "decline crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0282",
+    "labels": {
+      "en": "decline sit-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0407",
+    "labels": {
+      "en": "dumbbell side bend"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "0443",
+    "labels": {
+      "en": "elbow-to-knee"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3303",
+    "labels": {
+      "en": "flag"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0456",
+    "labels": {
+      "en": "flexion leg sit up (bent knee)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0457",
+    "labels": {
+      "en": "flexion leg sit up (straight arm)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2429",
+    "labels": {
+      "en": "frog crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3301",
+    "labels": {
+      "en": "frog planche"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3296",
+    "labels": {
+      "en": "front lever"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "lats",
+      "deltoids",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0464",
+    "labels": {
+      "en": "front plank with twist"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3315",
+    "labels": {
+      "en": "full maltese"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3299",
+    "labels": {
+      "en": "full planche"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0467",
+    "labels": {
+      "en": "gorilla chin"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "forearms",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0469",
+    "labels": {
+      "en": "groin crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "inner_thighs"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3202",
+    "labels": {
+      "en": "half sit-up (male)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1764",
+    "labels": {
+      "en": "hanging leg hip raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0472",
+    "labels": {
+      "en": "hanging leg raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1761",
+    "labels": {
+      "en": "hanging oblique knee raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0473",
+    "labels": {
+      "en": "hanging pike"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0474",
+    "labels": {
+      "en": "hanging straight leg hip raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0475",
+    "labels": {
+      "en": "hanging straight leg raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0476",
+    "labels": {
+      "en": "hanging straight twisting leg hip raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0484",
+    "labels": {
+      "en": "hip raise (bent knee)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1471",
+    "labels": {
+      "en": "inchworm"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3698",
+    "labels": {
+      "en": "inchworm v. 2"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0491",
+    "labels": {
+      "en": "incline leg hip raise (leg straight)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0495",
+    "labels": {
+      "en": "incline twisting sit-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0507",
+    "labels": {
+      "en": "jackknife sit-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0508",
+    "labels": {
+      "en": "janda sit-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0517",
+    "labels": {
+      "en": "kettlebell advanced windmill"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0524",
+    "labels": {
+      "en": "kettlebell bent press"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps",
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0530",
+    "labels": {
+      "en": "kettlebell double windmill"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0532",
+    "labels": {
+      "en": "kettlebell figure 8"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0554",
+    "labels": {
+      "en": "kettlebell windmill"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "3640",
+    "labels": {
+      "en": "knee touch crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3239",
+    "labels": {
+      "en": "kneeling plank tap shoulder (male)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3419",
+    "labels": {
+      "en": "l-sit on floor"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0562",
+    "labels": {
+      "en": "landmine 180"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "3300",
+    "labels": {
+      "en": "lean planche"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0570",
+    "labels": {
+      "en": "leg pull in flat bench"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0583",
+    "labels": {
+      "en": "lever kneeling twist"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1452",
+    "labels": {
+      "en": "lever seated crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0595",
+    "labels": {
+      "en": "lever seated crunch (chest pad)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "3760",
+    "labels": {
+      "en": "lever seated crunch v. 2"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0600",
+    "labels": {
+      "en": "lever seated leg raise crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1688",
+    "labels": {
+      "en": "lunge with twist"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "quads",
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2312",
+    "labels": {
+      "en": "lying elbow to knee"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0620",
+    "labels": {
+      "en": "lying leg raise flat bench"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0865",
+    "labels": {
+      "en": "lying leg-hip raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0634",
+    "labels": {
+      "en": "negative crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1495",
+    "labels": {
+      "en": "oblique crunch v. 2"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0635",
+    "labels": {
+      "en": "oblique crunches floor"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0640",
+    "labels": {
+      "en": "one arm slam (with medicine ball)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "medicine_ball"
+  },
+  {
+    "source_id": "0641",
+    "labels": {
+      "en": "otis up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "3147",
+    "labels": {
+      "en": "pelvic tilt"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1687",
+    "labels": {
+      "en": "posterior step to overhead reach"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings",
+      "quads",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3119",
+    "labels": {
+      "en": "potty squat"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "quads",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3665",
+    "labels": {
+      "en": "power point plank"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3203",
+    "labels": {
+      "en": "prisoner half sit-up (male)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1707",
+    "labels": {
+      "en": "prone twist on stability ball"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "0650",
+    "labels": {
+      "en": "pull-in (on stability ball)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "0664",
+    "labels": {
+      "en": "push-up to side plank"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3201",
+    "labels": {
+      "en": "quarter sit-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0872",
+    "labels": {
+      "en": "reverse crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3663",
+    "labels": {
+      "en": "reverse plank with leg lift"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2204",
+    "labels": {
+      "en": "roller body saw"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "roller"
+  },
+  {
+    "source_id": "2206",
+    "labels": {
+      "en": "roller reverse crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "roller"
+  },
+  {
+    "source_id": "0687",
+    "labels": {
+      "en": "russian twist"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0689",
+    "labels": {
+      "en": "seated leg raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0691",
+    "labels": {
+      "en": "seated side crunch (wall)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3699",
+    "labels": {
+      "en": "shoulder tap"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0705",
+    "labels": {
+      "en": "side bridge v. 2"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0709",
+    "labels": {
+      "en": "side hip (on parallel bars)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3213",
+    "labels": {
+      "en": "side-to-side toe touch (male)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0735",
+    "labels": {
+      "en": "sit-up v. 2"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3679",
+    "labels": {
+      "en": "sit-up with arms on chest"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1496",
+    "labels": {
+      "en": "sledge hammer"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "forearms",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "hammer"
+  },
+  {
+    "source_id": "0756",
+    "labels": {
+      "en": "smith hip raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "smith_machine"
+  },
+  {
+    "source_id": "0777",
+    "labels": {
+      "en": "spell caster"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "2329",
+    "labels": {
+      "en": "spine twist"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2297",
+    "labels": {
+      "en": "stability ball crunch (full range hands behind head)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "0796",
+    "labels": {
+      "en": "standing wheel rollerout"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "lower_back",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "wheel_roller"
+  },
+  {
+    "source_id": "3314",
+    "labels": {
+      "en": "straddle maltese"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3298",
+    "labels": {
+      "en": "straddle planche"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0805",
+    "labels": {
+      "en": "suspended abdominal fallout"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0807",
+    "labels": {
+      "en": "suspended reverse crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0871",
+    "labels": {
+      "en": "tuck crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2802",
+    "labels": {
+      "en": "twisted leg raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2801",
+    "labels": {
+      "en": "twisted leg raise (female)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3420",
+    "labels": {
+      "en": "v-sit on floor"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0826",
+    "labels": {
+      "en": "vertical leg raise (on parallel bars)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0832",
+    "labels": {
+      "en": "weighted crunch"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "3670",
+    "labels": {
+      "en": "weighted decline sit-up"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "2135",
+    "labels": {
+      "en": "weighted front plank"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "0866",
+    "labels": {
+      "en": "weighted hanging leg-hip raise"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "hip_flexors",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "0840",
+    "labels": {
+      "en": "weighted overhead crunch (on stability ball)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "0846",
+    "labels": {
+      "en": "weighted russian twist"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "0845",
+    "labels": {
+      "en": "weighted russian twist (legs up)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "hip_flexors"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "2371",
+    "labels": {
+      "en": "weighted russian twist v. 2"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "0849",
+    "labels": {
+      "en": "weighted seated twist (on stability ball)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "0850",
+    "labels": {
+      "en": "weighted side bend (on stability ball)"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "obliques",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "0857",
+    "labels": {
+      "en": "wheel rollerout"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "wheel_roller"
+  },
+  {
+    "source_id": "0858",
+    "labels": {
+      "en": "wind sprints"
+    },
+    "primary_muscle_id": "abs",
+    "secondary_muscle_ids": [
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  }
+]

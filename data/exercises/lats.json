@@ -1,0 +1,1079 @@
+[
+  {
+    "source_id": "0007",
+    "labels": {
+      "en": "alternate lateral pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "3293",
+    "labels": {
+      "en": "archer pull up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0015",
+    "labels": {
+      "en": "assisted parallel close grip pull-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0017",
+    "labels": {
+      "en": "assisted pull-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1431",
+    "labels": {
+      "en": "assisted standing chin-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1432",
+    "labels": {
+      "en": "assisted standing pull-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1405",
+    "labels": {
+      "en": "back pec stretch"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0970",
+    "labels": {
+      "en": "band assisted pull-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0974",
+    "labels": {
+      "en": "band close-grip pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "3117",
+    "labels": {
+      "en": "band fixed back close grip pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "3116",
+    "labels": {
+      "en": "band fixed back underhand pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "0983",
+    "labels": {
+      "en": "band kneeling one arm pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1013",
+    "labels": {
+      "en": "band underhand pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "band"
+  },
+  {
+    "source_id": "1316",
+    "labels": {
+      "en": "barbell bent arm pullover"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0034",
+    "labels": {
+      "en": "barbell decline bent arm pullover"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0037",
+    "labels": {
+      "en": "barbell decline wide-grip pullover"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0073",
+    "labels": {
+      "en": "barbell pullover"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "chest",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0022",
+    "labels": {
+      "en": "barbell pullover to press"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "3019",
+    "labels": {
+      "en": "bench pull-ups"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0150",
+    "labels": {
+      "en": "cable bar lateral pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0153",
+    "labels": {
+      "en": "cable cross-over lateral pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0172",
+    "labels": {
+      "en": "cable incline pushdown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "2330",
+    "labels": {
+      "en": "cable lat pulldown full range of motion"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0177",
+    "labels": {
+      "en": "cable lateral pulldown (with rope attachment)"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "2616",
+    "labels": {
+      "en": "cable lateral pulldown with v-bar"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0184",
+    "labels": {
+      "en": "cable lying extension pullover (with rope attachment)"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "3563",
+    "labels": {
+      "en": "cable one arm pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0198",
+    "labels": {
+      "en": "cable pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0197",
+    "labels": {
+      "en": "cable pulldown (pro lat bar)"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0199",
+    "labels": {
+      "en": "cable pushdown (straight arm) v. 2"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0205",
+    "labels": {
+      "en": "cable rear pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0213",
+    "labels": {
+      "en": "cable seated high row (v-bar)"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1717",
+    "labels": {
+      "en": "cable squat row (with rope attachment)"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0238",
+    "labels": {
+      "en": "cable straight arm pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0237",
+    "labels": {
+      "en": "cable straight arm pulldown (with rope)"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "2464",
+    "labels": {
+      "en": "cable thibaudeau kayak row"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0244",
+    "labels": {
+      "en": "cable twisting pull"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "biceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0245",
+    "labels": {
+      "en": "cable underhand pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1325",
+    "labels": {
+      "en": "cable wide grip rear pulldown behind neck"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "1326",
+    "labels": {
+      "en": "chin-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1327",
+    "labels": {
+      "en": "close grip chin-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1332",
+    "labels": {
+      "en": "exercise ball alternating arm ups"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1339",
+    "labels": {
+      "en": "exercise ball lat stretch"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1341",
+    "labels": {
+      "en": "exercise ball lower back stretch (pyramid)"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "1342",
+    "labels": {
+      "en": "exercise ball lying side lat stretch"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "3010",
+    "labels": {
+      "en": "ez bar lying bent arms pullover"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "triceps",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "ez_barbell"
+  },
+  {
+    "source_id": "0466",
+    "labels": {
+      "en": "gironda sternum chin"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0558",
+    "labels": {
+      "en": "kipping muscle up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1346",
+    "labels": {
+      "en": "kneeling lat stretch"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "3418",
+    "labels": {
+      "en": "l-pull-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0572",
+    "labels": {
+      "en": "lever assisted chin-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0579",
+    "labels": {
+      "en": "lever front pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1347",
+    "labels": {
+      "en": "lever one arm lateral wide pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "2285",
+    "labels": {
+      "en": "lever pullover"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "triceps",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "2736",
+    "labels": {
+      "en": "lever reverse grip lateral pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "1353",
+    "labels": {
+      "en": "medicine ball catch and overhead throw"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "core"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "medicine_ball"
+  },
+  {
+    "source_id": "0627",
+    "labels": {
+      "en": "mixed grip chin-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0631",
+    "labels": {
+      "en": "muscle up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "triceps",
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1401",
+    "labels": {
+      "en": "muscle-up (on vertical bar)"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "triceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1355",
+    "labels": {
+      "en": "one arm against wall"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0638",
+    "labels": {
+      "en": "one arm chin-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0651",
+    "labels": {
+      "en": "pull up (neutral grip)"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0652",
+    "labels": {
+      "en": "pull-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0670",
+    "labels": {
+      "en": "rear pull-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0673",
+    "labels": {
+      "en": "reverse grip machine lat pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0674",
+    "labels": {
+      "en": "reverse grip pull-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0678",
+    "labels": {
+      "en": "rocky pull-up pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2207",
+    "labels": {
+      "en": "roller side lat stretch"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "triceps"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "roller"
+  },
+  {
+    "source_id": "0690",
+    "labels": {
+      "en": "seated lower back stretch"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "glutes",
+      "hamstrings"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1763",
+    "labels": {
+      "en": "shoulder grip pull-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1358",
+    "labels": {
+      "en": "side lying floor stretch"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "obliques",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0720",
+    "labels": {
+      "en": "side-to-side chin"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0794",
+    "labels": {
+      "en": "standing lateral stretch"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "deltoids",
+      "obliques"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0818",
+    "labels": {
+      "en": "twin handle parallel grip lat pulldown"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "rhomboids",
+      "deltoids"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "2987",
+    "labels": {
+      "en": "weighted close grip chin-up on dip cage"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "3286",
+    "labels": {
+      "en": "weighted muscle up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "triceps",
+      "deltoids",
+      "chest"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "3312",
+    "labels": {
+      "en": "weighted muscle up (on bar)"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "triceps",
+      "deltoids",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "3290",
+    "labels": {
+      "en": "weighted one hand pull up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "0841",
+    "labels": {
+      "en": "weighted pull-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "weighted"
+  },
+  {
+    "source_id": "1429",
+    "labels": {
+      "en": "wide grip pull-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1367",
+    "labels": {
+      "en": "wide grip rear pull-up"
+    },
+    "primary_muscle_id": "lats",
+    "secondary_muscle_ids": [
+      "biceps",
+      "forearms"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  }
+]

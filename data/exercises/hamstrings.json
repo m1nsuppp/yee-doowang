@@ -1,0 +1,359 @@
+[
+  {
+    "source_id": "0016",
+    "labels": {
+      "en": "assisted prone hamstring"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "assisted"
+  },
+  {
+    "source_id": "0044",
+    "labels": {
+      "en": "barbell good morning"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "0116",
+    "labels": {
+      "en": "barbell straight leg deadlift"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "3235",
+    "labels": {
+      "en": "cable assisted inverse leg curl"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "cable"
+  },
+  {
+    "source_id": "0339",
+    "labels": {
+      "en": "dumbbell lying femoral"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "dumbbell"
+  },
+  {
+    "source_id": "1560",
+    "labels": {
+      "en": "exercise ball seated hamstring stretch"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "stability_ball"
+  },
+  {
+    "source_id": "3193",
+    "labels": {
+      "en": "glute-ham raise"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "lower_back"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1511",
+    "labels": {
+      "en": "hamstring stretch"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0496",
+    "labels": {
+      "en": "inverse leg curl (bench support)"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "2400",
+    "labels": {
+      "en": "inverse leg curl (on pull-up cable machine)"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0535",
+    "labels": {
+      "en": "kettlebell hang clean"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "quads",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "kettlebell"
+  },
+  {
+    "source_id": "0555",
+    "labels": {
+      "en": "kick out sit"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "quads",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1576",
+    "labels": {
+      "en": "leg up hamstring stretch"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0582",
+    "labels": {
+      "en": "lever kneeling leg curl"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0586",
+    "labels": {
+      "en": "lever lying leg curl"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "3195",
+    "labels": {
+      "en": "lever lying two-one leg curl"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0599",
+    "labels": {
+      "en": "lever seated leg curl"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "leverage_machine"
+  },
+  {
+    "source_id": "0648",
+    "labels": {
+      "en": "power clean"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "quads",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "barbell"
+  },
+  {
+    "source_id": "1582",
+    "labels": {
+      "en": "reclining big toe pose with rope"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "calves",
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "rope"
+  },
+  {
+    "source_id": "1585",
+    "labels": {
+      "en": "runners stretch"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "calves",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1587",
+    "labels": {
+      "en": "seated wide angle pose sequence"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "quads",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0697",
+    "labels": {
+      "en": "self assisted inverse leg curl"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1766",
+    "labels": {
+      "en": "self assisted inverse leg curl"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0696",
+    "labels": {
+      "en": "self assisted inverse leg curl (on floor)"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "0730",
+    "labels": {
+      "en": "single leg platform slide"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "quads"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1599",
+    "labels": {
+      "en": "standing hamstring and calf stretch with strap"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "rope"
+  },
+  {
+    "source_id": "0795",
+    "labels": {
+      "en": "standing single leg curl"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  },
+  {
+    "source_id": "1604",
+    "labels": {
+      "en": "world greatest stretch"
+    },
+    "primary_muscle_id": "hamstrings",
+    "secondary_muscle_ids": [
+      "glutes",
+      "quads",
+      "calves"
+    ],
+    "movement_pattern_id": null,
+    "equipment_id": "body_weight"
+  }
+]
