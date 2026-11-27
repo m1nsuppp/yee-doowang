@@ -1,20 +1,6 @@
 # 이두왕(Yee DooWang)
 
-헬스트레이너 AI 에이전트의 이름이자 프로젝트 이름이다. 피트니스, 운동 루틴, 자세 교정, 근성장·다이어트 코칭을 제공한다.
-
-## 기술 구성
-
-- `frontend/`: Next.js App Router, React, TypeScript, Tailwind CSS, Biome
-- `backend/`: Python 3.12, FastAPI, Pydantic, `uv`
-- `compose.yaml`: 로컬 PostgreSQL 개발용 컨테이너 (현재 API는 DB에 연결하지 않는다)
-- LLM: OpenRouter를 provider 어댑터 경계로 연결하며 모델·API 키는 환경 변수로 설정한다(`backend/.env.example` 참고)
-- 규칙 추론: PyreWire (wirelog Datalog 엔진)
-
-배포 설정은 포함하지 않는다.
-
-## 동작 개요
-
-웹 앱은 일반 운동 대화로 시작하고, 루틴을 요청하면 상담으로 전환한다. 상담은 목표·경력·장비·시간·운동 부위·제약 조건을 확인해 루틴 초안을 만든다. 개인 맥락은 브라우저 메모리에만 유지하며 DB나 영구 저장소에 기록하지 않는다. 통증·부상 등 제약이 있으면 확인 전 루틴을 반환하지 않고, 응급 징후에는 진료를 안내한다.
+이 프로젝트의 이름이자 헬스트레이너 AI 에이전트의 이름이다. 피트니스, 운동 루틴, 근성장, 다이어트 코칭을 제공한다.
 
 ## 운동 데이터
 
